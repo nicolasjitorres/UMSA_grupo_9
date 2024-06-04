@@ -35,6 +35,7 @@ public class LocationResource {
     }
 
     @POST
+    @Path("/add")
     public Response addLocation(Location location) {
         locationService.addLocation(location);
         return Response.status(Response.Status.CREATED).entity(location).build();
