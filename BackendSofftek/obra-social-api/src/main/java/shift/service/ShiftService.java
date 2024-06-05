@@ -19,12 +19,14 @@ public class ShiftService {
         return Response.ok(shiftRepository.findAll().stream().toList()).build();
     }
 
-    public Response GetShift(Long idShift){
-        return Response.ok(shiftRepository.findById(idShift)).build();
+    public Response GetShift(Long idShift) throws Exception {
+        Shift shift = shiftRepository.findById(idShift);
+        if(shift == null) throw new Exception("no se encontro nada");
+        return Response.ok(shift).build();
     }
 
     public Response AddShift(Shift shift){
-        if(shiftRepository.findByDateAndHour(shift.getDate(),shift.getHour()) != null){
+        if(shiftRepository.findByDateAndHour(shift.getDate(),shift.getShifthour()) != null){
             return Response.status(Response.Status.BAD_REQUEST).entity("ya existe este turno").build();
         }
         shiftRepository.persist(shift);
@@ -38,7 +40,7 @@ public class ShiftService {
         }
         existingShift.setDescription(shift.getDescription());;
         existingShift.setDate(shift.getDate());
-        existingShift.setHour(shift.getHour());
+        existingShift.setShifthour(shift.getShifthour());
         existingShift.setState(shift.getState());
         existingShift.persist();
         return Response.ok(existingShift).build();

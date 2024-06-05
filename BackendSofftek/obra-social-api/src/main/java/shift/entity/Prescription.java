@@ -16,7 +16,7 @@ public class Prescription extends PanacheEntity {
     private String description;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "shift_id", nullable = false)
+    @JoinColumn(name = "id", nullable = false)
     private Shift shift;
 
     @Override//puse esto o genera overflow cuando se muestre

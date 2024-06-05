@@ -25,7 +25,13 @@ public class ShiftResource {
     @GET
     @Path("/getShift/{id}")
     public Response getShift(@PathParam("id") Long id){
-        return serviceShift.GetShift(id);
+        Response response = null;
+        try {
+            response = serviceShift.GetShift(id);
+        } catch (Exception e){
+            response = Response.status(Response.Status.NOT_FOUND).entity(e).build();
+        }
+        return response;
     }
 
     @POST
