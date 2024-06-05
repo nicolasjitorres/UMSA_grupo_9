@@ -16,7 +16,7 @@ import java.util.List;
 public class LocationResource {
 
     @Inject
-    LocationService locationService;
+    private LocationService locationService;
 
     @GET
     public List<Location> getAllLocations() {

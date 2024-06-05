@@ -1,10 +1,10 @@
-package location.repository;
+package schedule.repository;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
-import location.model.Location;
+import schedule.model.Schedule;
 
 @ApplicationScoped
-public class LocationRepository implements PanacheRepository<Location> {
+public class ScheduleRepository implements PanacheRepository<Schedule> {
 
 }
