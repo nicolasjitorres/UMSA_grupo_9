@@ -35,14 +35,13 @@ public class LocationResource {
     }
 
     @POST
-    @Path("/add")
     public Response addLocation(Location location) {
         locationService.addLocation(location);
         return Response.status(Response.Status.CREATED).entity(location).build();
     }
 
     @PUT
-    @Path("/update/{id}")
+    @Path("/{id}")
     public Response updateLocation(@PathParam("id") Long id, Location location) {
         Location existingLocation = locationService.getLocationById(id);
         if (existingLocation != null) {
@@ -55,7 +54,7 @@ public class LocationResource {
     }
 
     @DELETE
-    @Path("/delete/{id}")
+    @Path("/{id}")
     public Response deleteLocation(@PathParam("id") Long id) {
         Location location = locationService.getLocationById(id);
         if (location != null) {

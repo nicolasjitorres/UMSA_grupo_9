@@ -6,14 +6,15 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Locations")
+@Table(name = "locations")
 public class Location extends PanacheEntity {
+    @Column(name = "street")
     private String street;
-
+    @Column(name = "locality")
     private String locality;
-
+    @Column(name = "province")
     private String province;
-
+    @Column(name = "country")
     private String country;
     public Location() {
     }

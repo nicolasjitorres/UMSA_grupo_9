@@ -30,14 +30,13 @@ public class ScheduleResource
     }
 
     @POST
-    @Path("/add")
     public Response addSchedule(Schedule schedule){
         scheduleService.addSchedule(schedule);
             return Response.status(Response.Status.CREATED).entity(schedule).build();
     }
 
     @DELETE
-    @Path("/delete/{id}")
+    @Path("/{id}")
     public Response deleteScheduleById(@PathParam("id") Long id)
     {
         Schedule schedule = scheduleService.getScheduleById(id);
@@ -51,7 +50,7 @@ public class ScheduleResource
 
     }
     @PUT
-    @Path("/update/{id}")
+    @Path("/{id}")
     public Response updateSchedule(@PathParam("id") Long id, Schedule schedule)
     {
         Schedule existingSchedule = scheduleService.getScheduleById(id);
