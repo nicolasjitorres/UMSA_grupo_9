@@ -3,15 +3,13 @@ package person.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Specialist {
+@EqualsAndHashCode(callSuper = false)
+public class Specialist extends User{
 	
 	@Id
 	@GeneratedValue
