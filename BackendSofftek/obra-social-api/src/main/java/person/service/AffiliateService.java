@@ -32,7 +32,7 @@ public class AffiliateService {
 	public Response create(Affiliate newAffiliate) {
 		affiliateRepository.persist(newAffiliate);
 		return Response.ok(newAffiliate)
-			.build();
+				.build();
 	}
 	
 	public Response edit(Long id,Affiliate editedAffiliate) {

@@ -3,8 +3,12 @@ package shift.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.*;
+import person.model.Affiliate;
+import person.model.Specialist;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,13 +20,19 @@ import java.time.LocalTime;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Shift extends PanacheEntity {
-    //falta el id_Paciente
-    //falta el id_Especialista
     private Long id;
     private String description; //descripcion
     private LocalDate date; //fecha del turno
     private LocalTime time; // horario
     private Boolean state; //estado vigente
+
+    @ManyToOne
+    @JoinColumn(name = "specialist_id")
+    private Specialist specialist;
+
+    @ManyToOne
+    @JoinColumn(name = "affiliated_id")
+    private Affiliate affiliated;
 
     @JsonIgnore //ignora la prescripcion en el json enviado y evita el overflow
     @OneToOne(mappedBy = "shift")

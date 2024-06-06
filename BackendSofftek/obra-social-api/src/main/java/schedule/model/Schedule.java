@@ -2,9 +2,12 @@ package schedule.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import person.model.Specialist;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +19,8 @@ public class Schedule extends PanacheEntity {
     private LocalTime endTime;
     @Column(name = "schedule_day")
     private Days day;
+    @ManyToMany(mappedBy = "schedules")
+    private List<Specialist> specialists; // Especialistas
 
     public Schedule() {
     }

@@ -39,6 +39,7 @@ public class AffiliateController {
 	
 	@POST
 	public Response createSpecialist(Affiliate newAffiliate) {
+		System.out.println(newAffiliate);
 		return affiliateService.create(newAffiliate);
 	}
 	

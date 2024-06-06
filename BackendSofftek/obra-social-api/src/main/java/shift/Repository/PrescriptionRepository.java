@@ -1,4 +1,4 @@
-package shift.dao;
+package shift.Repository;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;

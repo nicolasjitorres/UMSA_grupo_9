@@ -4,9 +4,8 @@ package shift.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Response;
-import shift.dao.PrescriptionRepository;
-import shift.dao.ShiftRepository;
+import shift.Repository.PrescriptionRepository;
+import shift.Repository.ShiftRepository;
 import shift.entity.Prescription;
 import shift.entity.Shift;
 
