@@ -11,7 +11,7 @@ import shift.service.PrescriptionService;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/Prescriptions")
+@Path("/Recetas")
 public class PrescriptionResource {
 
     @Inject
@@ -35,7 +35,7 @@ public class PrescriptionResource {
     }
 
     @POST
-    @Path("/add-Prescription")
+    @Path("/agregar-Receta")
     public Response addPrescription(Prescription prescription){
         try{
             prescriptionService.AddPrescription(prescription);
@@ -46,7 +46,7 @@ public class PrescriptionResource {
     }
 
     @PUT
-    @Path("/{id}/update-Prescription")
+    @Path("/{id}/actualizar-Receta")
     public Response updatePrescription(@PathParam("id") Long id, Prescription prescription){
         try {
             prescriptionService.UpdatePrescription(id,prescription);
@@ -57,7 +57,7 @@ public class PrescriptionResource {
     }
 
     @DELETE
-    @Path("/{id}/delete-Prescription")
+    @Path("/{id}/eliminar-Receta")
     public Response deletePrescription(@PathParam("id") Long id,Prescription prescription){
         try {
             prescriptionService.DeletePrescription(id,prescription);

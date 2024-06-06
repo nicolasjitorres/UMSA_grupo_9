@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.Response;
 import shift.dao.ShiftRepository;
 import shift.entity.Shift;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Transactional
@@ -30,6 +31,7 @@ public class ShiftService {
     public void AddShift(Shift shift) throws Exception {
         if(shift==null) throw new Exception("No se proporciono ninguna informacion");
         if(shiftRepository.findByDateAndHour(shift.getDate(),shift.getTime()) != null) throw  new Exception("ya existe este Turno");
+        if(shift.getDate().isBefore(LocalDate.now())) throw  new Exception("la fecha del turno debe ser superior a la de hoy");
         shiftRepository.persist(shift);
     }
 
@@ -50,7 +52,8 @@ public class ShiftService {
         if (!id.equals(shift.getId())) throw new Exception("los ids no coinciden");
         Shift existingShift = shiftRepository.findById(shift.getId());
         if ( existingShift == null) throw  new Exception("no existe este turno en la base de datos");
-        if(existingShift.getPrescription() != null) throw  new Exception("no se puede eliminar una turno que tiene asociado una receta, elimine la receta con el id: "+existingShift.getPrescription().getId()+" primero");
-        shiftRepository.delete(existingShift);
+        if(existingShift.getDate().isAfter(LocalDate.now())) throw new Exception("no se puede cancelar un turno que ya sucedio");
+        existingShift.setState(!shift.getState());
+        existingShift.persist();
     }
 }

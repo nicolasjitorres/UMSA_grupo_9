@@ -10,7 +10,7 @@ import shift.service.ShiftService;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/Shifts")
+@Path("/Turnos")
 public class ShiftResource {
 
     @Inject
@@ -33,7 +33,7 @@ public class ShiftResource {
     }
 
     @POST
-    @Path("/add-Shift")
+    @Path("/agregar-Turno")
     public Response addShift(Shift shift){
         try {
             serviceShift.AddShift(shift);
@@ -44,7 +44,7 @@ public class ShiftResource {
     }
 
     @PUT
-    @Path("/{id}/update-Shift")
+    @Path("/{id}/actualizar-Turno")
     public Response updateShift(@PathParam("id") Long id, Shift shift){
         try {
             serviceShift.UpdateShift(id,shift);
@@ -55,7 +55,7 @@ public class ShiftResource {
     }
 
     @DELETE
-    @Path("/{id}/delete-Shift")
+    @Path("/{id}/eliminar-Turno")
     public Response deleteShift(@PathParam("id") Long id,Shift shift){
         try {
             serviceShift.DeleteShift(id,shift);
