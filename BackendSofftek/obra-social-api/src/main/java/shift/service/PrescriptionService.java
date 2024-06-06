@@ -6,8 +6,11 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import shift.dao.PrescriptionRepository;
+import shift.dao.ShiftRepository;
 import shift.entity.Prescription;
 import shift.entity.Shift;
+
+import java.util.List;
 
 
 @Transactional
@@ -15,35 +18,41 @@ import shift.entity.Shift;
 public class PrescriptionService {
     @Inject
     PrescriptionRepository prescriptionRepository;
+    @Inject
+    ShiftRepository shiftRepository;
 
-    public Response GetAllPrescriptions(){
-        return Response.ok(prescriptionRepository.findAll().stream().toList()).build();
+    public List<Prescription> GetAllPrescriptions(){
+        return prescriptionRepository.findAll().stream().toList();
     }
 
-    public Response GetPrescription(Long idPrescription){
-        return Response.ok(prescriptionRepository.findById(idPrescription)).build();
+    public Prescription getPrescription(Long idPrescription) throws Exception {
+        Prescription existingPrescription = prescriptionRepository.findById(idPrescription);
+        if(existingPrescription == null) throw new Exception("no se encontro ninguna receta con este id");
+        return existingPrescription;
     }
 
-    public Response AddPrescription(Prescription prescription){
+    public void AddPrescription(Prescription prescription) throws Exception {
+        if(prescription==null) throw new Exception("No se proporciono ninguna informacion");
+        if(prescription.getShift()==null) throw new Exception("No se proporciono ningun turno");
+        Shift shift = shiftRepository.findById(prescription.getShift().getId());
+        if(shift == null) throw new Exception("no existe este turno");
+        if(shift.getPrescription()!=null) throw new Exception("este turno ya tiene una receta");
         prescriptionRepository.persist(prescription);
-        return Response.status(Response.Status.CREATED).entity("se agrego con exito").build();
     }
 
-    public Response UpdatePrescription(Prescription prescription){
+    public void UpdatePrescription(Long id, Prescription prescription) throws Exception{
+        if (!id.equals(prescription.getId())) throw new Exception("los ids no coinciden");
         Prescription existingPrescription = prescriptionRepository.findById(prescription.getId());
-        if (existingPrescription == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("no se encontro esta receta").build();
-        }
+        if ( existingPrescription == null) throw  new Exception("no existe esta receta en la base de datos");
         existingPrescription.setDescription(prescription.getDescription());;
         existingPrescription.persist();
-        return Response.ok(existingPrescription).build();
     }
 
-    public Response DeletePrescription(Prescription prescription){
-        if (prescriptionRepository.findById(prescription.getId()) != null){
-            prescriptionRepository.delete(prescription);
-            return Response.ok("Se elimino correctamente").build();
-        }
-        return Response.status(Response.Status.NOT_FOUND).entity("no existe esta receta en la base de datos").build();
+    public void DeletePrescription(Long id, Prescription prescription) throws Exception{
+        if (!id.equals(prescription.getId())) throw new Exception("los ids no coinciden");
+        Prescription existingPrescription = prescriptionRepository.findById(prescription.getId());
+        if ( existingPrescription == null) throw  new Exception("no existe esta receta en la base de datos");
+        prescriptionRepository.delete(prescription);
     }
+
 }

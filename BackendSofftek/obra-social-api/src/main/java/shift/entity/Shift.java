@@ -21,7 +21,7 @@ public class Shift extends PanacheEntity {
     private Long id;
     private String description; //descripcion
     private LocalDate date; //fecha del turno
-    private LocalTime shifthour; // horario
+    private LocalTime time; // horario
     private Boolean state; //estado vigente
 
     @JsonIgnore //ignora la prescripcion en el json enviado y evita el overflow
@@ -34,7 +34,7 @@ public class Shift extends PanacheEntity {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", date=" + date +
-                ", hour=" + shifthour +
+                ", time=" + time +
                 ", state=" + state +
                 '}';
     }

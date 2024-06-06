@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @ApplicationScoped
 public class ShiftRepository implements PanacheRepository<Shift>{
 
-    public Shift findByDateAndHour(LocalDate date, LocalTime hour) {
-        return find("date = ?1 and hour = ?2", date, hour).firstResult();
+    public Shift findByDateAndHour(LocalDate date, LocalTime time) {
+        return find("date = ?1 and time = ?2", date, time).firstResult();
     }
 }

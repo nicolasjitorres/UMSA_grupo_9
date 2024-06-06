@@ -10,46 +10,59 @@ import shift.service.ShiftService;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/Shift")
+@Path("/Shifts")
 public class ShiftResource {
 
     @Inject
     ShiftService serviceShift;
 
     @GET
-    @Path("/getShifts")
+    @Path("/")
     public Response getShifts(){
-        return serviceShift.GetAllShift();
+        return Response.ok(serviceShift.GetAllShift()).build();
     }
 
     @GET
-    @Path("/getShift/{id}")
+    @Path("/{id}")
     public Response getShift(@PathParam("id") Long id){
-        Response response = null;
         try {
-            response = serviceShift.GetShift(id);
+            return Response.ok(serviceShift.GetShift(id)).build();
         } catch (Exception e){
-            response = Response.status(Response.Status.NOT_FOUND).entity(e).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e).build();
         }
-        return response;
     }
 
     @POST
-    @Path("/addShift")
+    @Path("/add-Shift")
     public Response addShift(Shift shift){
-        return serviceShift.AddShift(shift);
+        try {
+            serviceShift.AddShift(shift);
+            return Response.ok("se agrego con exito").build();
+        }catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
     @PUT
-    @Path("/UpdateShift")
-    public Response updateShift(Shift shift){
-        return serviceShift.UpdateShift(shift);
+    @Path("/{id}/update-Shift")
+    public Response updateShift(@PathParam("id") Long id, Shift shift){
+        try {
+            serviceShift.UpdateShift(id,shift);
+            return Response.ok("se actualizo correctamente").build();
+        }catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
     @DELETE
-    @Path("/DeleteShift")
-    public Response deleteShift(Shift shift){
-        return serviceShift.DeleteShift(shift);
+    @Path("/{id}/delete-Shift")
+    public Response deleteShift(@PathParam("id") Long id,Shift shift){
+        try {
+            serviceShift.DeleteShift(id,shift);
+            return Response.ok("se elimino con exito").build();
+        }catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
 }
