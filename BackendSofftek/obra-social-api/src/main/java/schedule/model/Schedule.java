@@ -1,9 +1,7 @@
 package schedule.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import person.model.Specialist;
 
 import java.time.LocalTime;
@@ -19,8 +17,11 @@ public class Schedule extends PanacheEntity {
     private LocalTime endTime;
     @Column(name = "schedule_day")
     private Days day;
-    @ManyToMany(mappedBy = "schedules")
-    private List<Specialist> specialists; // Especialistas
+
+    @JsonIgnore //ignora al especialista en el json enviado y evita el overflow
+    @ManyToOne
+    @JoinColumn(name = "specialist_id")
+    private Specialist specialist; // Especialista
 
     public Schedule() {
     }
@@ -62,6 +63,13 @@ public class Schedule extends PanacheEntity {
         this.day = day;
     }
 
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

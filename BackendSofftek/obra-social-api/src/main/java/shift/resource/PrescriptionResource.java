@@ -18,7 +18,6 @@ public class PrescriptionResource {
     PrescriptionService prescriptionService;
 
     @GET
-    @Path("/")
     public Response getPrescriptions(){
         return Response.ok(prescriptionService.GetAllPrescriptions()).build();
     }

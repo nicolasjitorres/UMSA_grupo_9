@@ -19,12 +19,7 @@ public class Specialist extends User{
 	private Long id;
 	private Speciality speciality;
 
-	@ManyToMany
-	@JoinTable(
-			name = "specialist_schedule",
-			joinColumns = @JoinColumn(name = "specialist_id"),
-			inverseJoinColumns = @JoinColumn(name = "schedule_id")
-	)
+	@OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Schedule> schedules; // Horarios
 
 	@OneToOne(cascade = CascadeType.ALL)

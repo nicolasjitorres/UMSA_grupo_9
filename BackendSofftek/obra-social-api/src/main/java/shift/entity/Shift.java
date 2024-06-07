@@ -34,6 +34,7 @@ public class Shift extends PanacheEntity {
     @JoinColumn(name = "affiliated_id")
     private Affiliate affiliated;
 
+
     @JsonIgnore //ignora la prescripcion en el json enviado y evita el overflow
     @OneToOne(mappedBy = "shift")
     private Prescription prescription;
