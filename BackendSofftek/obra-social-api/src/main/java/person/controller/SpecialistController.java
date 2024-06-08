@@ -51,7 +51,7 @@ public class SpecialistController {
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteSpecialist(@PathParam("id") Long id, Specialist editSpecialist) {
+	public Response deleteSpecialist(@PathParam("id") Long id) {
 		return specialistService.delete(id);
 	}
 	
