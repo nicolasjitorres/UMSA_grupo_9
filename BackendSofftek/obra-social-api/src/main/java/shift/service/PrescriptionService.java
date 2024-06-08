@@ -16,12 +16,12 @@ import java.util.List;
 
 
 @Transactional
-@ApplicationScoped //esta anotacion se usa para los service
+@ApplicationScoped
 public class PrescriptionService {
     @Inject
-    PrescriptionRepository prescriptionRepository;
+    private PrescriptionRepository prescriptionRepository;
     @Inject
-    ShiftRepository shiftRepository;
+    private ShiftRepository shiftRepository;
 
     public List<Prescription> GetAllPrescriptions(){
         return prescriptionRepository.findAll().stream().toList();

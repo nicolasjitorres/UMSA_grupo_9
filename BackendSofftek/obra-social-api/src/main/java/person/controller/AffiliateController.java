@@ -51,7 +51,7 @@ public class AffiliateController {
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteSpecialist(@PathParam("id") Long id, Affiliate editAffiliate) {
+	public Response deleteSpecialist(@PathParam("id") Long id) {
 		return affiliateService.delete(id);
 	}
 	
