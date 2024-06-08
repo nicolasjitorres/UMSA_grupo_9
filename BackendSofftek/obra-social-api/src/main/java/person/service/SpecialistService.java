@@ -4,9 +4,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
+import location.model.Location;
+import location.repository.LocationRepository;
 import person.model.Specialist;
 import person.repository.SpecialistRepository;
 import schedule.model.Schedule;
+
+import java.util.Optional;
 
 @ApplicationScoped
 public class SpecialistService {
@@ -15,6 +19,8 @@ public class SpecialistService {
 	@Inject
 	private SpecialistRepository specialistRepository;
 
+	@Inject
+	private LocationRepository locationRepository;
 
 	@Transactional
 	public Response listAll() {
@@ -45,6 +51,25 @@ public class SpecialistService {
 			for (Schedule schedule : newSpecialist.getSchedules()) {
 				schedule.setSpecialist(newSpecialist);
 			}
+
+			//este bloque lo que permite es que si existe la ubicacion se la agrega al especialista
+			if (newSpecialist.getLocation() != null) {
+				Location location = newSpecialist.getLocation();
+				Optional<Location> existingLocation = locationRepository.findByDetails(
+						location.getStreet(),
+						location.getLocality(),
+						location.getProvince(),
+						location.getCountry()
+				);
+				if (existingLocation.isPresent()) {
+					//si existe lo agrega al especialista
+					newSpecialist.setLocation(existingLocation.get());
+				} else {
+					//sino lo persiste
+					locationRepository.persist(location);
+				}
+			}
+			//y luego persiste el especialista
 			specialistRepository.persist(newSpecialist);
 			return Response.status(Response.Status.CREATED)
 					.entity(newSpecialist)

@@ -18,7 +18,7 @@ import java.time.LocalTime;
 @Entity //marcar la calse como entidad y asi generar la tabla de la bd
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor()
 public class Shift extends PanacheEntity {
     private Long id;
     private String description; //descripcion
@@ -33,7 +33,6 @@ public class Shift extends PanacheEntity {
     @ManyToOne
     @JoinColumn(name = "affiliated_id")
     private Affiliate affiliated;
-
 
     @JsonIgnore //ignora la prescripcion en el json enviado y evita el overflow
     @OneToOne(mappedBy = "shift")

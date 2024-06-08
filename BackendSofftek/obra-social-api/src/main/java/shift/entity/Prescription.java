@@ -10,7 +10,7 @@ import lombok.*;
 @Entity //marcar la calse como entidad y asi generar la tabla de la bd
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor()
 public class Prescription extends PanacheEntity {
     private Long id;
     private String description;

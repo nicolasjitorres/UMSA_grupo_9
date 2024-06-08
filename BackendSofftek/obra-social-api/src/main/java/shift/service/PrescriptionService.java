@@ -8,6 +8,7 @@ import shift.Repository.PrescriptionRepository;
 import shift.Repository.ShiftRepository;
 import shift.entity.Prescription;
 import shift.entity.Shift;
+import shift.entity.dto.PrescriptionDTO;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -32,15 +33,15 @@ public class PrescriptionService {
         return existingPrescription;
     }
 
-    public void AddPrescription(Prescription prescription) throws Exception {
-        if(prescription==null) throw new Exception("No se proporciono ninguna informacion");
-        if(prescription.getShift()==null) throw new Exception("No se proporciono ningun turno");
-        Shift shift = shiftRepository.findById(prescription.getShift().getId());
+    public void AddPrescription(PrescriptionDTO prescriptionDto) throws Exception {
+        if(prescriptionDto==null) throw new Exception("No se proporciono ninguna informacion");
+        if(prescriptionDto.getShiftId()==null) throw new Exception("No se proporciono ningun turno");
+        Shift shift = shiftRepository.findById(prescriptionDto.getShiftId());
         if(shift == null) throw new Exception("no existe este turno");
         if(LocalDate.now().isBefore(shift.getDate())) throw new Exception("no puede darle una receta a un turno que no sucedio");
         if(LocalTime.now().isBefore(shift.getTime())) throw new Exception("no puede darle una receta a un turno que no sucedio");
         if(shift.getPrescription()!=null) throw new Exception("este turno ya tiene una receta");
-        prescriptionRepository.persist(prescription);
+        prescriptionRepository.persist(prescriptionDto.toEntity(prescriptionDto,shift));
     }
 
     public void UpdatePrescription(Long id, Prescription prescription) throws Exception{
