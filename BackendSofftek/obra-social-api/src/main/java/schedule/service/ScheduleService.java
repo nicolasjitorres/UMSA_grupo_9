@@ -9,44 +9,40 @@ import schedule.repository.ScheduleRepository;
 import java.util.List;
 
 @ApplicationScoped
-
+@Transactional
 public class ScheduleService implements IScheduleService {
     @Inject
     private ScheduleRepository scheduleRepository;
-
-    @Transactional
     @Override
     public List<Schedule> getSchedules() {
         return scheduleRepository.findAll().stream().toList();
     }
-
-    @Transactional
     @Override
     public Schedule getScheduleById(Long id) {
         return scheduleRepository.findById(id);
     }
-
-    @Transactional
     @Override
     public void addSchedule(Schedule schedule) {
         scheduleRepository.persist(schedule);
     }
-
-    @Transactional
     @Override
     public void deleteSchedule(Long id) {
         scheduleRepository.deleteById(id);
     }
-
-    @Transactional
-    @Override
     public void editSchedule(Long id, Schedule schedule) {
         Schedule existingSchedule = scheduleRepository.findById(id);
         if (existingSchedule != null) {
-            existingSchedule.setDay(schedule.getDay());
-            existingSchedule.setStartTime((schedule.getStartTime()));
-            existingSchedule.setEndTime((schedule.getEndTime()));
+            if (schedule.getDay() != null) {
+                existingSchedule.setDay(schedule.getDay());
+            }
+            if (schedule.getStartTime() != null) {
+                existingSchedule.setStartTime(schedule.getStartTime());
+            }
+            if (schedule.getEndTime() != null) {
+                existingSchedule.setEndTime(schedule.getEndTime());
+            }
             scheduleRepository.persist(existingSchedule);
         }
     }
+
 }

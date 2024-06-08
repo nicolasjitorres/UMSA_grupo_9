@@ -15,7 +15,7 @@ import jakarta.ws.rs.core.Response;
 import person.model.Specialist;
 import person.service.SpecialistService;
 
-@Path("/especialista")
+@Path("/especialistas")
 @Transactional
 @Produces(MediaType.APPLICATION_JSON)
 public class SpecialistController {
@@ -51,7 +51,7 @@ public class SpecialistController {
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteSpecialist(@PathParam("id") Long id, Specialist editSpecialist) {
+	public Response deleteSpecialist(@PathParam("id") Long id) {
 		return specialistService.delete(id);
 	}
 	

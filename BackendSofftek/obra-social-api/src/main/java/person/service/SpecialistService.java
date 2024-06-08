@@ -9,6 +9,7 @@ import location.repository.LocationRepository;
 import person.model.Specialist;
 import person.repository.SpecialistRepository;
 import schedule.model.Schedule;
+import schedule.repository.ScheduleRepository;
 
 import java.util.Optional;
 
@@ -21,6 +22,9 @@ public class SpecialistService {
 
 	@Inject
 	private LocationRepository locationRepository;
+
+	@Inject
+	private ScheduleRepository scheduleRepository;
 
 	@Transactional
 	public Response listAll() {
@@ -85,11 +89,30 @@ public class SpecialistService {
 					.entity("No existe el especialista.")
 					.build();
 		} else {
-			specialist.setFirstName(editedSpecialist.getFirstName());
-			specialist.setLastName(editedSpecialist.getLastName());
-			specialist.setDni(editedSpecialist.getDni());
-			specialist.setSpeciality(editedSpecialist.getSpeciality());
-			return Response.ok(editedSpecialist)
+			if (editedSpecialist.getFirstName() != null) {
+				specialist.setFirstName(editedSpecialist.getFirstName());
+			}
+			if (editedSpecialist.getLastName() != null) {
+				specialist.setLastName(editedSpecialist.getLastName());
+			}
+			if (editedSpecialist.getDni() != null) {
+				specialist.setDni(editedSpecialist.getDni());
+			}
+			if (editedSpecialist.getSpeciality() != null) {
+				specialist.setSpeciality(editedSpecialist.getSpeciality());
+			}
+			// Actualizar ubicación
+			if (editedSpecialist.getLocation() != null) {
+				Location updatedLocation = editedSpecialist.getLocation();
+				locationRepository.persist(updatedLocation);
+			}
+			// Actualizar horarios
+			if (editedSpecialist.getSchedules() != null) {
+				for (Schedule updatedSchedule : editedSpecialist.getSchedules()) {
+					scheduleRepository.persist(updatedSchedule);
+				}
+			}
+			return Response.ok(specialistRepository.findById(id))
 					.build();
 		}
 	}
