@@ -15,7 +15,7 @@ import jakarta.ws.rs.core.Response;
 import person.model.Specialist;
 import person.service.SpecialistService;
 
-@Path("/especialista")
+@Path("/especialistas")
 @Transactional
 @Produces(MediaType.APPLICATION_JSON)
 public class SpecialistController {
