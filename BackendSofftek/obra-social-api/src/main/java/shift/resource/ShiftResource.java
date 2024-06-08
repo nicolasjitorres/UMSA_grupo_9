@@ -15,7 +15,7 @@ import shift.service.ShiftService;
 public class ShiftResource {
 
     @Inject
-    ShiftService serviceShift;
+    private ShiftService serviceShift;
 
     @GET
     @Path("/")
