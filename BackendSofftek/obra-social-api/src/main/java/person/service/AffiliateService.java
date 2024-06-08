@@ -45,7 +45,7 @@ public class AffiliateService {
 			affiliate.setFirstName(editedAffiliate.getFirstName());
 			affiliate.setLastName(editedAffiliate.getLastName());
 			affiliate.setDni(editedAffiliate.getDni());
-			
+			affiliate.setHealthInsuranceCode(editedAffiliate.getHealthInsuranceCode());
 			return Response.ok(editedAffiliate)
 					.build();
 		}
