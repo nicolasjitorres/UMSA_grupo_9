@@ -2,21 +2,33 @@ package person.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
+import location.model.Location;
+import location.repository.LocationRepository;
 import person.model.Specialist;
 import person.repository.SpecialistRepository;
+import schedule.model.Schedule;
+
+import java.util.Optional;
 
 @ApplicationScoped
 public class SpecialistService {
-	
+
+
 	@Inject
 	private SpecialistRepository specialistRepository;
-		
+
+	@Inject
+	private LocationRepository locationRepository;
+
+	@Transactional
 	public Response listAll() {
-		return Response.ok(specialistRepository.listAll())
+		return Response.ok(specialistRepository.findAll().stream().toList())
 				.build();
 	}
-	
+
+	@Transactional
 	public Response listOne(Long id) {
 		Specialist specialist = specialistRepository.findById(id);
 		if (specialist == null) {
@@ -28,19 +40,44 @@ public class SpecialistService {
 				.build();	
 		}
 	}
-	
+
+	@Transactional
 	public Response create(Specialist newSpecialist) {
 		if (newSpecialist.getSpeciality() == null) {
 			return Response.status(400)
 					.entity("El campo especialidad es obligatorio.")
 					.build();
-		} else {
+		}else {
+			for (Schedule schedule : newSpecialist.getSchedules()) {
+				schedule.setSpecialist(newSpecialist);
+			}
+
+			//este bloque lo que permite es que si existe la ubicacion se la agrega al especialista
+			if (newSpecialist.getLocation() != null) {
+				Location location = newSpecialist.getLocation();
+				Optional<Location> existingLocation = locationRepository.findByDetails(
+						location.getStreet(),
+						location.getLocality(),
+						location.getProvince(),
+						location.getCountry()
+				);
+				if (existingLocation.isPresent()) {
+					//si existe lo agrega al especialista
+					newSpecialist.setLocation(existingLocation.get());
+				} else {
+					//sino lo persiste
+					locationRepository.persist(location);
+				}
+			}
+			//y luego persiste el especialista
 			specialistRepository.persist(newSpecialist);
-			return Response.ok(newSpecialist)
-				.build();
+			return Response.status(Response.Status.CREATED)
+					.entity(newSpecialist)
+					.build();
 		}
 	}
-	
+
+	@Transactional
 	public Response edit(Long id,Specialist editedSpecialist) {
 		Specialist specialist = specialistRepository.findById(id);
 		if (specialist == null) {
@@ -56,7 +93,8 @@ public class SpecialistService {
 					.build();
 		}
 	}
-	
+
+	@Transactional
 	public Response delete(Long id) {
 		if (specialistRepository.deleteById(id)) {
 			return Response.ok("Se eliminó el especialista correctamente.")

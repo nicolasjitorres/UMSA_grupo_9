@@ -6,6 +6,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import shift.entity.Shift;
+import shift.entity.dto.ShiftDTO;
 import shift.service.ShiftService;
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -34,7 +35,7 @@ public class ShiftResource {
 
     @POST
     @Path("/agregar-Turno")
-    public Response addShift(Shift shift){
+    public Response addShift(ShiftDTO shift){
         try {
             serviceShift.AddShift(shift);
             return Response.ok("se agrego con exito").build();

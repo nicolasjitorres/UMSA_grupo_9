@@ -1,22 +1,29 @@
 package person.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import location.model.Location;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import schedule.model.Schedule;
+import shift.entity.Shift;
+
+import java.util.List;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Specialist extends User{
-	
 	@Id
 	@GeneratedValue
 	private Long id;
-	
 	private Speciality speciality;
-	
-	
+
+	@OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<Schedule> schedules; // Horarios
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "location_id", referencedColumnName = "id")
+	private Location location; // Ubicación
 
 }

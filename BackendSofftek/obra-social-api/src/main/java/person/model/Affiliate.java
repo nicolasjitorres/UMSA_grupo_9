@@ -1,10 +1,12 @@
 package person.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import shift.entity.Shift;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -16,7 +18,5 @@ public class Affiliate extends User {
 	private Long id;
 	
 	//private String speciality;
-	
-	
-	
+
 }

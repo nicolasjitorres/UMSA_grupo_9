@@ -10,13 +10,13 @@ import lombok.*;
 @Entity //marcar la calse como entidad y asi generar la tabla de la bd
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor()
 public class Prescription extends PanacheEntity {
     private Long id;
     private String description;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "shift_id", nullable = false)
     private Shift shift;
 
     @Override//puse esto o genera overflow cuando se muestre

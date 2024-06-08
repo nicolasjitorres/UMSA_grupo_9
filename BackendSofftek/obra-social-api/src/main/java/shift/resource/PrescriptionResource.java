@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import shift.entity.Prescription;
 import shift.entity.Shift;
+import shift.entity.dto.PrescriptionDTO;
 import shift.service.PrescriptionService;
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -18,7 +19,6 @@ public class PrescriptionResource {
     PrescriptionService prescriptionService;
 
     @GET
-    @Path("/")
     public Response getPrescriptions(){
         return Response.ok(prescriptionService.GetAllPrescriptions()).build();
     }
@@ -36,9 +36,9 @@ public class PrescriptionResource {
 
     @POST
     @Path("/agregar-Receta")
-    public Response addPrescription(Prescription prescription){
+    public Response addPrescription(PrescriptionDTO prescriptionDTO){
         try{
-            prescriptionService.AddPrescription(prescription);
+            prescriptionService.AddPrescription(prescriptionDTO);
             return Response.ok("se agrego con exito").build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

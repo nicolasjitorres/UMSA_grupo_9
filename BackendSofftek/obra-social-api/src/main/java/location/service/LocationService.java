@@ -7,6 +7,7 @@ import location.model.Location;
 import location.repository.LocationRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
@@ -27,7 +28,18 @@ public class LocationService implements ILocationService{
     @Override
     public void addLocation(Location location)
     {
-        locationRepository.persist(location);
+        Optional<Location> existingLocation = locationRepository.findByDetails(
+                location.getStreet(),
+                location.getLocality(),
+                location.getProvince(),
+                location.getCountry()
+        );
+        if (existingLocation.isPresent()) {
+            //hacer lo que quieras hacer si es que existe
+        } else {
+            //sino lo persiste
+            locationRepository.persist(location);
+        }
     }
 
     @Override
