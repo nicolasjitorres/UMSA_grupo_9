@@ -2,7 +2,6 @@ package person.controller;
 
 
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -22,8 +21,8 @@ public class SpecialistResource {
 	
 	@GET
 	@Path("{id}")
-	public Response getOneSpecialist(@PathParam("id") Long id){
-		return specialistService.listOne(id);
+	public Specialist getOneSpecialist(@PathParam("id") Long id){
+		return specialistService.findById(id);
 	}
 	
 	@POST

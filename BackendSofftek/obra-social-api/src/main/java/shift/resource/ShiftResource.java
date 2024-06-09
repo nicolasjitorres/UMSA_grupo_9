@@ -11,7 +11,7 @@ import shift.service.ShiftService;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/Turnos")
+@Path("/turnos")
 public class ShiftResource {
 
     @Inject
@@ -46,9 +46,9 @@ public class ShiftResource {
 
     @PUT
     @Path("/{id}/actualizar-Turno")
-    public Response updateShift(@PathParam("id") Long id, Shift shift){
+    public Response updateShift(@PathParam("id") Long id, ShiftDTO shift){
         try {
-            serviceShift.UpdateShift(id,shift);
+            serviceShift.editShift(id,shift);
             return Response.ok("se actualizo correctamente").build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

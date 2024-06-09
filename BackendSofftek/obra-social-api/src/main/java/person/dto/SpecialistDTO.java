@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SpecialistDTO
 {
+    private String id;
     private String firstName;
     private String lastName;
     private String speciality;

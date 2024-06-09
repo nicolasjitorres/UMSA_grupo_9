@@ -1,6 +1,7 @@
 package shift.service;
 
 
+import com.arjuna.ats.internal.arjuna.objectstore.ShadowNoFileLockStore;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -8,6 +9,8 @@ import person.model.Affiliate;
 import person.model.Specialist;
 import person.repository.AffiliateRepository;
 import person.repository.SpecialistRepository;
+import person.service.AffiliateService;
+import person.service.SpecialistService;
 import shift.Repository.ShiftRepository;
 import shift.entity.Shift;
 import shift.entity.dto.ShiftDTO;
@@ -25,7 +28,8 @@ public class ShiftService {
     private SpecialistRepository specialistRepository;
     @Inject
     private AffiliateRepository affiliateRepository;
-
+    @Inject
+    private SpecialistService specialistService;
     @Transactional
     public List<Shift> GetAllShift(){
         return shiftRepository.findAll().stream().toList();
@@ -61,6 +65,18 @@ public class ShiftService {
         existingShift.setTime(shift.getTime());
         existingShift.setState(shift.getState());
         existingShift.persist();
+    }
+
+    @Transactional
+    public void editShift(Long id, ShiftDTO shiftDTO)
+    {
+        Shift shiftEdit  = shiftRepository.findById(id);
+        shiftEdit.setDate((shiftDTO.getDate()));
+        shiftEdit.setTime(shiftDTO.getTime());
+        shiftEdit.setDescription(shiftDTO.getDescription());
+        shiftEdit.setSpecialist(specialistService.findById(shiftDTO.getSpecialistId()));
+
+        shiftRepository.getEntityManager().merge(shiftEdit);
     }
 
     @Transactional

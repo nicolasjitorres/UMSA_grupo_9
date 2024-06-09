@@ -35,16 +35,9 @@ public class SpecialistService {
 		return Response.ok(specialistDTOs)
 				.build();
 	}
-	public Response listOne(Long id) {
-		Specialist specialist = specialistRepository.findById(id);
-		if (specialist == null) {
-			return Response.status(400)
-					.entity("El especialista con id " + id + " no existe.")
-					.build();
-		} else {
-		return Response.ok(convertSpecialistToDTO(specialist))
-				.build();	
-		}
+	public Specialist findById(Long id) {
+		return specialistRepository.findById(id);
+
 	}
 
 	public Response create(Specialist newSpecialist) {
@@ -129,6 +122,7 @@ public class SpecialistService {
 
 	private SpecialistDTO convertSpecialistToDTO(Specialist specialist) {
 		SpecialistDTO dto = new SpecialistDTO();
+		dto.setId(specialist.getId().toString());
 		dto.setFirstName(specialist.getFirstName());
 		dto.setLastName(specialist.getLastName());
 		dto.setSpeciality(specialist.getSpeciality().toString());
