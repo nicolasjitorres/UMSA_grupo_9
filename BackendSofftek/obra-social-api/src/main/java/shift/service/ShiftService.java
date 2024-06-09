@@ -51,16 +51,23 @@ public class ShiftService {
     }
 
     @Transactional
-    public void UpdateShift(Long id,Shift shift) throws Exception {
-        if(shift==null) throw new Exception("No se proporciono ninguna informacion");
-        if (!id.equals(shift.getId())) throw new Exception("los ids no coinciden");
-        Shift existingShift = shiftRepository.findById(shift.getId());
-        if ( existingShift == null) throw  new Exception("no existe este turno en la base de datos");
-        existingShift.setDescription(shift.getDescription());;
-        existingShift.setDate(shift.getDate());
-        existingShift.setTime(shift.getTime());
-        existingShift.setState(shift.getState());
-        existingShift.persist();
+    public void UpdateShift(Long id,ShiftDTO shiftDTO) throws Exception {
+        if(shiftDTO==null) throw new Exception("No se proporciono ninguna informacion");
+        if (!id.equals(shiftDTO.getId())) throw new Exception("los ids no coinciden");
+
+
+        Specialist existSpecialist =  specialistRepository.findById(shiftDTO.getSpecialistId());
+        Affiliate existAffiliate = affiliateRepository.findById(shiftDTO.getAffiliatedId());
+
+        Shift existingShift = shiftDTO.toEntity(shiftDTO,existSpecialist,existAffiliate);
+        ///if ( existingShift == null) throw  new Exception("no existe este turno en la base de datos");
+
+        /*existingShift.setDescription(shiftDTO.getDescription());;
+        existingShift.setDate(shiftDTO.getDate());
+        existingShift.setTime(shiftDTO.getTime());
+        existingShift.setState(shiftDTO.getState());
+        existingShift.setSpecialist();*/
+        shiftRepository.getEntityManager().merge(existingShift);
     }
 
     @Transactional

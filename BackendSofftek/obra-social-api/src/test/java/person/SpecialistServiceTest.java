@@ -35,7 +35,6 @@ public class SpecialistServiceTest {
         // Crea un nuevo especialista con sus horarios y ubicación asociados
         specialist = new Specialist();
         specialist.setId(1L);
-        specialist.setEmail("specialist456@example.com");
         specialist.setFirstName("Noa");
         specialist.setLastName("Nao");
         specialist.setSpeciality(Speciality.DERMATOLOGY);

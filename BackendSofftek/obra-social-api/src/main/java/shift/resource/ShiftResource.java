@@ -46,9 +46,9 @@ public class ShiftResource {
 
     @PUT
     @Path("/{id}/actualizar-Turno")
-    public Response updateShift(@PathParam("id") Long id, Shift shift){
+    public Response updateShift(@PathParam("id") Long id, ShiftDTO shiftDTO){
         try {
-            serviceShift.UpdateShift(id,shift);
+            serviceShift.UpdateShift(id,shiftDTO);
             return Response.ok("se actualizo correctamente").build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

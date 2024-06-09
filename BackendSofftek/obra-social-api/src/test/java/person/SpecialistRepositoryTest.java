@@ -35,7 +35,6 @@ public class SpecialistRepositoryTest {
         // Crea un nuevo especialista con sus horarios y ubicación asociados
         specialist = new Specialist();
         specialist.setId(1L);
-        specialist.setEmail("specialist456@example.com");
         specialist.setFirstName("Noa");
         specialist.setLastName("Nao");
         specialist.setSpeciality(Speciality.DERMATOLOGY);
@@ -77,7 +76,6 @@ public class SpecialistRepositoryTest {
         assertFalse(entity.isEmpty());
 
         // Verifica las propiedades del primer especialista en la lista
-        assertEquals("specialist456@example.com", entity.get(0).getEmail());
         assertEquals("Noa", entity.get(0).getFirstName());
         assertEquals("Nao", entity.get(0).getLastName());
         assertEquals(Speciality.DERMATOLOGY, entity.get(0).getSpeciality());
@@ -116,7 +114,6 @@ public class SpecialistRepositoryTest {
         assertFalse(entity==null);
 
         // Verifica las propiedades del primer especialista en la lista
-        assertEquals("specialist456@example.com", entity.getEmail());
         assertEquals("Noa", entity.getFirstName());
         assertEquals("Nao", entity.getLastName());
         assertEquals(Speciality.DERMATOLOGY, entity.getSpeciality());
