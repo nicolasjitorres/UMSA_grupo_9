@@ -7,7 +7,9 @@ import jakarta.ws.rs.core.Response;
 import location.model.Location;
 import location.repository.LocationRepository;
 import person.dto.SpecialistDTO;
+import person.model.Role;
 import person.model.Specialist;
+import person.model.Speciality;
 import person.repository.SpecialistRepository;
 import schedule.model.Schedule;
 import schedule.repository.ScheduleRepository;
@@ -35,17 +37,18 @@ public class SpecialistService {
 		return Response.ok(specialistDTOs)
 				.build();
 	}
-	public Specialist findById(Long id) {
-		return specialistRepository.findById(id);
 
+	public Response findById(Long id) {
+		return Response.ok(convertSpecialistToDTO(specialistRepository.findById(id))).build();
 	}
 
-	public Response create(Specialist newSpecialist) {
-		if (newSpecialist.getSpeciality() == null) {
+	public Response create(SpecialistDTO newSpecialistDTO) {
+		if (newSpecialistDTO.getSpeciality() == null) {
 			return Response.status(400)
 					.entity("El campo especialidad es obligatorio.")
 					.build();
 		}else {
+			Specialist newSpecialist = this.DTOtoSpecialist(newSpecialistDTO);
 			for (Schedule schedule : newSpecialist.getSchedules()) {
 				schedule.setSpecialist(newSpecialist);
 			}
@@ -74,7 +77,7 @@ public class SpecialistService {
 		}
 	}
 
-	public Response edit(Long id,Specialist editedSpecialist) {
+	public Response edit(Long id,SpecialistDTO editedSpecialist) {
 		Specialist specialist = specialistRepository.findById(id);
 		if (specialist == null) {
 			return Response.status(400)
@@ -91,7 +94,7 @@ public class SpecialistService {
 				specialist.setDni(editedSpecialist.getDni());
 			}
 			if (editedSpecialist.getSpeciality() != null) {
-				specialist.setSpeciality(editedSpecialist.getSpeciality());
+				specialist.setSpeciality(Speciality.valueOf(editedSpecialist.getSpeciality()));
 			}
 			// Actualizar ubicación
 			if (editedSpecialist.getLocation() != null) {
@@ -99,8 +102,8 @@ public class SpecialistService {
 				locationRepository.persist(updatedLocation);
 			}
 			// Actualizar horarios
-			if (editedSpecialist.getSchedules() != null) {
-				for (Schedule updatedSchedule : editedSpecialist.getSchedules()) {
+			if (editedSpecialist.getScheduleList() != null) {
+				for (Schedule updatedSchedule : editedSpecialist.getScheduleList()) {
 					scheduleRepository.persist(updatedSchedule);
 				}
 			}
@@ -131,4 +134,27 @@ public class SpecialistService {
 		return dto;
 	}
 
+	public Specialist DTOtoSpecialist(SpecialistDTO dto) {
+		if (dto == null) {
+			return null;
+		}
+		Specialist specialist = new Specialist();
+		specialist.setId(Long.getLong(dto.getId()));
+		specialist.setFirstName(dto.getFirstName());
+		specialist.setLastName(dto.getLastName());
+		specialist.setRole(Role.USER);
+		specialist.setSpeciality(Speciality.valueOf(dto.getSpeciality()));
+
+		// Convertir y asignar schedules
+		if (dto.getScheduleList() != null) {
+			specialist.setSchedules(dto.getScheduleList());
+		}
+
+		// Convertir y asignar location
+		if (dto.getLocation() != null) {
+			specialist.setLocation(dto.getLocation());
+		}
+
+		return specialist;
+	}
 }

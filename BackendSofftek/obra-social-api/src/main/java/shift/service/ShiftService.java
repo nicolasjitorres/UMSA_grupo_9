@@ -5,6 +5,8 @@ import com.arjuna.ats.internal.arjuna.objectstore.ShadowNoFileLockStore;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import person.dto.AffiliateDTO;
+import person.dto.SpecialistDTO;
 import person.model.Affiliate;
 import person.model.Specialist;
 import person.repository.AffiliateRepository;
@@ -50,7 +52,7 @@ public class ShiftService {
     public void AddShift(ShiftDTO shiftDTO) throws Exception {
         if(shiftDTO==null) throw new Exception("No se proporciono ninguna informacion");
         if(shiftRepository.findByDateAndHour(shiftDTO.getDate(),shiftDTO.getTime()) != null) throw  new Exception("ya existe este Turno");
-        if(shiftDTO.getDate().isBefore(LocalDate.now())) throw  new Exception("la fecha del turno debe ser superior a la de hoy");
+        if(LocalDate.now().isAfter(shiftDTO.getDate())) throw  new Exception("la fecha del turno debe ser superior a la de hoy");
 
         Specialist existSpecialist =  specialistRepository.findById(shiftDTO.getSpecialistId());
         Affiliate existAffiliate = affiliateRepository.findById(shiftDTO.getAffiliatedId());
@@ -63,8 +65,8 @@ public class ShiftService {
     {
         if(shiftDTO!=null)
         {
-            Specialist existSpecialist= specialistService.findById(shiftDTO.getSpecialistId());
-            Affiliate existAffiliate = affiliateService.getAffiliateById((shiftDTO.getAffiliatedId()));
+            Specialist existSpecialist = specialistService.DTOtoSpecialist(specialistService.findById(shiftDTO.getSpecialistId()).readEntity(SpecialistDTO.class));
+            Affiliate existAffiliate = affiliateService.convertDTOToEntity(affiliateService.getAffiliateById(shiftDTO.getAffiliatedId()).readEntity(AffiliateDTO.class));
             if(existSpecialist!= null && existAffiliate!=null)
             {
                 shiftRepository.persist(new Shift(shiftDTO.getDescription(), shiftDTO.getDate(), shiftDTO.getTime(),existSpecialist, existAffiliate));
@@ -85,7 +87,7 @@ public class ShiftService {
         {
             if(shiftDTO!=null)
             {
-                Specialist existSpecialist= specialistService.findById(shiftDTO.getSpecialistId());
+                Specialist existSpecialist= specialistService.DTOtoSpecialist(specialistService.findById(shiftDTO.getSpecialistId()).readEntity(SpecialistDTO.class));
                 if(existSpecialist!= null)
                 {
                     existingShift.setSpecialist(existSpecialist);
@@ -106,26 +108,7 @@ public class ShiftService {
             {
                 throw new Exception ("No existe ese shift");
             }
-
-/*
-        if(shift==null) throw new Exception("No se proporciono ninguna informacion");
-        //if (!id.equals(shift.getId())) throw new Exception("los ids no coinciden");
-        Shift existingShift = shiftRepository.findById(shift.getId());
-        if ( existingShift == null) throw  new Exception("No existe este turno en la base de datos");
-        Specialist existSpecialist= specialistService.findById(shift.getSpecialistId());
-        if(existSpecialist==null)throw  new Exception("No existe ese especialista con id: "+shift.getSpecialistId());
-
-        existingShift.setDescription(shift.getDescription());;
-        existingShift.setDate(shift.getDate());
-        existingShift.setTime(shift.getTime());
-        //FALTA VALIDAR SI ESTE PUEDE
-        //VALIDAR NO EXISTA UN TURNO CON ESTE HORARIO Y FECHA CON ESTE ESPECIALISTA
-        existingShift.setSpecialist(existSpecialist);
-
-        //existingShift.persist();
-        shiftRepository.getEntityManager().merge(existingShift);*/
     }
-
 
     @Transactional
     public void DeleteShift(Long id) throws Exception {
