@@ -16,14 +16,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"description\": \"Consulta médica general\",\r\n  \"date\": \"2025-07-09\",\r\n  \"time\": \"10:00:00\",\r\n  \"state\": true,\r\n  \"specialistId\": 2,\r\n  \"affiliatedId\": 1\r\n}\r\n",
+							"raw": "{\r\n  \"description\": \"Consulta médica general\",\r\n  \"date\": \"2025-07-09\",\r\n  \"time\": \"10:00:00\",\r\n  \"state\": true,\r\n  \"specialistId\": 1,\r\n  \"affiliatedId\": 1\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8080/turnos/agregar-Turno"
+						"url": "http://localhost:8080/turnos"
 					},
 					"response": []
 				},
@@ -52,14 +52,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"Consulta general\",\r\n    \"date\": \"2025-06-16\",\r\n    \"time\": \"11:30:00\"\r\n    \r\n}",
+							"raw": "{\r\n    \"description\": \"Consulta general\",\r\n    \"date\": \"2025-06-16\",\r\n    \"time\": \"11:30:00\",\r\n    \"specialistId\": 1\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8080/turnos/1/actualizar-Turno"
+						"url": "http://localhost:8080/turnos/1"
 					},
 					"response": []
 				},
@@ -70,14 +70,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"description\": \"Consulta general\",\r\n    \"date\": \"2024-06-09\",\r\n    \"hour\": \"10:30:00\",\r\n    \"state\": true,\r\n    \"prescription\": null\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8080/turnos/1/eliminar-Turno"
+						"url": "http://localhost:8080/turnos/1"
 					},
 					"response": []
 				}
@@ -93,14 +93,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"description\": \"Tomar una tableta diaria\",\r\n  \"shiftId\": 2\r\n}",
+							"raw": "{\r\n  \"description\": \"Tomar una tableta diaria\",\r\n  \"shiftId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8080/Recetas/agregar-Receta"
+						"url": "http://localhost:8080/recetas"
 					},
 					"response": []
 				},
@@ -109,7 +109,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/Recetas"
+						"url": "http://localhost:8080/recetas"
 					},
 					"response": []
 				},
@@ -127,7 +127,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/Recetas/1/actualizar-Receta"
+						"url": "http://localhost:8080/recetas"
 					},
 					"response": []
 				},
@@ -145,7 +145,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/Recetas/1/eliminar-Receta"
+						"url": "http://localhost:8080/recetas"
 					},
 					"response": []
 				},
@@ -154,7 +154,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/Recetas/1"
+						"url": "http://localhost:8080/recetas"
 					},
 					"response": []
 				}
@@ -318,6 +318,15 @@
 			"name": "Especialista",
 			"item": [
 				{
+					"name": "traer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/especialistas"
+					},
+					"response": []
+				},
+				{
 					"name": "añadir",
 					"request": {
 						"method": "POST",
@@ -331,15 +340,6 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/especialistas"
-					},
-					"response": []
-				},
-				{
-					"name": "traer",
-					"request": {
-						"method": "GET",
-						"header": [],
 						"url": "http://localhost:8080/especialistas"
 					},
 					"response": []
