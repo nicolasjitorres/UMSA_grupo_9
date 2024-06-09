@@ -38,6 +38,14 @@ public class Shift extends PanacheEntity {
     @OneToOne(mappedBy = "shift")
     private Prescription prescription;
 
+    public Shift(String description, LocalDate date, LocalTime time, Specialist specialist, Affiliate affiliated) {
+        this.description = description;
+        this.date = date;
+        this.time = time;
+        this.specialist = specialist;
+        this.affiliated = affiliated;
+    }
+
     @Override//puse esto o genera overflow cuando se muestre
     public String toString() {
         return "Shift{" +
