@@ -28,6 +28,10 @@ public class ShiftService {
     private SpecialistRepository specialistRepository;
     @Inject
     private AffiliateRepository affiliateRepository;
+
+    @Inject
+    private AffiliateService affiliateService;
+
     @Inject
     private SpecialistService specialistService;
     @Transactional
@@ -54,27 +58,80 @@ public class ShiftService {
         shiftRepository.persist(shiftDTO.toEntity(shiftDTO,existSpecialist,existAffiliate));
     }
 
-
     @Transactional
-    public void editShift(Long id, ShiftDTO shiftDTO)
+    public void addShift(ShiftDTO shiftDTO) throws Exception
     {
-        Shift shiftEdit  = shiftRepository.findById(id);
-        shiftEdit.setDate((shiftDTO.getDate()));
-        shiftEdit.setTime(shiftDTO.getTime());
-        shiftEdit.setDescription(shiftDTO.getDescription());
-        shiftEdit.setSpecialist(specialistService.DTOtoSpecialist(specialistService.findById(shiftDTO.getSpecialistId())));
-
-        shiftRepository.getEntityManager().merge(shiftEdit);
+        if(shiftDTO!=null)
+        {
+            Specialist existSpecialist= specialistService.findById(shiftDTO.getSpecialistId());
+            Affiliate existAffiliate = affiliateService.getAffiliateById((shiftDTO.getAffiliatedId()));
+            if(existSpecialist!= null && existAffiliate!=null)
+            {
+                shiftRepository.persist(new Shift(shiftDTO.getDescription(), shiftDTO.getDate(), shiftDTO.getTime(),existSpecialist, existAffiliate));
+            }
+            else {
+                throw new Exception ("IDs de afiliado y especialista no pueden ser vacios");
+            }
+        }
+        else {
+            throw new Exception ("No se mandaron datos");
+        }
     }
 
     @Transactional
-    public void DeleteShift(Long id, Shift shift) throws Exception {
+    public void editShift(Long id,ShiftDTO shiftDTO) throws Exception {
+        Shift existingShift =shiftRepository.findById(id);
+        if(existingShift!=null)
+        {
+            if(shiftDTO!=null)
+            {
+                Specialist existSpecialist= specialistService.findById(shiftDTO.getSpecialistId());
+                if(existSpecialist!= null)
+                {
+                    existingShift.setSpecialist(existSpecialist);
+                    existingShift.setDate(shiftDTO.getDate());
+                    existingShift.setTime(shiftDTO.getTime());
+                    existingShift.setDescription(shiftDTO.getDescription());
+                    shiftRepository.getEntityManager().merge(existingShift);
+                }
+                else {
+                    throw new Exception ("No existe ese especialista");
+                }
+            }
+            else
+                {
+                throw new Exception ("No se mandaron datos en body");
+                }
+        }else
+            {
+                throw new Exception ("No existe ese shift");
+            }
+
+/*
         if(shift==null) throw new Exception("No se proporciono ninguna informacion");
-        if (!id.equals(shift.getId())) throw new Exception("los ids no coinciden");
+        //if (!id.equals(shift.getId())) throw new Exception("los ids no coinciden");
         Shift existingShift = shiftRepository.findById(shift.getId());
-        if ( existingShift == null) throw  new Exception("no existe este turno en la base de datos");
-        if(LocalDate.now().isAfter(shift.getDate())) throw new Exception("no se puede cancelar un turno que ya sucedio");
-        existingShift.setState(!shift.getState());
-        existingShift.persist();
+        if ( existingShift == null) throw  new Exception("No existe este turno en la base de datos");
+        Specialist existSpecialist= specialistService.findById(shift.getSpecialistId());
+        if(existSpecialist==null)throw  new Exception("No existe ese especialista con id: "+shift.getSpecialistId());
+
+        existingShift.setDescription(shift.getDescription());;
+        existingShift.setDate(shift.getDate());
+        existingShift.setTime(shift.getTime());
+        //FALTA VALIDAR SI ESTE PUEDE
+        //VALIDAR NO EXISTA UN TURNO CON ESTE HORARIO Y FECHA CON ESTE ESPECIALISTA
+        existingShift.setSpecialist(existSpecialist);
+
+        //existingShift.persist();
+        shiftRepository.getEntityManager().merge(existingShift);*/
+    }
+
+    @Transactional
+    public void DeleteShift(Long id) throws Exception {
+        Shift existingShift = shiftRepository.findById(id);
+        if (existingShift == null) throw new Exception("no existe este turno en la base de datos");
+        if (LocalDate.now().isAfter(existingShift.getDate()))
+            throw new Exception("no se puede cancelar un turno que ya sucedio");
+        shiftRepository.deleteById(id);
     }
 }

@@ -34,10 +34,9 @@ public class ShiftResource {
     }
 
     @POST
-    @Path("/agregar-Turno")
     public Response addShift(ShiftDTO shift){
         try {
-            serviceShift.AddShift(shift);
+            serviceShift.addShift(shift);
             return Response.ok("se agrego con exito").build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
@@ -45,23 +44,23 @@ public class ShiftResource {
     }
 
     @PUT
-    @Path("/{id}/actualizar-Turno")
+    @Path("/{id}")
     public Response updateShift(@PathParam("id") Long id, ShiftDTO shift){
         try {
             serviceShift.editShift(id,shift);
-            return Response.ok("se actualizo correctamente").build();
+            return Response.ok("se actualizo correctamente").build();//PASAR DTO
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 
     @DELETE
-    @Path("/{id}/eliminar-Turno")
-    public Response deleteShift(@PathParam("id") Long id,Shift shift){
+    @Path("/{id}")
+    public Response deleteShift(@PathParam("id") Long id) {
         try {
-            serviceShift.DeleteShift(id,shift);
+            serviceShift.DeleteShift(id);
             return Response.ok("se elimino con exito").build();
-        }catch (Exception e){
+        } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
