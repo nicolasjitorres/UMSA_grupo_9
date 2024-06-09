@@ -1,0 +1,454 @@
+{
+	"info": {
+		"_postman_id": "18e0971d-3120-4605-bafa-b219d8c0002a",
+		"name": "obrasocial Copy 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23485740"
+	},
+	"item": [
+		{
+			"name": "Shift",
+			"item": [
+				{
+					"name": "add shift",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Consulta médica general\",\r\n  \"date\": \"2025-07-09\",\r\n  \"time\": \"10:00:00\",\r\n  \"state\": true,\r\n  \"specialistId\": 1,\r\n  \"affiliatedId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/turnos"
+					},
+					"response": []
+				},
+				{
+					"name": "get shifts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/turnos"
+					},
+					"response": []
+				},
+				{
+					"name": "get shift",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/turnos/1"
+					},
+					"response": []
+				},
+				{
+					"name": "update shift",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Consulta general\",\r\n    \"date\": \"2025-06-16\",\r\n    \"time\": \"11:30:00\",\r\n    \"specialistId\": 1\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/turnos/1"
+					},
+					"response": []
+				},
+				{
+					"name": "delete shift",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/turnos/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Prescription",
+			"item": [
+				{
+					"name": "add prescription",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Tomar una tableta diaria\",\r\n  \"shiftId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/recetas"
+					},
+					"response": []
+				},
+				{
+					"name": "get prescriptions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/recetas"
+					},
+					"response": []
+				},
+				{
+					"name": "update prescription",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"description\": \"Tratamiento para el catarro\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/recetas"
+					},
+					"response": []
+				},
+				{
+					"name": "delete prescription",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"description\": \"Tratamiento para la catarro\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/recetas"
+					},
+					"response": []
+				},
+				{
+					"name": "get prescription",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/recetas"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "agregar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"street\": \"Avenida Corrientes 123\",\r\n    \"locality\": \"Buenos Aires\",\r\n    \"province\": \"Ciudad Autónoma de Buenos Aires\",\r\n    \"country\": \"Argentina\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/locations"
+					},
+					"response": []
+				},
+				{
+					"name": "traer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/locations"
+					},
+					"response": []
+				},
+				{
+					"name": "traer  por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/locations/1"
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"street\": \"Avenida Corrientes 174\",\r\n    \"locality\": \"Buenos Aires\",\r\n    \"province\": \"Ciudad Autónoma de Buenos Aires\",\r\n    \"country\": \"Argentina\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/locations/1"
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/locations/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Afiliado",
+			"item": [
+				{
+					"name": "agregar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Pérez\",\r\n    \"dni\": \"12345678\",\r\n    \"role\": \"USER\",\r\n    \"healthInsuranceCode\":\"21352\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/afiliado"
+					},
+					"response": []
+				},
+				{
+					"name": "traer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/afiliado"
+					},
+					"response": []
+				},
+				{
+					"name": "traer por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/afiliado/1"
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"firstName\": \"Leonel\",\r\n    \"lastName\": \"Messi\",\r\n    \"dni\": \"12345678\",\r\n    \"healthInsuranceCode\":\"21492\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/afiliado/2"
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"firstName\": \"Nicolas\",\r\n    \"lastName\": \"Pérez\",\r\n    \"dni\": \"12345678\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"password\": \"contraseña123\",\r\n    \"role\": \"USER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/afiliado/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Especialista",
+			"item": [
+				{
+					"name": "traer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/especialistas"
+					},
+					"response": []
+				},
+				{
+					"name": "añadir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n  \"username\": \"specialist41232\",\r\n  \"firstName\": \"Noaa\",\r\n  \"lastName\": \"Nao\",\r\n  \"dni\":\"416722382\",\r\n  \"speciality\": \"DERMATOLOGY\",\r\n  \"role\": \"USER\",\r\n  \"schedules\": [\r\n    {\r\n      \"startTime\": \"08:00\",\r\n      \"endTime\": \"12:00\",\r\n      \"day\": \"SUNDAY\"\r\n    },\r\n    {\r\n      \"startTime\": \"13:50\",\r\n      \"endTime\": \"17:00\",\r\n      \"day\": \"WEDNESDAY\"\r\n    }\r\n  ],\r\n  \"location\":{\r\n    \"street\": \"Avenida Corrientes 42262\",\r\n    \"locality\": \"Buenos Aires\",\r\n    \"province\": \"Ciudad Autónoma de Buenos Aires\",\r\n    \"country\": \"Argentina\"\r\n}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/especialistas"
+					},
+					"response": []
+				},
+				{
+					"name": "traer por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/especialistas/1"
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"MisatoKatsuragi23\",\r\n  \"firstName\": \"Misato\",\r\n  \"lastName\": \"katsuragi\",\r\n  \"speciality\": \"CARDIOLOGY\",\r\n  \"role\": \"USER\",\r\n  \"schedules\": [\r\n    {\r\n      \"startTime\": \"08:00\",\r\n      \"endTime\": \"12:00\",\r\n      \"day\": \"MONDAY\"\r\n    },\r\n    {\r\n      \"startTime\": \"13:00\",\r\n      \"endTime\": \"17:00\",\r\n      \"day\": \"TUESDAY\"\r\n    }\r\n  ],\r\n  \"location\":{\r\n    \"street\": \"Avenida Corrientes 123\",\r\n    \"locality\": \"Buenos Aires\",\r\n    \"province\": \"Ciudad Autónoma de Buenos Aires\",\r\n    \"country\": \"Argentina\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/especialistas/1"
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/especialistas/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Schedules",
+			"item": [
+				{
+					"name": "traer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/schedules"
+					},
+					"response": []
+				},
+				{
+					"name": "agregar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": ""
+					},
+					"response": []
+				},
+				{
+					"name": "traer por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/schedules/3"
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 3,\r\n    \"startTime\": \"08:00:00\",\r\n    \"endTime\": \"12:00:00\",\r\n    \"day\": \"SUNDAY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/schedules/3"
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/schedules/3"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

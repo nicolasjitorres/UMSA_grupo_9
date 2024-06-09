@@ -76,7 +76,7 @@ public class ShiftDTO {
 
     public Shift toEntity(ShiftDTO dto, Specialist specialist, Affiliate affiliated) {
         Shift shift = new Shift();
-        shift.setId(dto.getId());
+        //shift.setId(dto.getId());
         shift.setDescription(dto.getDescription());
         shift.setDate(dto.getDate());
         shift.setTime(dto.getTime());
@@ -88,7 +88,7 @@ public class ShiftDTO {
 
     public static ShiftDTO toDTO(Shift shift) {
         ShiftDTO dto = new ShiftDTO();
-        dto.setId(shift.getId());
+        //dto.setId(shift.getId());
         dto.setDescription(shift.getDescription());
         dto.setDate(shift.getDate());
         dto.setTime(shift.getTime());
