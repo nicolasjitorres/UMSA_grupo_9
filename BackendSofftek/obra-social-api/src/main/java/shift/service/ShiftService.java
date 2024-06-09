@@ -42,7 +42,7 @@ public class ShiftService {
     public void AddShift(ShiftDTO shiftDTO) throws Exception {
         if(shiftDTO==null) throw new Exception("No se proporciono ninguna informacion");
         if(shiftRepository.findByDateAndHour(shiftDTO.getDate(),shiftDTO.getTime()) != null) throw  new Exception("ya existe este Turno");
-        if(shiftDTO.getDate().isBefore(LocalDate.now())) throw  new Exception("la fecha del turno debe ser superior a la de hoy");
+        if(LocalDate.now().isAfter(shiftDTO.getDate())) throw  new Exception("la fecha del turno debe ser superior a la de hoy");
 
         Specialist existSpecialist =  specialistRepository.findById(shiftDTO.getSpecialistId());
         Affiliate existAffiliate = affiliateRepository.findById(shiftDTO.getAffiliatedId());

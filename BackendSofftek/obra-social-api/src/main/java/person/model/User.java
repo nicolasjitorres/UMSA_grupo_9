@@ -1,5 +1,7 @@
 package person.model;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +16,6 @@ public abstract class User{
 	private String dni;
 	private String email;
 	private String password;
+	@Enumerated(EnumType.STRING)
 	private Role role;
-	
 }
