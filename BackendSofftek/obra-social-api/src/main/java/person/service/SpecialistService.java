@@ -6,33 +6,35 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import location.model.Location;
 import location.repository.LocationRepository;
+import person.dto.SpecialistDTO;
 import person.model.Specialist;
 import person.repository.SpecialistRepository;
 import schedule.model.Schedule;
 import schedule.repository.ScheduleRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-
+@Transactional
 @ApplicationScoped
 public class SpecialistService {
-
-
 	@Inject
 	private SpecialistRepository specialistRepository;
-
 	@Inject
 	private LocationRepository locationRepository;
-
 	@Inject
 	private ScheduleRepository scheduleRepository;
 
-	@Transactional
 	public Response listAll() {
-		return Response.ok(specialistRepository.findAll().stream().toList())
+		List<Specialist> specialists = specialistRepository.findAll().stream().toList();
+		List<SpecialistDTO> specialistDTOs = new ArrayList<>();
+		for (Specialist specialist : specialists) {
+			SpecialistDTO specialistDTO = convertSpecialistToDTO(specialist);
+			specialistDTOs.add(specialistDTO);
+		}
+		return Response.ok(specialistDTOs)
 				.build();
 	}
-
-	@Transactional
 	public Response listOne(Long id) {
 		Specialist specialist = specialistRepository.findById(id);
 		if (specialist == null) {
@@ -40,12 +42,11 @@ public class SpecialistService {
 					.entity("El especialista con id " + id + " no existe.")
 					.build();
 		} else {
-		return Response.ok(specialist)
+		return Response.ok(convertSpecialistToDTO(specialist))
 				.build();	
 		}
 	}
 
-	@Transactional
 	public Response create(Specialist newSpecialist) {
 		if (newSpecialist.getSpeciality() == null) {
 			return Response.status(400)
@@ -55,7 +56,6 @@ public class SpecialistService {
 			for (Schedule schedule : newSpecialist.getSchedules()) {
 				schedule.setSpecialist(newSpecialist);
 			}
-
 			//este bloque lo que permite es que si existe la ubicacion se la agrega al especialista
 			if (newSpecialist.getLocation() != null) {
 				Location location = newSpecialist.getLocation();
@@ -76,12 +76,11 @@ public class SpecialistService {
 			//y luego persiste el especialista
 			specialistRepository.persist(newSpecialist);
 			return Response.status(Response.Status.CREATED)
-					.entity(newSpecialist)
+					.entity(convertSpecialistToDTO(newSpecialist))
 					.build();
 		}
 	}
 
-	@Transactional
 	public Response edit(Long id,Specialist editedSpecialist) {
 		Specialist specialist = specialistRepository.findById(id);
 		if (specialist == null) {
@@ -112,21 +111,30 @@ public class SpecialistService {
 					scheduleRepository.persist(updatedSchedule);
 				}
 			}
-			return Response.ok(specialistRepository.findById(id))
+			return Response.ok(convertSpecialistToDTO(specialistRepository.findById(id)))
 					.build();
 		}
 	}
 
-	@Transactional
 	public Response delete(Long id) {
 		if (specialistRepository.deleteById(id)) {
 			return Response.ok("Se eliminó el especialista correctamente.")
 					.build();
 		} else {
 			return Response.status(400)
-					.entity("No se pudo eliminar el especialista.")
+					.entity("No se eliminó debido a que no se encontró el especialista con id: "+id)
 					.build();
 		}
+	}
+
+	private SpecialistDTO convertSpecialistToDTO(Specialist specialist) {
+		SpecialistDTO dto = new SpecialistDTO();
+		dto.setFirstName(specialist.getFirstName());
+		dto.setLastName(specialist.getLastName());
+		dto.setSpeciality(specialist.getSpeciality().toString());
+		dto.setScheduleList(specialist.getSchedules());
+		dto.setLocation(specialist.getLocation());
+		return dto;
 	}
 
 }
