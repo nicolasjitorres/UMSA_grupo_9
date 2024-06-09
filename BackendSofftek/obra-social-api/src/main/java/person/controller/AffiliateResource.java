@@ -20,52 +20,39 @@ public class AffiliateResource {
 	private IAffiliateService affiliateService;
 	@GET
 	public Response getAllAffiliates(){
-		List<Affiliate> affiliates = affiliateService.getAffiliates();
-		List<AffiliateDTO> affiliateDTOs = new ArrayList<>();
-		for (Affiliate affiliate : affiliates) {
-			affiliateDTOs.add(convertToDTO(affiliate));
-		}
-		return Response.ok(affiliateDTOs).build();
+		return affiliateService.getAffiliates();
 	}
 	
 	@GET
 	@Path("{id}")
 	public Response getAffiliate(@PathParam("id") Long id){
-		Affiliate affiliate = affiliateService.getAffiliateById(id);
-		if (affiliate != null) {
-			return Response.ok(convertToDTO(affiliate)).build();
+		if (id != null) {
+			return affiliateService.getAffiliateById(id);
 		} else {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 	}
 	
 	@POST
-	public Response createAffiliate(Affiliate newAffiliate) {
-		affiliateService.addAffiliate(newAffiliate);
-		return Response.status(Response.Status.CREATED).entity(convertToDTO(newAffiliate)).build();
+	public Response createAffiliate(AffiliateDTO newAffiliateDTO) {
+		return affiliateService.addAffiliate(newAffiliateDTO);
 	}
 
 	@PUT
 	@Path("{id}")
-	public Response updateAffiliate(@PathParam("id") Long id, Affiliate editAffiliate) {
-		Affiliate existingAffiliate = affiliateService.getAffiliateById(id);
-		if (existingAffiliate != null) {
-			affiliateService.editAffiliate(id, editAffiliate);
-			return Response.ok(convertToDTO(editAffiliate)).build();
+	public Response updateAffiliate(@PathParam("id") Long id, AffiliateDTO editAffiliateDTO) {
+		if (editAffiliateDTO != null) {
+			return affiliateService.editAffiliate(id, editAffiliateDTO);
 		} else {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 	}
 
-
-
 	@DELETE
 	@Path("{id}")
 	public Response deleteAffiliateById(@PathParam("id") Long id) {
-		Affiliate existingAffiliate = affiliateService.getAffiliateById(id);
-		if (existingAffiliate != null) {
-			affiliateService.deleteAffiliate(id);
-			return Response.ok("Se eliminó con exito").build();
+		if (id != null) {
+			return affiliateService.deleteAffiliate(id);
 		} else {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}

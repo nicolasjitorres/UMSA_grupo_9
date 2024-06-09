@@ -1,17 +1,14 @@
-package person;
+package person.specialistTest;
 
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import location.model.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import person.dto.SpecialistDTO;
-import person.model.Role;
-import person.model.Specialist;
 import person.model.Speciality;
 import person.service.SpecialistService;
 import schedule.model.Days;
@@ -21,7 +18,7 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
 public class SpecialistServiceTest {
@@ -30,10 +27,8 @@ public class SpecialistServiceTest {
 
     private SpecialistDTO specialistDTO;
 
-    private Specialist specialist;
-
     @BeforeEach
-    void intance() {
+    void intanceSpecialistDTO() {
         // Crea un nuevo especialista con sus horarios y ubicación asociados
         specialistDTO = new SpecialistDTO();
         specialistDTO.setFirstName("Noa");
@@ -62,39 +57,6 @@ public class SpecialistServiceTest {
         specialistDTO.setScheduleList(Arrays.asList(schedule1, schedule2));
     }
 
-    @BeforeEach
-    void intance2() {
-        // Crea un nuevo especialista con sus horarios y ubicación asociados
-        specialist = new Specialist();
-        specialist.setFirstName("Noa");
-        specialist.setLastName("Nao");
-        specialist.setSpeciality(Speciality.DERMATOLOGY);
-        specialist.setRole(Role.USER);
-
-        // Crea y configura la ubicación del especialista
-        Location location = new Location();
-        location.setStreet("Avenida Corrientes 456");
-        location.setLocality("Buenos Aires");
-        location.setProvince("Ciudad Autónoma de Buenos Aires");
-        location.setCountry("Argentina");
-        specialist.setLocation(location);
-
-        // Crea y configura los horarios del especialista
-        Schedule schedule1 = new Schedule();
-        schedule1.setStartTime(LocalTime.parse("08:00"));
-        schedule1.setEndTime(LocalTime.parse("12:00"));
-        schedule1.setDay(Days.SUNDAY);
-
-        Schedule schedule2 = new Schedule();
-        schedule2.setStartTime(LocalTime.parse("13:00"));
-        schedule2.setEndTime(LocalTime.parse("17:00"));
-        schedule2.setDay(Days.WEDNESDAY);
-
-        specialist.setSchedules(Arrays.asList(schedule1, schedule2));
-    }
-
-
-
     @Test
     public void testGetAllSpecialistsService() {
         // Ajusta los valores de Specialist según sea necesario
@@ -116,29 +78,34 @@ public class SpecialistServiceTest {
     @Test
     public void testGetSpecialistsService() {
         // Configurar el comportamiento del mock
-        Mockito.when(specialistService.findById(1L)).thenReturn(specialistDTO);
+        Mockito.when(specialistService.findById(1L)).thenReturn(Response.ok(specialistDTO).build());
+
         // Verificar que el contenido de la respuesta es el esperado
-        assertEquals(specialistService.findById(1L), specialistDTO);
+        Response response = specialistService.findById(1L);
+
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+        assertEquals(specialistDTO, response.getEntity());
     }
 
     @Test
     public void testCreateSpecialistsService() {
         // Configurar el comportamiento del mock
-        Mockito.when(specialistService.create(specialist)).thenReturn(Response.status(Response.Status.CREATED).build());
+        Mockito.when(specialistService.create(specialistDTO)).thenReturn(Response.status(Response.Status.CREATED).build());
         // Llamar al método y obtener la respuesta
-        Response response = specialistService.create(specialist);
+        Response response = specialistService.create(specialistDTO);
         // Verificar que el código de estado es 201/CREATED
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
     }
 
     @Test
     public void testUpdateSpecialistsService() {
+        specialistDTO.setDni("32145");
         // Configurar el comportamiento del mock
-        Mockito.when(specialistService.edit(1L,specialist)).thenReturn(Response.ok().build());
-        specialist.setId(1L);
-        specialist.setLastName("richadns");
+        Mockito.when(specialistService.edit(1L,specialistDTO)).thenReturn(Response.ok().build());
+
         // Llamar al método y obtener la respuesta
-        Response response = specialistService.edit(1L,specialist);
+        Response response = specialistService.edit(1L,specialistDTO);
         // Verificar que el código de estado es 201/CREATED
         assertEquals(Response.ok().build().getStatus(), response.getStatus());
     }

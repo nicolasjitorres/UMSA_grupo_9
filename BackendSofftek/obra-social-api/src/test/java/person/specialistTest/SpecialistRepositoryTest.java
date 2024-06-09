@@ -1,10 +1,9 @@
-package person;
+package person.specialistTest;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 
-import jakarta.transaction.Transactional;
 import location.model.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

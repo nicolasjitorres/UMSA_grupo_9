@@ -1,23 +1,16 @@
-package person;
+package person.specialistTest;
 
 
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectSpy;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import location.model.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import person.controller.SpecialistResource;
 import person.dto.SpecialistDTO;
-import person.model.Role;
-import person.model.Specialist;
 import person.model.Speciality;
-import person.repository.SpecialistRepository;
 import person.service.SpecialistService;
 import schedule.model.Days;
 import schedule.model.Schedule;
@@ -33,24 +26,21 @@ import static org.mockito.Mockito.*;
 public class SpecialistResourceTest {
 
     @InjectMock
-    SpecialistRepository specialistRepository;
-
-    @InjectMock
     SpecialistService specialistService;
     @Inject
     SpecialistResource specialistResource;
 
-    private SpecialistDTO specialist;
+    private SpecialistDTO specialistDTO;
 
-    @Transactional
     @BeforeEach
-    void intance() {
+    void intancSpecialistDTO() {
         // Crea un nuevo especialista con sus horarios y ubicación asociados
-        specialist = new SpecialistDTO();
-        specialist.setId("1");
-        specialist.setFirstName("Noa");
-        specialist.setLastName("Nao");
-        specialist.setSpeciality(Speciality.DERMATOLOGY.toString());
+        specialistDTO = new SpecialistDTO();
+        specialistDTO.setId("1");
+        specialistDTO.setFirstName("Noa");
+        specialistDTO.setLastName("Nao");
+        specialistDTO.setDni("19776242");
+        specialistDTO.setSpeciality(Speciality.DERMATOLOGY.toString());
 
         // Crea y configura la ubicación del especialista
         Location location = new Location();
@@ -58,7 +48,7 @@ public class SpecialistResourceTest {
         location.setLocality("Buenos Aires");
         location.setProvince("Ciudad Autónoma de Buenos Aires");
         location.setCountry("Argentina");
-        specialist.setLocation(location);
+        specialistDTO.setLocation(location);
 
         // Crea y configura los horarios del especialista
         Schedule schedule1 = new Schedule();
@@ -71,14 +61,14 @@ public class SpecialistResourceTest {
         schedule2.setEndTime(LocalTime.parse("17:00"));
         schedule2.setDay(Days.WEDNESDAY);
 
-        specialist.setScheduleList(Arrays.asList(schedule1, schedule2));
+        specialistDTO.setScheduleList(Arrays.asList(schedule1, schedule2));
     }
 
     @Test
     public void testGetAllSpecialistsResource(){
-        List<SpecialistDTO> ltsSpecialist = List.of(specialist);
+        List<SpecialistDTO> ltsSpecialist = List.of(specialistDTO);
 
-        when(specialistService.listAll()).thenReturn(Response.ok().build());
+        when(specialistService.listAll()).thenReturn(Response.ok(ltsSpecialist).build());
 
         Response response = specialistResource.getAllSpecialists();
         assertNotNull(response);
@@ -121,21 +111,23 @@ public class SpecialistResourceTest {
     public void testGetSpecialistResource(){
         // Crea una simulación de PanacheQuery
 
-        when(specialistService.findById(1l)).thenReturn(specialist);
+        when(specialistService.findById(1l)).thenReturn(Response.ok(specialistDTO).build());
+
         Response response = specialistResource.getOneSpecialist(1L);
 
         assertNotNull(response);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertNotNull(response.getEntity());
-        SpecialistDTO entity = (SpecialistDTO) response.getEntity();
+
+        SpecialistDTO entity = response.readEntity(SpecialistDTO.class);
 
         assertNotNull(entity.getId());
 
         // Verifica las propiedades del especialista en la lista
         assertEquals("Noa", entity.getFirstName());
         assertEquals("Nao", entity.getLastName());
-        assertEquals(Speciality.DERMATOLOGY, entity.getSpeciality());
+        assertEquals(Speciality.DERMATOLOGY.toString(), entity.getSpeciality());
 
         // Verifica las propiedades de la ubicación del especialista en la lista
         Location location = entity.getLocation();
@@ -158,20 +150,37 @@ public class SpecialistResourceTest {
         assertEquals(LocalTime.parse("17:00"), schedules.get(1).getEndTime());
         assertEquals(Days.WEDNESDAY, schedules.get(1).getDay());
     }
-/*
     @Test
     public void testCreateSpecialistResource(){
         // Configurar el comportamiento del mock del servicio
-        when(specialistService.create(any(Specialist.class))).thenReturn(Response.status(Response.Status.CREATED).build());
+        when(specialistService.create(any(SpecialistDTO.class))).thenReturn(Response.status(Response.Status.CREATED).build());
 
         // Llamar al método del recurso
-        Response response = specialistResource.createSpecialist(specialist);
+        Response response = specialistResource.createSpecialist(specialistDTO);
 
         // Verificar el código de estado y el contenido de la respuesta
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         //assertEquals(specialist, response.getEntity());
 
         // Verificar que el método create del servicio fue llamado una vez
-        verify(specialistService, times(1)).create(any(Specialist.class));
-    }*/
+        verify(specialistService, times(1)).create(any(SpecialistDTO.class));
+    }
+
+    @Test
+    public void testUpdateSpecialistResource(){
+        specialistDTO.setLastName("juanchoooooo");
+        // Configurar el comportamiento del mock del servicio
+        when(specialistService.edit(1L,specialistDTO)).thenReturn(Response.ok(specialistDTO).build());
+
+        // Llamar al método del recurso
+        Response response = specialistResource.updateSpecialist(1L,specialistDTO);
+
+        // Verificar el código de estado y el contenido de la respuesta
+        assertEquals(Response.ok(specialistDTO).build().getStatus(), response.getStatus());
+
+        assertEquals(specialistDTO, response.getEntity());
+
+        // Verificar que el método create del servicio fue llamado una vez
+        verify(specialistService, times(1)).edit(1L,specialistDTO);
+    }
 }

@@ -38,16 +38,17 @@ public class SpecialistService {
 				.build();
 	}
 
-	public SpecialistDTO findById(Long id) {
-		return convertSpecialistToDTO(specialistRepository.findById(id));
+	public Response findById(Long id) {
+		return Response.ok(convertSpecialistToDTO(specialistRepository.findById(id))).build();
 	}
 
-	public Response create(Specialist newSpecialist) {
-		if (newSpecialist.getSpeciality() == null) {
+	public Response create(SpecialistDTO newSpecialistDTO) {
+		if (newSpecialistDTO.getSpeciality() == null) {
 			return Response.status(400)
 					.entity("El campo especialidad es obligatorio.")
 					.build();
 		}else {
+			Specialist newSpecialist = this.DTOtoSpecialist(newSpecialistDTO);
 			for (Schedule schedule : newSpecialist.getSchedules()) {
 				schedule.setSpecialist(newSpecialist);
 			}
@@ -76,7 +77,7 @@ public class SpecialistService {
 		}
 	}
 
-	public Response edit(Long id,Specialist editedSpecialist) {
+	public Response edit(Long id,SpecialistDTO editedSpecialist) {
 		Specialist specialist = specialistRepository.findById(id);
 		if (specialist == null) {
 			return Response.status(400)
@@ -93,7 +94,7 @@ public class SpecialistService {
 				specialist.setDni(editedSpecialist.getDni());
 			}
 			if (editedSpecialist.getSpeciality() != null) {
-				specialist.setSpeciality(editedSpecialist.getSpeciality());
+				specialist.setSpeciality(Speciality.valueOf(editedSpecialist.getSpeciality()));
 			}
 			// Actualizar ubicación
 			if (editedSpecialist.getLocation() != null) {
@@ -101,8 +102,8 @@ public class SpecialistService {
 				locationRepository.persist(updatedLocation);
 			}
 			// Actualizar horarios
-			if (editedSpecialist.getSchedules() != null) {
-				for (Schedule updatedSchedule : editedSpecialist.getSchedules()) {
+			if (editedSpecialist.getScheduleList() != null) {
+				for (Schedule updatedSchedule : editedSpecialist.getScheduleList()) {
 					scheduleRepository.persist(updatedSchedule);
 				}
 			}
