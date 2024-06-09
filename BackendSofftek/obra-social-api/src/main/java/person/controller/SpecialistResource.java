@@ -21,8 +21,8 @@ public class SpecialistResource {
 	
 	@GET
 	@Path("{id}")
-	public Specialist getOneSpecialist(@PathParam("id") Long id){
-		return specialistService.findById(id);
+	public Response getOneSpecialist(@PathParam("id") Long id){
+		return Response.status(Response.Status.OK).entity(specialistService.findById(id)).build();
 	}
 	
 	@POST

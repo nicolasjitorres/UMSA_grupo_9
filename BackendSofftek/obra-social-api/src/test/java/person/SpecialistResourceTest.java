@@ -1,18 +1,24 @@
 package person;
 
+
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
-
+import io.quarkus.test.junit.mockito.InjectSpy;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.core.Response;
 import location.model.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import person.controller.SpecialistResource;
+import person.dto.SpecialistDTO;
 import person.model.Role;
 import person.model.Specialist;
 import person.model.Speciality;
 import person.repository.SpecialistRepository;
+import person.service.SpecialistService;
 import schedule.model.Days;
 import schedule.model.Schedule;
 
@@ -20,25 +26,31 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @QuarkusTest
-public class SpecialistRepositoryTest {
+public class SpecialistResourceTest {
+
     @InjectMock
     SpecialistRepository specialistRepository;
 
-    private Specialist specialist;
+    @InjectMock
+    SpecialistService specialistService;
+    @Inject
+    SpecialistResource specialistResource;
 
+    private SpecialistDTO specialist;
+
+    @Transactional
     @BeforeEach
     void intance() {
         // Crea un nuevo especialista con sus horarios y ubicación asociados
-        specialist = new Specialist();
-        specialist.setId(1L);
+        specialist = new SpecialistDTO();
+        specialist.setId("1");
         specialist.setFirstName("Noa");
         specialist.setLastName("Nao");
-        specialist.setSpeciality(Speciality.DERMATOLOGY);
-        specialist.setRole(Role.USER);
+        specialist.setSpeciality(Speciality.DERMATOLOGY.toString());
 
         // Crea y configura la ubicación del especialista
         Location location = new Location();
@@ -59,27 +71,28 @@ public class SpecialistRepositoryTest {
         schedule2.setEndTime(LocalTime.parse("17:00"));
         schedule2.setDay(Days.WEDNESDAY);
 
-        specialist.setSchedules(Arrays.asList(schedule1, schedule2));
+        specialist.setScheduleList(Arrays.asList(schedule1, schedule2));
     }
 
     @Test
-    public void testGetAllSpecialistsRepository() {
-        List<Specialist> ltsSpecialist = List.of(specialist);
+    public void testGetAllSpecialistsResource(){
+        List<SpecialistDTO> ltsSpecialist = List.of(specialist);
 
-        // Crea una simulación de PanacheQuery
-        PanacheQuery<Specialist> panacheQuery = Mockito.mock(PanacheQuery.class);
-        Mockito.when(panacheQuery.stream()).thenReturn(ltsSpecialist.stream());
-        Mockito.when(specialistRepository.findAll()).thenReturn(panacheQuery);
+        when(specialistService.listAll()).thenReturn(Response.ok().build());
 
-        List<Specialist> entity = specialistRepository.findAll().stream().toList();
-
+        Response response = specialistResource.getAllSpecialists();
+        assertNotNull(response);
+        // Verificar que el código de estado es 200
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        assertNotNull(response.getEntity());
+        List<SpecialistDTO> entity = (List<SpecialistDTO>) response.getEntity();
+        // Verificar que el contenido de la respuesta es el esperado
         assertFalse(entity.isEmpty());
 
         // Verifica las propiedades del primer especialista en la lista
         assertEquals("Noa", entity.get(0).getFirstName());
         assertEquals("Nao", entity.get(0).getLastName());
-        assertEquals(Speciality.DERMATOLOGY, entity.get(0).getSpeciality());
-        assertEquals(Role.USER, entity.get(0).getRole());
+        assertEquals(Speciality.DERMATOLOGY.toString(), entity.get(0).getSpeciality());
 
         // Verifica las propiedades de la ubicación del primer especialista en la lista
         Location location = entity.get(0).getLocation();
@@ -89,7 +102,7 @@ public class SpecialistRepositoryTest {
         assertEquals("Argentina", location.getCountry());
 
         // Verifica las propiedades de los horarios del primer especialista en la lista
-        List<Schedule> schedules = entity.get(0).getSchedules();
+        List<Schedule> schedules = entity.get(0).getScheduleList();
         assertEquals(2, schedules.size()); // Verifica que haya dos horarios
 
         // Verifica las propiedades del primer horario del primer especialista en la lista
@@ -101,69 +114,64 @@ public class SpecialistRepositoryTest {
         assertEquals(LocalTime.parse("13:00"), schedules.get(1).getStartTime());
         assertEquals(LocalTime.parse("17:00"), schedules.get(1).getEndTime());
         assertEquals(Days.WEDNESDAY, schedules.get(1).getDay());
-
     }
 
+
     @Test
-    public void testGetSpecialistByID(){
-        PanacheQuery<Specialist> panacheQuery = Mockito.mock(PanacheQuery.class);
-        Mockito.when(panacheQuery.firstResult()).thenReturn(specialist);
-        Mockito.when(specialistRepository.findById(1l)).thenReturn(specialist);
+    public void testGetSpecialistResource(){
+        // Crea una simulación de PanacheQuery
 
-        Specialist entity = specialistRepository.findById(1L);
-        assertFalse(entity==null);
+        when(specialistService.findById(1l)).thenReturn(specialist);
+        Response response = specialistResource.getOneSpecialist(1L);
 
-        // Verifica las propiedades del primer especialista en la lista
+        assertNotNull(response);
+
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        assertNotNull(response.getEntity());
+        SpecialistDTO entity = (SpecialistDTO) response.getEntity();
+
+        assertNotNull(entity.getId());
+
+        // Verifica las propiedades del especialista en la lista
         assertEquals("Noa", entity.getFirstName());
         assertEquals("Nao", entity.getLastName());
         assertEquals(Speciality.DERMATOLOGY, entity.getSpeciality());
-        assertEquals(Role.USER, entity.getRole());
 
-        // Verifica las propiedades de la ubicación del primer especialista en la lista
+        // Verifica las propiedades de la ubicación del especialista en la lista
         Location location = entity.getLocation();
         assertEquals("Avenida Corrientes 456", location.getStreet());
         assertEquals("Buenos Aires", location.getLocality());
         assertEquals("Ciudad Autónoma de Buenos Aires", location.getProvince());
         assertEquals("Argentina", location.getCountry());
 
-        // Verifica las propiedades de los horarios del primer especialista en la lista
-        List<Schedule> schedules = entity.getSchedules();
+        // Verifica las propiedades de los horarios del especialista en la lista
+        List<Schedule> schedules = entity.getScheduleList();
         assertEquals(2, schedules.size()); // Verifica que haya dos horarios
 
-        // Verifica las propiedades del primer horario del primer especialista en la lista
+        // Verifica las propiedades del primer horario del especialista en la lista
         assertEquals(LocalTime.parse("08:00"), schedules.get(0).getStartTime());
         assertEquals(LocalTime.parse("12:00"), schedules.get(0).getEndTime());
         assertEquals(Days.SUNDAY, schedules.get(0).getDay());
 
-        // Verifica las propiedades del segundo horario del primer especialista en la lista
+        // Verifica las propiedades del segundo horario del especialista en la lista
         assertEquals(LocalTime.parse("13:00"), schedules.get(1).getStartTime());
         assertEquals(LocalTime.parse("17:00"), schedules.get(1).getEndTime());
         assertEquals(Days.WEDNESDAY, schedules.get(1).getDay());
     }
-
+/*
     @Test
-    public void testMergeSpecialist(){
-        SpecialistRepository specialistMockRepository = Mockito.mock(SpecialistRepository.class);
-        specialist.setId(1L);
-        specialistMockRepository.persist(specialist);
-        specialist.setLastName("richadns");
-        specialistMockRepository.persist(specialist);
-        verify(specialistMockRepository,times(2)).persist(specialist);
-    }
+    public void testCreateSpecialistResource(){
+        // Configurar el comportamiento del mock del servicio
+        when(specialistService.create(any(Specialist.class))).thenReturn(Response.status(Response.Status.CREATED).build());
 
-    @Test
-    public void testPersistSpecialist(){
-        SpecialistRepository specialistMockRepository = Mockito.mock(SpecialistRepository.class);
-        specialistMockRepository.persist(specialist);
-        verify(specialistMockRepository).persist(specialist);
-    }
+        // Llamar al método del recurso
+        Response response = specialistResource.createSpecialist(specialist);
 
-    @Test
-    public void testSpecialistDelete() {
-        SpecialistRepository specialistMockRepository = Mockito.mock(SpecialistRepository.class);
-        specialist.setId(1L);
-        specialistMockRepository.delete(specialist);
-        verify(specialistMockRepository).delete(specialist);
-    }
+        // Verificar el código de estado y el contenido de la respuesta
+        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+        //assertEquals(specialist, response.getEntity());
 
+        // Verificar que el método create del servicio fue llamado una vez
+        verify(specialistService, times(1)).create(any(Specialist.class));
+    }*/
 }

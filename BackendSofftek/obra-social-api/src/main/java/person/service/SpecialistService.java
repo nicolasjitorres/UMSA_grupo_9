@@ -7,7 +7,9 @@ import jakarta.ws.rs.core.Response;
 import location.model.Location;
 import location.repository.LocationRepository;
 import person.dto.SpecialistDTO;
+import person.model.Role;
 import person.model.Specialist;
+import person.model.Speciality;
 import person.repository.SpecialistRepository;
 import schedule.model.Schedule;
 import schedule.repository.ScheduleRepository;
@@ -35,9 +37,9 @@ public class SpecialistService {
 		return Response.ok(specialistDTOs)
 				.build();
 	}
-	public Specialist findById(Long id) {
-		return specialistRepository.findById(id);
 
+	public SpecialistDTO findById(Long id) {
+		return convertSpecialistToDTO(specialistRepository.findById(id));
 	}
 
 	public Response create(Specialist newSpecialist) {
@@ -131,4 +133,27 @@ public class SpecialistService {
 		return dto;
 	}
 
+	public Specialist DTOtoSpecialist(SpecialistDTO dto) {
+		if (dto == null) {
+			return null;
+		}
+		Specialist specialist = new Specialist();
+		specialist.setId(Long.getLong(dto.getId()));
+		specialist.setFirstName(dto.getFirstName());
+		specialist.setLastName(dto.getLastName());
+		specialist.setRole(Role.USER);
+		specialist.setSpeciality(Speciality.valueOf(dto.getSpeciality()));
+
+		// Convertir y asignar schedules
+		if (dto.getScheduleList() != null) {
+			specialist.setSchedules(dto.getScheduleList());
+		}
+
+		// Convertir y asignar location
+		if (dto.getLocation() != null) {
+			specialist.setLocation(dto.getLocation());
+		}
+
+		return specialist;
+	}
 }
