@@ -38,8 +38,8 @@ public class PrescriptionService {
         if(prescriptionDto.getShiftId()==null) throw new Exception("No se proporciono ningun turno");
         Shift shift = shiftRepository.findById(prescriptionDto.getShiftId());
         if(shift == null) throw new Exception("no existe este turno");
-        if(LocalDate.now().isBefore(shift.getDate())) throw new Exception("no puede darle una receta a un turno que no sucedio");
-        if(LocalTime.now().isBefore(shift.getTime())) throw new Exception("no puede darle una receta a un turno que no sucedio");
+        //if(LocalDate.now().isBefore(shift.getDate())) throw new Exception("no puede darle una receta a un turno que no sucedio");
+        //if(LocalTime.now().isBefore(shift.getTime())) throw new Exception("no puede darle una receta a un turno que no sucedio");
         if(shift.getPrescription()!=null) throw new Exception("este turno ya tiene una receta");
         prescriptionRepository.persist(prescriptionDto.toEntity(prescriptionDto,shift));
     }
