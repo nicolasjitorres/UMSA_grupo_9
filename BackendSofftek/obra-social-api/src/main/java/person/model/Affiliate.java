@@ -16,7 +16,6 @@ public class Affiliate extends User {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	//private String speciality;
+	private String healthInsuranceCode;
 
 }

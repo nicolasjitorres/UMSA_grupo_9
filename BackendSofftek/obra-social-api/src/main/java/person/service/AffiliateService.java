@@ -2,64 +2,53 @@ package person.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import person.model.Affiliate;
 import person.repository.AffiliateRepository;
 
-@ApplicationScoped
-public class AffiliateService {
+import java.util.List;
 
+@ApplicationScoped
+@Transactional
+public class AffiliateService implements IAffiliateService {
 	@Inject
 	private AffiliateRepository affiliateRepository;
-	
-	public Response listAll() {
-		return Response.ok(affiliateRepository.listAll())
-				.build();
+	@Override
+	public List<Affiliate> getAffiliates() {
+		return affiliateRepository.listAll();
 	}
-	
-	public Response listOne(Long id) {
-		Affiliate affiliate = affiliateRepository.findById(id);
-		if (affiliate == null) {
-			return Response.status(400)
-					.entity("El especialista con id " + id + " no existe.")
-					.build();
-		} else {
-		return Response.ok(affiliate)
-				.build();	
-		}
+	@Override
+	public Affiliate getAffiliateById(Long id) {
+		return affiliateRepository.findById(id);
 	}
-	
-	public Response create(Affiliate newAffiliate) {
+	@Override
+	public void addAffiliate(Affiliate newAffiliate) {
 		affiliateRepository.persist(newAffiliate);
-		return Response.ok(newAffiliate)
-				.build();
+
 	}
-	
-	public Response edit(Long id,Affiliate editedAffiliate) {
+	@Override
+	public void editAffiliate(Long id, Affiliate editedAffiliate) {
 		Affiliate affiliate = affiliateRepository.findById(id);
-		if (affiliate == null) {
-			return Response.status(400)
-					.entity("No existe el especialista.")
-					.build();
-		} else {
-			affiliate.setFirstName(editedAffiliate.getFirstName());
-			affiliate.setLastName(editedAffiliate.getLastName());
-			affiliate.setDni(editedAffiliate.getDni());
-			
-			return Response.ok(editedAffiliate)
-					.build();
+		if (affiliate != null) {
+			if (editedAffiliate.getFirstName() != null) {
+				affiliate.setFirstName(editedAffiliate.getFirstName());
+			}
+			if (editedAffiliate.getLastName() != null) {
+				affiliate.setLastName(editedAffiliate.getLastName());
+			}
+			if (editedAffiliate.getDni() != null) {
+				affiliate.setDni(editedAffiliate.getDni());
+			}
+			if (editedAffiliate.getHealthInsuranceCode() != null) {
+				affiliate.setHealthInsuranceCode(editedAffiliate.getHealthInsuranceCode());
+			}
 		}
+		affiliateRepository.persist(editedAffiliate);
 	}
-	
-	public Response delete(Long id) {
-		if (affiliateRepository.deleteById(id)) {
-			return Response.ok("Se eliminó el afiliado correctamente.")
-					.build();
-		} else {
-			return Response.status(400)
-					.entity("No se pudo eliminar el afiliado.")
-					.build();
-		}
+	@Override
+	public void deleteAffiliate(Long id) {
+		affiliateRepository.deleteById(id);
 	}
-	
+
 }

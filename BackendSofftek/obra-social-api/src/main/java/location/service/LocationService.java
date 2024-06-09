@@ -51,12 +51,21 @@ public class LocationService implements ILocationService{
     public void editLocation(Long id, Location location) {
         Location existingLocation = locationRepository.findById(id);
         if (existingLocation != null) {
-            existingLocation.setStreet(location.getStreet());
-            existingLocation.setLocality(location.getLocality());
-            existingLocation.setProvince(location.getProvince());
-            existingLocation.setCountry(location.getCountry());
+            if (location.getStreet() != null) {
+                existingLocation.setStreet(location.getStreet());
+            }
+            if (location.getLocality() != null) {
+                existingLocation.setLocality(location.getLocality());
+            }
+            if (location.getProvince() != null) {
+                existingLocation.setProvince(location.getProvince());
+            }
+            if (location.getCountry() != null) {
+                existingLocation.setCountry(location.getCountry());
+            }
             locationRepository.persist(existingLocation);
         }
     }
+
 
 }
