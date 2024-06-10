@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import person.dto.SpecialistDTO;
 import person.model.Specialist;
 import person.service.SpecialistService;
 
@@ -21,19 +22,19 @@ public class SpecialistResource {
 	
 	@GET
 	@Path("{id}")
-	public Specialist getOneSpecialist(@PathParam("id") Long id){
+	public Response getOneSpecialist(@PathParam("id") Long id){
 		return specialistService.findById(id);
 	}
 	
 	@POST
-	public Response createSpecialist(Specialist newSpecialist) {
-		return specialistService.create(newSpecialist);
+	public Response createSpecialist(SpecialistDTO newSpecialistDTO) {
+		return specialistService.create(newSpecialistDTO);
 	}
 	
 	@PUT
 	@Path("{id}")
-	public Response updateSpecialist(@PathParam("id") Long id, Specialist editSpecialist) {
-		return specialistService.edit(id, editSpecialist);
+	public Response updateSpecialist(@PathParam("id") Long id, SpecialistDTO editSpecialistDTO) {
+		return specialistService.edit(id, editSpecialistDTO);
 	}
 	
 	@DELETE
@@ -41,6 +42,5 @@ public class SpecialistResource {
 	public Response deleteSpecialist(@PathParam("id") Long id) {
 		return specialistService.delete(id);
 	}
-	
-	
+
 }

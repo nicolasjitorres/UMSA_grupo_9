@@ -15,6 +15,8 @@ public class Specialist extends User{
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	@Enumerated(EnumType.STRING)
 	private Speciality speciality;
 
 	@OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
