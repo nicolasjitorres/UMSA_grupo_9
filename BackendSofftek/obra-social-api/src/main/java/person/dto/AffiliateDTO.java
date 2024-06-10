@@ -1,12 +1,9 @@
 package person.dto;
 
-import location.model.Location;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import schedule.model.Schedule;
 
-import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
