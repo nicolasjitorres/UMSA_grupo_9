@@ -2,15 +2,16 @@ package shift.resource;
 
 
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import shift.entity.Shift;
 import shift.entity.dto.ShiftDTO;
 import shift.service.ShiftService;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Transactional
 @Path("/turnos")
 public class ShiftResource {
 

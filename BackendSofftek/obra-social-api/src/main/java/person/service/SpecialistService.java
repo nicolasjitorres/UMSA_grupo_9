@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import location.model.Location;
 import location.repository.LocationRepository;
 import person.dto.SpecialistDTO;
@@ -58,6 +59,7 @@ public class SpecialistService {
 			}
 			//este bloque lo que permite es que si existe la ubicacion se la agrega al especialista
 			if (newSpecialist.getLocation() != null) {
+
 				Location location = newSpecialist.getLocation();
 				Optional<Specialist> existingSpecialist = specialistRepository.findByLocation(
 						location.getStreet(),
@@ -85,6 +87,7 @@ public class SpecialistService {
 					}
 				}
 			}
+
 			//y luego persiste el especialista
 			specialistRepository.persist(newSpecialist);
 			return Response.status(Response.Status.CREATED)
@@ -156,7 +159,7 @@ public class SpecialistService {
 			return null;
 		}
 		Specialist specialist = new Specialist();
-		specialist.setId(Long.getLong(dto.getId()));
+		specialist.setId(Long.parseLong(dto.getId()));
 		specialist.setFirstName(dto.getFirstName());
 		specialist.setDni(dto.getDni());
 		specialist.setLastName(dto.getLastName());

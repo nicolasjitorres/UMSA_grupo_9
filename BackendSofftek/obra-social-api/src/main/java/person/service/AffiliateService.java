@@ -66,6 +66,7 @@ public class AffiliateService implements IAffiliateService {
 			return null;
 		}
 		Affiliate entity = new Affiliate();
+		entity.setId(dto.getId());
 		entity.setFirstName(dto.getFirstName());
 		entity.setLastName(dto.getLastName());
 		entity.setHealthInsuranceCode(dto.getHealthInsuranceCode());
