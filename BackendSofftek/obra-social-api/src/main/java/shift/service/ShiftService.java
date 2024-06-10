@@ -67,9 +67,11 @@ public class ShiftService {
         {
             Specialist existSpecialist = specialistService.DTOtoSpecialist(specialistService.findById(shiftDTO.getSpecialistId()).readEntity(SpecialistDTO.class));
             Affiliate existAffiliate = affiliateService.convertDTOToEntity(affiliateService.getAffiliateById(shiftDTO.getAffiliatedId()).readEntity(AffiliateDTO.class));
+             
             if(existSpecialist!= null && existAffiliate!=null)
             {
-                shiftRepository.persist(new Shift(shiftDTO.getDescription(), shiftDTO.getDate(), shiftDTO.getTime(),existSpecialist, existAffiliate));
+            	Shift newShift = new Shift(shiftDTO.getDescription(), shiftDTO.getDate(), shiftDTO.getTime(), existSpecialist, existAffiliate);
+                shiftRepository.persist(newShift);
             }
             else {
                 throw new Exception ("IDs de afiliado y especialista no pueden ser vacios");
