@@ -5,6 +5,7 @@ import com.arjuna.ats.internal.arjuna.objectstore.ShadowNoFileLockStore;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.core.Response;
 import person.dto.AffiliateDTO;
 import person.dto.SpecialistDTO;
 import person.model.Affiliate;
@@ -65,15 +66,17 @@ public class ShiftService {
     {
         if(shiftDTO!=null)
         {
-            Specialist existSpecialist = specialistService.DTOtoSpecialist(specialistService.findById(shiftDTO.getSpecialistId()).readEntity(SpecialistDTO.class));
-            Affiliate existAffiliate = affiliateService.convertDTOToEntity(affiliateService.getAffiliateById(shiftDTO.getAffiliatedId()).readEntity(AffiliateDTO.class));
-            if(existSpecialist!= null && existAffiliate!=null)
-            {
-                shiftRepository.persist(new Shift(shiftDTO.getDescription(), shiftDTO.getDate(), shiftDTO.getTime(),existSpecialist, existAffiliate));
-            }
-            else {
-                throw new Exception ("IDs de afiliado y especialista no pueden ser vacios");
-            }
+            SpecialistDTO existSpecialist = specialistService.findById(shiftDTO.getSpecialistId()).readEntity(SpecialistDTO.class);
+            AffiliateDTO existAffiliate = affiliateService.getAffiliateById((shiftDTO.getAffiliatedId())).readEntity(AffiliateDTO.class);
+
+            System.out.println();
+//            if(existSpecialist!= null && existAffiliate!=null)
+//            {
+//                shiftRepository.persist(new Shift(shiftDTO.getDescription(), shiftDTO.getDate(), shiftDTO.getTime(),existSpecialist, existAffiliate));
+//            }
+//            else {
+//                throw new Exception ("IDs de afiliado y especialista no pueden ser vacios");
+//            }
         }
         else {
             throw new Exception ("No se mandaron datos");

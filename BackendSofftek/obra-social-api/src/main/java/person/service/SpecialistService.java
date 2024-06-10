@@ -59,18 +59,30 @@ public class SpecialistService {
 			//este bloque lo que permite es que si existe la ubicacion se la agrega al especialista
 			if (newSpecialist.getLocation() != null) {
 				Location location = newSpecialist.getLocation();
-				Optional<Location> existingLocation = locationRepository.findByDetails(
+				Optional<Specialist> existingSpecialist = specialistRepository.findByLocation(
 						location.getStreet(),
 						location.getLocality(),
 						location.getProvince(),
 						location.getCountry()
 				);
-				if (existingLocation.isPresent()) {
-					//si existe lo agrega al especialista
-					newSpecialist.setLocation(existingLocation.get());
+				if (existingSpecialist.isPresent()) {
+					// Si existe un especialista con esa ubicación, lanza una bad request
+					return Response.status(Response.Status.BAD_REQUEST).entity("ya existe un especialista en esta locacion").build();
 				} else {
-					//sino lo persiste
-					locationRepository.persist(location);
+					//si nadie tiene esa ubicacion la busca en la base de datos de location
+					Optional<Location> existLocation = locationRepository.findByDetails(
+							location.getStreet(),
+							location.getLocality(),
+							location.getProvince(),
+							location.getCountry()
+					);
+					if(existLocation.isPresent()){
+						//si existe se la da al especialista y no crea una nueva
+						newSpecialist.setLocation(existLocation.get());
+					}else{
+						// Si no existe, persistir la nueva ubicación dandosela al espcialista
+						newSpecialist.setLocation(location);
+					}
 				}
 			}
 			//y luego persiste el especialista

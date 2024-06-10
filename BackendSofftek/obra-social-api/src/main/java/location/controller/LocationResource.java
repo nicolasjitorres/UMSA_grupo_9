@@ -9,7 +9,7 @@ import location.service.LocationService;
 
 import java.util.List;
 
-@Path("/locations")
+@Path("/ubicaciones")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 
