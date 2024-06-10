@@ -14,5 +14,4 @@ public class AffiliateDTO
     private String lastName;
     private String healthInsuranceCode;
     private String dni;
-
 }

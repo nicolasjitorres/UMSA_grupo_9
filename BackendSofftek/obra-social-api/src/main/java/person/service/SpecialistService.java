@@ -39,7 +39,11 @@ public class SpecialistService {
 	}
 
 	public Response findById(Long id) {
-		return Response.ok(convertSpecialistToDTO(specialistRepository.findById(id))).build();
+		Specialist existSpecialist = specialistRepository.findById(id);
+		if (existSpecialist == null){
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+		return Response.ok(this.convertSpecialistToDTO(existSpecialist)).build();
 	}
 
 	public Response create(SpecialistDTO newSpecialistDTO) {
@@ -131,6 +135,7 @@ public class SpecialistService {
 		dto.setSpeciality(specialist.getSpeciality().toString());
 		dto.setScheduleList(specialist.getSchedules());
 		dto.setLocation(specialist.getLocation());
+		dto.setDni(specialist.getDni());
 		return dto;
 	}
 
@@ -141,6 +146,7 @@ public class SpecialistService {
 		Specialist specialist = new Specialist();
 		specialist.setId(Long.getLong(dto.getId()));
 		specialist.setFirstName(dto.getFirstName());
+		specialist.setDni(dto.getDni());
 		specialist.setLastName(dto.getLastName());
 		specialist.setRole(Role.USER);
 		specialist.setSpeciality(Speciality.valueOf(dto.getSpeciality()));
