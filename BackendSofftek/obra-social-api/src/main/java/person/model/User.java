@@ -14,6 +14,6 @@ public abstract class User{
 	private String dni;
 	@Enumerated(EnumType.STRING)
 	private Role role;
-	private String email;
-	private String password;
+	//private String email;
+	//private String password;
 }
