@@ -11,9 +11,13 @@ import person.service.IAffiliateService;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
 @Path("/afiliado")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Tag(name = "Gestion de afiliados", description = "Métodos relacionados con la gestión de afiliados."
+		+ "Mediante estos métodos podemos realizar una correcta gestión de los afiliados de la obra social.")
 public class AffiliateResource {
 
 	@Inject
@@ -29,7 +33,7 @@ public class AffiliateResource {
 		if (id != null) {
 			return affiliateService.getAffiliateById(id);
 		} else {
-			return Response.status(Response.Status.NOT_FOUND).build();
+			return Response.status(404).build();
 		}
 	}
 	

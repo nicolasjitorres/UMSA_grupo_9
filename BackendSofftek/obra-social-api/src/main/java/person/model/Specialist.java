@@ -1,12 +1,10 @@
 package person.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import location.model.Location;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import schedule.model.Schedule;
-import shift.entity.Shift;
 
 import java.util.List;
 
