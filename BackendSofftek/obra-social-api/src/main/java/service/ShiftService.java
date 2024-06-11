@@ -4,6 +4,7 @@ package service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import dto.AffiliateDTO;
 import dto.SpecialistDTO;
 import model.Affiliate;
 import model.Specialist;
@@ -27,8 +28,8 @@ public class ShiftService {
     @Inject
     private AffiliateRepository affiliateRepository;
 
-//    @Inject
-//    private AffiliateService affiliateService;
+    @Inject
+    private AffiliateService affiliateService;
 
     @Inject
     private SpecialistService specialistService;
@@ -53,7 +54,7 @@ public class ShiftService {
         Specialist existSpecialist =  specialistRepository.findById(shiftDTO.getSpecialist().getId());
         Affiliate existAffiliate = affiliateRepository.findById(shiftDTO.getAffiliated().getId());
 
-//        shiftRepository.persist(shiftDTO.toEntity(shiftDTO,existSpecialist,existAffiliate));
+//        shiftRepository.persist(shiftDTO.dtoToEntity(shiftDTO,existSpecialist,existAffiliate));
     }
 
     @Transactional
@@ -62,7 +63,7 @@ public class ShiftService {
 //        if(shiftDTO!=null)
 //        {
 //            Specialist existSpecialist = specialistService.DTOtoSpecialist(specialistService.findById(shiftDTO.getSpecialistId()).readEntity(SpecialistDTO.class));
-////            Affiliate existAffiliate = affiliateService.convertDTOToEntity(affiliateService.getAffiliateById(shiftDTO.getAffiliatedId()));
+//            Affiliate existAffiliate = affiliateService.convertDTOToEntity(affiliateService.getAffiliateById(shiftDTO.getAffiliatedId()).readEntity(AffiliateDTO.class));
 //             
 //            if(existSpecialist!= null && existAffiliate!=null)
 //            {

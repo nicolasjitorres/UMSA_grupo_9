@@ -13,41 +13,42 @@ import java.util.List;
 @Transactional
 public class LocationService implements ILocationService {
 
-    @Inject
-    private LocationRepository locationRepository;
-    @Override
-    public List<Location> findLocations() {
-       return locationRepository.findAll().stream().toList();
-    }
+	@Inject
+	private LocationRepository locationRepository;
 
-    @Override
-    public Location findLocationById(Long id) {
-        return locationRepository.findById(id);
-    }
-
-    @Override
-    public Location addLocation(Location location) throws Exception {
-        Location existingLocation = locationRepository.findByDetails(
-                location.getStreet(),
-                location.getLocality(),
-                location.getProvince(),
-                location.getCountry()
-        );
-        if (existingLocation!=null) throw new Exception("ya existe esta locacion");
-        locationRepository.persist(location);
-
-		return null;
+	@Override
+	public List<Location> findLocations() {
+		return locationRepository.findAll().stream().toList();
 	}
 
 	@Override
-	public Location deleteLocation(Long id) {
-		locationRepository.deleteById(id);
-
-		return null;
+	public Location findLocationById(Long id) {
+		return locationRepository.findById(id);
 	}
 
 	@Override
-	public Location editLocation(Long id, Location location) {
+	public Location addLocation(Location location) throws Exception {
+		if (location.getStreet() != null) {
+			locationRepository.persist(location);
+			return location;
+		} else {
+			throw new Exception("Faltan agregar campos");
+		}
+
+	}
+
+	public Location deleteLocation(Long id) throws Exception {
+		Location deletedLocation = locationRepository.findById(id);
+		if (deletedLocation != null) {
+			locationRepository.deleteById(id);
+			return deletedLocation;
+		} else {
+			throw new Exception("No existe esa ubicación con id: " + id);
+		}
+	}
+
+	@Override
+	public Location editLocation(Long id, Location location) throws Exception {
 		Location existingLocation = locationRepository.findById(id);
 		if (existingLocation != null) {
 			if (location.getStreet() != null) {
@@ -62,11 +63,11 @@ public class LocationService implements ILocationService {
 			if (location.getCountry() != null) {
 				existingLocation.setCountry(location.getCountry());
 			}
-			locationRepository.persist(existingLocation);
+			locationRepository.getEntityManager().merge(existingLocation);
+			return existingLocation;
+		} else {
+			throw new Exception("No existe esa ubicación con id: " + id);
 		}
-
-		return null;
-    }
-
+	}
 
 }

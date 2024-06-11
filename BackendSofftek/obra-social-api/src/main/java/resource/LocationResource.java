@@ -47,25 +47,22 @@ public class LocationResource {
     @PUT
     @Path("/{id}")
     public Response updateLocation(@PathParam("id") Long id, Location location) {
-        Location existingLocation = locationService.findLocationById(id);
-        if (existingLocation != null) {
-            locationService.editLocation(id, location);
-            location.setId(id);
-            return Response.ok(location).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
+        try {
+            Location updatedLocation = locationService.editLocation(id, location);
+            return Response.ok(updatedLocation).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteLocation(@PathParam("id") Long id) {
-        Location location = locationService.findLocationById(id);
-        if (location != null) {
-            locationService.deleteLocation(id);
-            return Response.ok().entity("Location deleted successfully").build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Location not found").build();
+        try {
+            Location deletedLocation = locationService.deleteLocation(id);
+            return Response.ok(deletedLocation).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
