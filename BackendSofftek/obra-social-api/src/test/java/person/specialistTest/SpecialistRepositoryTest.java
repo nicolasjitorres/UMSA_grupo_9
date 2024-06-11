@@ -4,16 +4,16 @@ import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 
-import location.model.Location;
+import model.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import person.model.Role;
-import person.model.Specialist;
-import person.model.Speciality;
-import person.repository.SpecialistRepository;
-import schedule.model.Days;
-import schedule.model.Schedule;
+import model.enums.Role;
+import model.Specialist;
+import model.enums.Speciality;
+import repository.SpecialistRepository;
+import model.enums.Days;
+import model.Schedule;
 
 import java.time.LocalTime;
 import java.util.Arrays;
