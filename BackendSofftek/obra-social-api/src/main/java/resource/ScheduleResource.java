@@ -31,21 +31,23 @@ public class ScheduleResource
 
     @POST
     public Response addSchedule(Schedule schedule){
-        scheduleService.addSchedule(schedule);
+        try {
+            scheduleService.addSchedule(schedule);
             return Response.status(Response.Status.CREATED).entity(schedule).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteScheduleById(@PathParam("id") Long id)
     {
-        Schedule schedule = scheduleService.findScheduleById(id);
-        if(schedule!=null)
-        {
-            return Response.ok().entity("Schedule deleted successfully").build();
-        }
-        else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Schedule not found").build();
+        try {
+            Schedule deletedSchedule = scheduleService.deleteSchedule(id);
+            return Response.ok(deletedSchedule).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
 
     }
@@ -53,15 +55,11 @@ public class ScheduleResource
     @Path("/{id}")
     public Response updateSchedule(@PathParam("id") Long id, Schedule schedule)
     {
-        Schedule existingSchedule = scheduleService.findScheduleById(id);
-        if (existingSchedule!=null)
-        {
-            scheduleService.editSchedule(id, schedule);
-            schedule.setId(id);
-            return Response.ok(schedule).build();
-        }
-        else {
-            return Response.status(Response.Status.NOT_FOUND).build();
+        try {
+            Schedule updatedSchedule = scheduleService.editSchedule(id, schedule);
+            return Response.ok(updatedSchedule).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 

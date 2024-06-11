@@ -23,14 +23,30 @@ public class ScheduleService implements IScheduleService {
         return scheduleRepository.findById(id);
     }
     @Override
-    public void addSchedule(Schedule schedule) {
-        scheduleRepository.persist(schedule);
+    public Schedule addSchedule(Schedule schedule) throws Exception{
+        //validaciones no vacias
+        if(schedule.getDay()!=null) {
+            scheduleRepository.persist(schedule);
+            return schedule;
+        }
+        else
+            {
+                throw new Exception(("Faltan agregar campos para el horario"));
+            }
     }
     @Override
-    public void deleteSchedule(Long id) {
-        scheduleRepository.deleteById(id);
+    public Schedule deleteSchedule(Long id) throws Exception{
+        Schedule deletedSchedule = scheduleRepository.findById(id);
+        if(deletedSchedule!=null)
+        {
+            scheduleRepository.deleteById(id);
+            return deletedSchedule;
+        }
+        else {
+            throw new Exception(("No existe horario con la id: "+id));
+        }
     }
-    public void editSchedule(Long id, Schedule schedule) {
+    public Schedule editSchedule(Long id, Schedule schedule)throws Exception {
         Schedule existingSchedule = scheduleRepository.findById(id);
         if (existingSchedule != null) {
             if (schedule.getDay() != null) {
@@ -43,6 +59,10 @@ public class ScheduleService implements IScheduleService {
                 existingSchedule.setEndTime(schedule.getEndTime());
             }
             scheduleRepository.persist(existingSchedule);
+            return scheduleRepository.findById((id));
+        }
+        else {
+            throw new Exception(("No existe horario con la id: "+id));
         }
     }
 
