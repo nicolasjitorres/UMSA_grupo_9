@@ -26,20 +26,15 @@ public class LocationService implements ILocationService{
     }
 
     @Override
-    public void addLocation(Location location)
-    {
-        Optional<Location> existingLocation = locationRepository.findByDetails(
+    public void addLocation(Location location) throws Exception {
+        Location existingLocation = locationRepository.findByDetails(
                 location.getStreet(),
                 location.getLocality(),
                 location.getProvince(),
                 location.getCountry()
         );
-        if (existingLocation.isPresent()) {
-            //hacer lo que quieras hacer si es que existe
-        } else {
-            //sino lo persiste
-            locationRepository.persist(location);
-        }
+        if (existingLocation!=null) throw new Exception("ya existe esta locacion");
+        locationRepository.persist(location);
     }
 
     @Override

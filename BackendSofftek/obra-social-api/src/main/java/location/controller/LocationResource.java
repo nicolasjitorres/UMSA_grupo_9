@@ -36,8 +36,12 @@ public class LocationResource {
 
     @POST
     public Response addLocation(Location location) {
-        locationService.addLocation(location);
-        return Response.status(Response.Status.CREATED).entity(location).build();
+        try {
+            locationService.addLocation(location);
+            return Response.status(Response.Status.CREATED).entity(location).build();
+        } catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
     @PUT

@@ -9,7 +9,7 @@ import schedule.service.IScheduleService;
 
 import java.util.List;
 
-@Path("/schedules")
+@Path("/horarios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ScheduleResource
