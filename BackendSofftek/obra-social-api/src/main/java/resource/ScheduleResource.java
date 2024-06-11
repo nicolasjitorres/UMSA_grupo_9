@@ -20,13 +20,13 @@ public class ScheduleResource
     @GET
     public List<Schedule> getSchedules()
     {
-        return scheduleService.getSchedules();
+        return scheduleService.findSchedules();
     }
     @GET
     @Path("/{id}")
     public Schedule getScheduleById(@PathParam("id") Long id)
     {
-        return scheduleService.getScheduleById(id);
+        return scheduleService.findScheduleById(id);
     }
 
     @POST
@@ -39,7 +39,7 @@ public class ScheduleResource
     @Path("/{id}")
     public Response deleteScheduleById(@PathParam("id") Long id)
     {
-        Schedule schedule = scheduleService.getScheduleById(id);
+        Schedule schedule = scheduleService.findScheduleById(id);
         if(schedule!=null)
         {
             return Response.ok().entity("Schedule deleted successfully").build();
@@ -53,7 +53,7 @@ public class ScheduleResource
     @Path("/{id}")
     public Response updateSchedule(@PathParam("id") Long id, Schedule schedule)
     {
-        Schedule existingSchedule = scheduleService.getScheduleById(id);
+        Schedule existingSchedule = scheduleService.findScheduleById(id);
         if (existingSchedule!=null)
         {
             scheduleService.editSchedule(id, schedule);

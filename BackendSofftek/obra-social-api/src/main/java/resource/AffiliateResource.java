@@ -21,7 +21,7 @@ public class AffiliateResource {
 	private IAffiliateService affiliateService;
 	@GET
 	public Response getAllAffiliates(){
-		return affiliateService.getAffiliates();
+		return affiliateService.findAffiliates();
 	}
 	
 	@GET

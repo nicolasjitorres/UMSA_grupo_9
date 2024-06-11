@@ -18,7 +18,7 @@ public class AffiliateService implements IAffiliateService {
 	@Inject
 	private AffiliateRepository affiliateRepository;
 	@Override
-	public Response getAffiliates() {
+	public Response findAffiliates() {
 		List<AffiliateDTO> affiliateDTOs = new ArrayList<>();
 		for (Affiliate affiliate : affiliateRepository.listAll()) {
 			affiliateDTOs.add(convertEntityToDTO(affiliate));

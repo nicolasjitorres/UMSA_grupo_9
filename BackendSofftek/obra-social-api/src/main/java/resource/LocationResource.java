@@ -20,13 +20,13 @@ public class LocationResource {
 
     @GET
     public List<Location> getAllLocations() {
-        return locationService.getLocations();
+        return locationService.findLocations();
     }
 
     @GET
     @Path("/{id}")
     public Response getLocationById(@PathParam("id") Long id) {
-        Location location = locationService.getLocationById(id);
+        Location location = locationService.findLocationById(id);
         if (location != null) {
             return Response.ok(location).build();
         } else {
@@ -47,7 +47,7 @@ public class LocationResource {
     @PUT
     @Path("/{id}")
     public Response updateLocation(@PathParam("id") Long id, Location location) {
-        Location existingLocation = locationService.getLocationById(id);
+        Location existingLocation = locationService.findLocationById(id);
         if (existingLocation != null) {
             locationService.editLocation(id, location);
             location.setId(id);
@@ -60,7 +60,7 @@ public class LocationResource {
     @DELETE
     @Path("/{id}")
     public Response deleteLocation(@PathParam("id") Long id) {
-        Location location = locationService.getLocationById(id);
+        Location location = locationService.findLocationById(id);
         if (location != null) {
             locationService.deleteLocation(id);
             return Response.ok().entity("Location deleted successfully").build();

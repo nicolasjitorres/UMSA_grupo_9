@@ -15,11 +15,11 @@ public class ScheduleService implements IScheduleService {
     @Inject
     private ScheduleRepository scheduleRepository;
     @Override
-    public List<Schedule> getSchedules() {
+    public List<Schedule> findSchedules() {
         return scheduleRepository.findAll().stream().toList();
     }
     @Override
-    public Schedule getScheduleById(Long id) {
+    public Schedule findScheduleById(Long id) {
         return scheduleRepository.findById(id);
     }
     @Override

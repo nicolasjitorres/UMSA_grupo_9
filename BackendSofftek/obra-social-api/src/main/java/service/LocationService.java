@@ -16,12 +16,12 @@ public class LocationService implements ILocationService {
     @Inject
     private LocationRepository locationRepository;
     @Override
-    public List<Location> getLocations() {
+    public List<Location> findLocations() {
        return locationRepository.findAll().stream().toList();
     }
 
     @Override
-    public Location getLocationById(Long id) {
+    public Location findLocationById(Long id) {
         return locationRepository.findById(id);
     }
 
