@@ -26,24 +26,30 @@ public class LocationService implements ILocationService {
     }
 
     @Override
-    public void addLocation(Location location) throws Exception {
-        Location existingLocation = locationRepository.findByDetails(
-                location.getStreet(),
-                location.getLocality(),
-                location.getProvince(),
-                location.getCountry()
-        );
-        if (existingLocation!=null) throw new Exception("ya existe esta locacion");
-        locationRepository.persist(location);
+    public Location addLocation(Location location)throws Exception{
+        if(location.getStreet()!=null)
+        {
+            locationRepository.persist(location);
+            return location;
+        }
+         else {
+                 throw new Exception("Faltan agregar campos");
+                 }
+
+    }
+
+    public Location deleteLocation(Long id) throws Exception {
+        Location deletedLocation = locationRepository.findById(id);
+        if (deletedLocation != null) {
+            locationRepository.deleteById(id);
+            return deletedLocation;
+        } else {
+            throw new Exception("No existe esa ubicación con id: " + id);
+        }
     }
 
     @Override
-    public void deleteLocation(Long id) {
-    locationRepository.deleteById(id);
-    }
-
-    @Override
-    public void editLocation(Long id, Location location) {
+    public Location editLocation(Long id, Location location)  throws Exception {
         Location existingLocation = locationRepository.findById(id);
         if (existingLocation != null) {
             if (location.getStreet() != null) {
@@ -59,6 +65,10 @@ public class LocationService implements ILocationService {
                 existingLocation.setCountry(location.getCountry());
             }
             locationRepository.persist(existingLocation);
+            return existingLocation;
+        }
+        else {
+            throw new Exception("No existe esa ubicación con id: " + id);
         }
     }
 
