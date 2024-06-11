@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 import dto.SpecialistDTO;
 import model.enums.Speciality;
 import service.SpecialistService;
-import model.enums.Days;
+import model.enums.Day;
 import model.Schedule;
 
 import java.time.LocalTime;
@@ -47,12 +47,12 @@ public class SpecialistServiceTest {
         Schedule schedule1 = new Schedule();
         schedule1.setStartTime(LocalTime.parse("08:00"));
         schedule1.setEndTime(LocalTime.parse("12:00"));
-        schedule1.setDay(Days.SUNDAY);
+        schedule1.setDayOfWeek(Day.SUNDAY);
 
         Schedule schedule2 = new Schedule();
         schedule2.setStartTime(LocalTime.parse("13:00"));
         schedule2.setEndTime(LocalTime.parse("17:00"));
-        schedule2.setDay(Days.WEDNESDAY);
+        schedule2.setDayOfWeek(Day.WEDNESDAY);
 
         specialistDTO.setSchedules(Arrays.asList(schedule1, schedule2));
     }

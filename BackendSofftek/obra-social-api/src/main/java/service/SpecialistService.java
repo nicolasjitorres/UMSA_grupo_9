@@ -11,6 +11,7 @@ import model.enums.Role;
 import model.Specialist;
 import model.enums.Speciality;
 import repository.SpecialistRepository;
+import service.interfaces.ISpecialistService;
 import model.Schedule;
 import repository.ScheduleRepository;
 

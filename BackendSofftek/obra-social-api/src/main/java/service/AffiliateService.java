@@ -3,88 +3,75 @@ package service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Response;
-import dto.AffiliateDTO;
 import model.Affiliate;
 import repository.AffiliateRepository;
 import service.interfaces.IAffiliateService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
 @Transactional
 public class AffiliateService implements IAffiliateService {
+	
 	@Inject
 	private AffiliateRepository affiliateRepository;
+	
 	@Override
-	public Affiliate findAffiliates() {
-		List<AffiliateDTO> affiliateDTOs = new ArrayList<>();
-		for (Affiliate affiliate : affiliateRepository.listAll()) {
-			affiliateDTOs.add(convertEntityToDTO(affiliate));
-		}
-		return null;
+	public List<Affiliate> getAllAffiliates() {
+		return affiliateRepository.listAll();
 	}
+	
 	@Override
 	public Affiliate getAffiliateById(Long id) {
-		return null;
+		return affiliateRepository.findById(id);
 	}
+	
 	@Override
-	public Affiliate addAffiliate(AffiliateDTO newAffiliateDTO) {
-		Affiliate newAffiliate = this.convertDTOToEntity(newAffiliateDTO);
-		affiliateRepository.persist(newAffiliate);
-		return null;
+	public Affiliate addAffiliate(Affiliate newAffiliate) throws Exception{
+//		Validaciones
+		if (newAffiliate.getFirstName() != null) {
+			affiliateRepository.persist(newAffiliate);			
+			return newAffiliate; 
+		} else {
+			throw new Exception("El campo nombre debe contener algo.");
+		}
 	}
+	
 	@Override
-	public Affiliate editAffiliate(Long id, AffiliateDTO editedAffiliateDTO) {
+	public Affiliate editAffiliate(Long id, Affiliate editedAffiliate) throws Exception{
 		Affiliate affiliate = affiliateRepository.findById(id);
 		if (affiliate != null) {
-			if (editedAffiliateDTO.getFirstName() != null) {
-				affiliate.setFirstName(editedAffiliateDTO.getFirstName());
+			if (editedAffiliate.getFirstName() != null) {
+				affiliate.setFirstName(editedAffiliate.getFirstName());
 			}
-			if (editedAffiliateDTO.getLastName() != null) {
-				affiliate.setLastName(editedAffiliateDTO.getLastName());
+			if (editedAffiliate.getLastName() != null) {
+				affiliate.setLastName(editedAffiliate.getLastName());
 			}
-			if (editedAffiliateDTO.getDni() != null) {
-				affiliate.setDni(editedAffiliateDTO.getDni());
+			if (editedAffiliate.getDni() != null) {
+				affiliate.setDni(editedAffiliate.getDni());
 			}
-			if (editedAffiliateDTO.getHealthInsuranceCode() != null) {
-				affiliate.setHealthInsuranceCode(editedAffiliateDTO.getHealthInsuranceCode());
+			if (editedAffiliate.getHealthInsuranceCode() != null) {
+				affiliate.setHealthInsuranceCode(editedAffiliate.getHealthInsuranceCode());
 			}
+			
+//			Agregar datos faltantes
+			
+//			affiliateRepository.persist(affiliate);
+			affiliateRepository.getEntityManager().merge(affiliate);
+			return affiliateRepository.findById(id);
+		} else {
+			throw new Exception("El afiliado con id " + id + " no existe.");
 		}
-		affiliateRepository.persist(affiliate);
-		return null;
 	}
+	
 	@Override
-	public Affiliate deleteAffiliate(Long id) {
-		affiliateRepository.deleteById(id);
-		return null;
-	}
-
-
-	public Affiliate convertDTOToEntity(AffiliateDTO dto) {
-		if (dto == null) {
-			return null;
+	public Affiliate deleteAffiliate(Long id) throws Exception{
+		Affiliate existingAffiliate = affiliateRepository.findById(id);
+		if (existingAffiliate != null) {
+			affiliateRepository.deleteById(id);		
+			return existingAffiliate;
+		} else {
+			throw new Exception("El afiliado con id " + id + " no existe.");
 		}
-		Affiliate entity = new Affiliate();
-		entity.setId(dto.getId());
-		entity.setFirstName(dto.getFirstName());
-		entity.setLastName(dto.getLastName());
-		entity.setHealthInsuranceCode(dto.getHealthInsuranceCode());
-		entity.setDni(dto.getDni());
-		return entity;
-	}
-
-	public AffiliateDTO convertEntityToDTO(Affiliate entity) {
-		if (entity == null) {
-			return null;
-		}
-		AffiliateDTO dto = new AffiliateDTO();
-		dto.setId(entity.getId());
-		dto.setFirstName(entity.getFirstName());
-		dto.setLastName(entity.getLastName());
-		dto.setHealthInsuranceCode(entity.getHealthInsuranceCode());
-		dto.setDni(entity.getDni());
-		return dto;
 	}
 }

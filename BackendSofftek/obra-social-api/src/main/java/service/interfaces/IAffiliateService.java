@@ -1,12 +1,13 @@
 package service.interfaces;
 
-import dto.AffiliateDTO;
+import java.util.List;
+
 import model.Affiliate;
 
 public interface IAffiliateService {
-    public Affiliate findAffiliates();
+    public List<Affiliate> getAllAffiliates();
     public Affiliate getAffiliateById(Long id);
-    public Affiliate addAffiliate(AffiliateDTO newAffiliateDTO);
-    public Affiliate deleteAffiliate(Long id);
-    public Affiliate editAffiliate(Long id, AffiliateDTO newAffiliateDTO);
+    public Affiliate addAffiliate(Affiliate newAffiliate) throws Exception;
+    public Affiliate deleteAffiliate(Long id) throws Exception;
+    public Affiliate editAffiliate(Long id, Affiliate newAffiliate) throws Exception;
 }

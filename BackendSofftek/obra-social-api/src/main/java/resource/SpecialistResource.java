@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.Specialist;
 import dto.SpecialistDTO;
-import dto.SpecialistMapper;
+import dto.mappers.SpecialistMapper;
 import service.SpecialistService;
 
 @Path("/especialistas")

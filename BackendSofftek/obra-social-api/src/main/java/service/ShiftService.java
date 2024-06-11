@@ -4,7 +4,6 @@ package service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import dto.AffiliateDTO;
 import dto.SpecialistDTO;
 import model.Affiliate;
 import model.Specialist;
@@ -28,8 +27,8 @@ public class ShiftService {
     @Inject
     private AffiliateRepository affiliateRepository;
 
-    @Inject
-    private AffiliateService affiliateService;
+//    @Inject
+//    private AffiliateService affiliateService;
 
     @Inject
     private SpecialistService specialistService;
@@ -51,10 +50,10 @@ public class ShiftService {
         if(shiftRepository.findByDateAndHour(shiftDTO.getDate(),shiftDTO.getTime()) != null) throw  new Exception("ya existe este Turno");
         if(LocalDate.now().isAfter(shiftDTO.getDate())) throw  new Exception("la fecha del turno debe ser superior a la de hoy");
 
-        Specialist existSpecialist =  specialistRepository.findById(shiftDTO.getSpecialistId());
-        Affiliate existAffiliate = affiliateRepository.findById(shiftDTO.getAffiliatedId());
+        Specialist existSpecialist =  specialistRepository.findById(shiftDTO.getSpecialist().getId());
+        Affiliate existAffiliate = affiliateRepository.findById(shiftDTO.getAffiliated().getId());
 
-        shiftRepository.persist(shiftDTO.toEntity(shiftDTO,existSpecialist,existAffiliate));
+//        shiftRepository.persist(shiftDTO.toEntity(shiftDTO,existSpecialist,existAffiliate));
     }
 
     @Transactional
@@ -86,7 +85,7 @@ public class ShiftService {
         {
             if(shiftDTO!=null)
             {
-                Specialist existSpecialist= specialistService.DTOtoSpecialist(specialistService.findById(shiftDTO.getSpecialistId()).readEntity(SpecialistDTO.class));
+                Specialist existSpecialist= specialistService.DTOtoSpecialist(specialistService.findById(shiftDTO.getSpecialist().getId()).readEntity(SpecialistDTO.class));
                 if(existSpecialist!= null)
                 {
                     existingShift.setSpecialist(existSpecialist);

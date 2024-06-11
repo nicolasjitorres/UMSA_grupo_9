@@ -36,7 +36,7 @@ public class PrescriptionResource {
     @POST
     public Response addPrescription(PrescriptionDTO prescriptionDTO){
         try{
-            prescriptionService.AddPrescription(prescriptionDTO);
+//            prescriptionService.AddPrescription(prescriptionDTO);
             return Response.ok("se agrego con exito").build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

@@ -1,6 +1,6 @@
 package model.enums;
 
-public enum Days {
+public enum Day {
     MONDAY,
     TUESDAY,
     WEDNESDAY,

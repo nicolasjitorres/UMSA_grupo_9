@@ -40,8 +40,8 @@ public class ScheduleService implements IScheduleService {
 	public Schedule editSchedule(Long id, Schedule schedule) {
 		Schedule existingSchedule = scheduleRepository.findById(id);
 		if (existingSchedule != null) {
-			if (schedule.getDay() != null) {
-				existingSchedule.setDay(schedule.getDay());
+			if (schedule.getDayOfWeek() != null) {
+				existingSchedule.setDayOfWeek(schedule.getDayOfWeek());
 			}
 			if (schedule.getStartTime() != null) {
 				existingSchedule.setStartTime(schedule.getStartTime());

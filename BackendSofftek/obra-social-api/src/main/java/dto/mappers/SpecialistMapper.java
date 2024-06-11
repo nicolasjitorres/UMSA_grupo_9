@@ -1,6 +1,8 @@
-package dto;
+package dto.mappers;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import dto.SpecialistDTO;
 import model.Specialist;
 
 public class SpecialistMapper {

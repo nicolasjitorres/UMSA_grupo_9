@@ -1,6 +1,8 @@
-package dto;
+package dto.mappers;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import dto.AffiliateDTO;
 import model.Affiliate;
 
 public class AffiliateMapper {
@@ -25,8 +27,10 @@ public class AffiliateMapper {
 		affiliate.setRole(affiliateDTO.getRole());
 		
 //		Aqui utilizamos el metodo para hashear la contraseña y asi guardarla de manera segura en la BD, para en un futuro realizar validaciones
-		String hashedPassword = hashPassword(affiliateDTO.getPassword());
-		affiliate.setPassword(hashedPassword);
+		if (affiliateDTO.getPassword() != null) {
+			String hashedPassword = hashPassword(affiliateDTO.getPassword());
+			affiliate.setPassword(hashedPassword);			
+		}
 		
 		return affiliate;
 	}
@@ -40,6 +44,7 @@ public class AffiliateMapper {
 		affiliateDTO.setHealthInsuranceCode(affiliate.getHealthInsuranceCode());
 		affiliateDTO.setId(affiliate.getId());
 		affiliateDTO.setRole(affiliate.getRole());
+		affiliate.setPassword(affiliate.getPassword());
 		
 		return affiliateDTO;
 	}
