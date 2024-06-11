@@ -64,7 +64,7 @@ public class LocationService implements ILocationService {
             if (location.getCountry() != null) {
                 existingLocation.setCountry(location.getCountry());
             }
-            locationRepository.persist(existingLocation);
+            locationRepository.getEntityManager().merge(existingLocation);
             return existingLocation;
         }
         else {
