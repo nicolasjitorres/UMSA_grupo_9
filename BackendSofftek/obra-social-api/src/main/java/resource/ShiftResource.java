@@ -7,7 +7,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import dto.ShiftDTO;
-import service.ShiftService;
+import service.interfaces.IShiftService;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -16,19 +16,19 @@ import service.ShiftService;
 public class ShiftResource {
 
     @Inject
-    private ShiftService serviceShift;
+    private IShiftService iserviceShift;
 
     @GET
     @Path("/")
     public Response getShifts(){
-        return Response.ok(serviceShift.GetAllShift()).build();
+        return Response.ok(iserviceShift.findShifts()).build();
     }
 
     @GET
     @Path("/{id}")
     public Response getShift(@PathParam("id") Long id){
         try {
-            return Response.ok(serviceShift.GetShift(id)).build();
+            return Response.ok(iserviceShift.findShiftById(id)).build();
         } catch (Exception e){
             return Response.status(Response.Status.NOT_FOUND).entity(e).build();
         }
@@ -37,8 +37,7 @@ public class ShiftResource {
     @POST
     public Response addShift(ShiftDTO shift){
         try {
-            serviceShift.addShift(shift);
-            return Response.ok("se agrego con exito").build();
+            return Response.ok("se agrego con exito").entity(iserviceShift.addShift(shift)).build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -48,8 +47,7 @@ public class ShiftResource {
     @Path("/{id}")
     public Response updateShift(@PathParam("id") Long id, ShiftDTO shift){
         try {
-            serviceShift.editShift(id,shift);
-            return Response.ok("se actualizo correctamente").build();//PASAR DTO
+            return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shift)).build();//PASAR DTO
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -59,11 +57,9 @@ public class ShiftResource {
     @Path("/{id}")
     public Response deleteShift(@PathParam("id") Long id) {
         try {
-            serviceShift.DeleteShift(id);
-            return Response.ok("se elimino con exito").build();
+            return Response.ok("se elimino con exito").entity(iserviceShift.deleteShift(id)).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
-
 }
