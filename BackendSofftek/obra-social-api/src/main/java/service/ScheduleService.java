@@ -58,7 +58,7 @@ public class ScheduleService implements IScheduleService {
             if (schedule.getEndTime() != null) {
                 existingSchedule.setEndTime(schedule.getEndTime());
             }
-            scheduleRepository.persist(existingSchedule);
+            scheduleRepository.getEntityManager().merge(existingSchedule);
             return scheduleRepository.findById((id));
         }
         else {
