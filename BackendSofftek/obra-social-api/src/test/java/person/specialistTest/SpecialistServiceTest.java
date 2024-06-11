@@ -4,15 +4,15 @@ package person.specialistTest;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.ws.rs.core.Response;
-import location.model.Location;
+import model.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import person.dto.SpecialistDTO;
-import person.model.Speciality;
-import person.service.SpecialistService;
-import schedule.model.Days;
-import schedule.model.Schedule;
+import dto.SpecialistDTO;
+import model.enums.Speciality;
+import service.SpecialistService;
+import model.enums.Days;
+import model.Schedule;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -54,7 +54,7 @@ public class SpecialistServiceTest {
         schedule2.setEndTime(LocalTime.parse("17:00"));
         schedule2.setDay(Days.WEDNESDAY);
 
-        specialistDTO.setScheduleList(Arrays.asList(schedule1, schedule2));
+        specialistDTO.setSchedules(Arrays.asList(schedule1, schedule2));
     }
 
     @Test

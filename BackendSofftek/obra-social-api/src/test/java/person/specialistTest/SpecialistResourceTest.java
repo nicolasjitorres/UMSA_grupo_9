@@ -5,15 +5,15 @@ import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
-import location.model.Location;
+import model.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import person.controller.SpecialistResource;
-import person.dto.SpecialistDTO;
-import person.model.Speciality;
-import person.service.SpecialistService;
-import schedule.model.Days;
-import schedule.model.Schedule;
+import resource.SpecialistResource;
+import dto.SpecialistDTO;
+import model.enums.Speciality;
+import service.SpecialistService;
+import model.enums.Days;
+import model.Schedule;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -36,7 +36,7 @@ public class SpecialistResourceTest {
     void intancSpecialistDTO() {
         // Crea un nuevo especialista con sus horarios y ubicación asociados
         specialistDTO = new SpecialistDTO();
-        specialistDTO.setId("1");
+//        specialistDTO.setId();
         specialistDTO.setFirstName("Noa");
         specialistDTO.setLastName("Nao");
         specialistDTO.setDni("19776242");
@@ -61,7 +61,7 @@ public class SpecialistResourceTest {
         schedule2.setEndTime(LocalTime.parse("17:00"));
         schedule2.setDay(Days.WEDNESDAY);
 
-        specialistDTO.setScheduleList(Arrays.asList(schedule1, schedule2));
+        specialistDTO.setSchedules(Arrays.asList(schedule1, schedule2));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class SpecialistResourceTest {
         assertEquals("Argentina", location.getCountry());
 
         // Verifica las propiedades de los horarios del primer especialista en la lista
-        List<Schedule> schedules = entity.get(0).getScheduleList();
+        List<Schedule> schedules = entity.get(0).getSchedules();
         assertEquals(2, schedules.size()); // Verifica que haya dos horarios
 
         // Verifica las propiedades del primer horario del primer especialista en la lista
@@ -137,7 +137,7 @@ public class SpecialistResourceTest {
         assertEquals("Argentina", location.getCountry());
 
         // Verifica las propiedades de los horarios del especialista en la lista
-        List<Schedule> schedules = entity.getScheduleList();
+        List<Schedule> schedules = entity.getSchedules();
         assertEquals(2, schedules.size()); // Verifica que haya dos horarios
 
         // Verifica las propiedades del primer horario del especialista en la lista
