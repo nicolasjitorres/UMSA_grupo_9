@@ -1,6 +1,5 @@
 package schedule.service;
 
-import location.model.Location;
 import schedule.model.Schedule;
 
 import java.util.List;

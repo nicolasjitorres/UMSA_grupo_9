@@ -2,8 +2,6 @@ package location.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
-import person.model.Specialist;
-import shift.entity.Shift;
 
 import java.util.Objects;
 

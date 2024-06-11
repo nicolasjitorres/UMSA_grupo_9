@@ -22,7 +22,7 @@ public class Specialist extends User{
 	@OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Schedule> schedules; // Horarios
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "location_id", referencedColumnName = "id")
 	private Location location; // Ubicación
 

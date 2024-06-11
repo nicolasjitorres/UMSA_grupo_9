@@ -4,6 +4,7 @@ import location.model.Location;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import person.model.Role;
 import schedule.model.Schedule;
 
 import java.util.List;
@@ -13,11 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 public class SpecialistDTO
 {
-    private String id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String dni;
     private String speciality;
-    private List<Schedule> scheduleList;
+    private List<Schedule> schedules;
     private Location location;
+    private Role role;
+	private String email;
+	private String password;
 }

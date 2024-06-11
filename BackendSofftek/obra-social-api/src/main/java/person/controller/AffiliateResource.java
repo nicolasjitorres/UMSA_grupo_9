@@ -5,11 +5,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import person.dto.AffiliateDTO;
-import person.model.Affiliate;
+//import person.model.Affiliate;
 import person.service.IAffiliateService;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -62,15 +60,15 @@ public class AffiliateResource {
 		}
 	}
 
-	private AffiliateDTO convertToDTO(Affiliate affiliate) {
-		AffiliateDTO affiliateDTO = new AffiliateDTO();
-		affiliateDTO.setId(affiliate.getId());
-		affiliateDTO.setFirstName(affiliate.getFirstName());
-		affiliateDTO.setLastName(affiliate.getLastName());
-		affiliateDTO.setHealthInsuranceCode(affiliate.getHealthInsuranceCode());
-		affiliateDTO.setDni(affiliate.getDni());
-		return affiliateDTO;
-	}
+//	private AffiliateDTO convertToDTO(Affiliate affiliate) {
+//		AffiliateDTO affiliateDTO = new AffiliateDTO();
+//		affiliateDTO.setId(affiliate.getId());
+//		affiliateDTO.setFirstName(affiliate.getFirstName());
+//		affiliateDTO.setLastName(affiliate.getLastName());
+//		affiliateDTO.setHealthInsuranceCode(affiliate.getHealthInsuranceCode());
+//		affiliateDTO.setDni(affiliate.getDni());
+//		return affiliateDTO;
+//	}
 
 
 }

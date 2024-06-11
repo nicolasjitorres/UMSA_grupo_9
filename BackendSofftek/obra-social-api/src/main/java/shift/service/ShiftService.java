@@ -1,7 +1,6 @@
 package shift.service;
 
 
-import com.arjuna.ats.internal.arjuna.objectstore.ShadowNoFileLockStore;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

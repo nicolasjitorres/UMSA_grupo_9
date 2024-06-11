@@ -2,10 +2,6 @@ package person.service;
 
 import jakarta.ws.rs.core.Response;
 import person.dto.AffiliateDTO;
-import person.model.Affiliate;
-import schedule.model.Schedule;
-
-import java.util.List;
 
 public interface IAffiliateService {
     public Response getAffiliates();

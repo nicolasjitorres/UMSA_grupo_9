@@ -1,11 +1,14 @@
 package person.controller;
 
 
+import java.util.List;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import person.dto.SpecialistDTO;
+import person.dto.SpecialistMapper;
 import person.model.Specialist;
 import person.service.SpecialistService;
 
@@ -17,7 +20,8 @@ public class SpecialistResource {
 	private SpecialistService specialistService;
 	@GET
 	public Response getAllSpecialists(){
-		return specialistService.listAll();
+		List<Specialist> specialists = specialistService.getAllSpecialists();
+		return Response.ok(specialists).build();
 	}
 	
 	@GET
@@ -28,7 +32,9 @@ public class SpecialistResource {
 	
 	@POST
 	public Response createSpecialist(SpecialistDTO newSpecialistDTO) {
-		return specialistService.create(newSpecialistDTO);
+		Specialist newSpecialist = SpecialistMapper.dtoToEntity(newSpecialistDTO);
+		specialistService.createSpecialist(newSpecialist);
+		return Response.ok(newSpecialist).build();
 	}
 	
 	@PUT

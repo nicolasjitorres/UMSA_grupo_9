@@ -6,7 +6,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import shift.entity.Prescription;
-import shift.entity.Shift;
 import shift.entity.dto.PrescriptionDTO;
 import shift.service.PrescriptionService;
 

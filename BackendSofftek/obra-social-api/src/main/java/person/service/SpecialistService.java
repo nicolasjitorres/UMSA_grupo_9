@@ -4,7 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
 import location.model.Location;
 import location.repository.LocationRepository;
 import person.dto.SpecialistDTO;
@@ -18,15 +17,62 @@ import schedule.repository.ScheduleRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-@Transactional
+
+
 @ApplicationScoped
-public class SpecialistService {
-	@Inject
+public class SpecialistService implements ISpecialistService{
+
 	private SpecialistRepository specialistRepository;
-	@Inject
 	private LocationRepository locationRepository;
-	@Inject
 	private ScheduleRepository scheduleRepository;
+	
+	@Inject
+	public SpecialistService(SpecialistRepository specialistRepository, LocationRepository locationRepository, ScheduleRepository scheduleRepository) {	
+		this.locationRepository = locationRepository;
+		this.specialistRepository = specialistRepository;
+		this.scheduleRepository = scheduleRepository;
+	}
+	
+	
+	@Override
+	public List<Specialist> getAllSpecialists() {
+		return specialistRepository.listAll();
+	}
+
+	@Override
+	public Specialist getOneSpecialist(Long id) {
+		return specialistRepository.findById(id);
+	}
+
+	@Override
+	@Transactional
+	public void createSpecialist(Specialist specialist) {
+		specialistRepository.persist(specialist);
+	}
+
+	@Override
+	@Transactional
+	public void updateSpecialist(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	@Transactional
+	public void deleteSpecialist(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public Response listAll() {
 		List<Specialist> specialists = specialistRepository.findAll().stream().toList();
@@ -119,8 +165,8 @@ public class SpecialistService {
 				locationRepository.persist(updatedLocation);
 			}
 			// Actualizar horarios
-			if (editedSpecialist.getScheduleList() != null) {
-				for (Schedule updatedSchedule : editedSpecialist.getScheduleList()) {
+			if (editedSpecialist.getSchedules() != null) {
+				for (Schedule updatedSchedule : editedSpecialist.getSchedules()) {
 					scheduleRepository.persist(updatedSchedule);
 				}
 			}
@@ -142,11 +188,11 @@ public class SpecialistService {
 
 	private SpecialistDTO convertSpecialistToDTO(Specialist specialist) {
 		SpecialistDTO dto = new SpecialistDTO();
-		dto.setId(specialist.getId().toString());
+		dto.setId(specialist.getId());
 		dto.setFirstName(specialist.getFirstName());
 		dto.setLastName(specialist.getLastName());
 		dto.setSpeciality(specialist.getSpeciality().toString());
-		dto.setScheduleList(specialist.getSchedules());
+		dto.setSchedules(specialist.getSchedules());
 		dto.setLocation(specialist.getLocation());
 		dto.setDni(specialist.getDni());
 		return dto;
@@ -157,7 +203,7 @@ public class SpecialistService {
 			return null;
 		}
 		Specialist specialist = new Specialist();
-		specialist.setId(Long.parseLong(dto.getId()));
+		specialist.setId(dto.getId());
 		specialist.setFirstName(dto.getFirstName());
 		specialist.setDni(dto.getDni());
 		specialist.setLastName(dto.getLastName());
@@ -165,8 +211,8 @@ public class SpecialistService {
 		specialist.setSpeciality(Speciality.valueOf(dto.getSpeciality()));
 
 		// Convertir y asignar schedules
-		if (dto.getScheduleList() != null) {
-			specialist.setSchedules(dto.getScheduleList());
+		if (dto.getSchedules() != null) {
+			specialist.setSchedules(dto.getSchedules());
 		}
 
 		// Convertir y asignar location

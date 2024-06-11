@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import person.model.Specialist;
 
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
