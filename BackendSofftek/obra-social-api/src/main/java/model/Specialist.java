@@ -29,5 +29,9 @@ public class Specialist extends User{
 	@JoinColumn(name = "location_id")
 	@JsonBackReference
 	private Location location; // Ubicación
+	
+	@OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JsonManagedReference("specialist-shift")
+	private List<Shift> shifts;
 
 }

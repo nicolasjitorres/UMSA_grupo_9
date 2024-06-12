@@ -6,7 +6,9 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import model.Shift;
 import dto.ShiftDTO;
+import dto.mappers.ShiftMapper;
 import service.interfaces.IShiftService;
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -15,29 +17,37 @@ import service.interfaces.IShiftService;
 @Path("/turnos")
 public class ShiftResource {
 
-    @Inject
     private IShiftService iserviceShift;
+    private ShiftMapper shiftMapper;
 
-    @GET
+    @Inject
+    public ShiftResource(IShiftService iserviceShift, ShiftMapper shiftMapper) {
+		super();
+		this.iserviceShift = iserviceShift;
+		this.shiftMapper = shiftMapper;
+	}
+
+	@GET
     @Path("/")
     public Response getShifts(){
-        return Response.ok(iserviceShift.findShifts()).build();
+        return Response.ok(iserviceShift.getAllShifts()).build();
     }
 
     @GET
     @Path("/{id}")
     public Response getShift(@PathParam("id") Long id){
         try {
-            return Response.ok(iserviceShift.findShiftById(id)).build();
+            return Response.ok(iserviceShift.getShiftById(id)).build();
         } catch (Exception e){
             return Response.status(Response.Status.NOT_FOUND).entity(e).build();
         }
     }
 
     @POST
-    public Response addShift(ShiftDTO shift){
+    public Response addShift(ShiftDTO shiftDto){
         try {
-            return Response.ok("se agrego con exito").entity(iserviceShift.addShift(shift)).build();
+        	Shift newShift = iserviceShift.addShift(shiftMapper.createShiftDto(shiftDto));
+            return Response.ok(shiftMapper.entityToDto(newShift)).build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -45,9 +55,10 @@ public class ShiftResource {
 
     @PUT
     @Path("/{id}")
-    public Response updateShift(@PathParam("id") Long id, ShiftDTO shift){
+    public Response updateShift(@PathParam("id") Long id, ShiftDTO shiftDto){
         try {
-            return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shift)).build();//PASAR DTO
+        	Shift shift = shiftMapper.createShiftDto(shiftDto);
+            return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shift)).build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }

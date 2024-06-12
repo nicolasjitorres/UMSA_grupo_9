@@ -6,8 +6,6 @@ import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import model.Affiliate;
-import model.Specialist;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +16,6 @@ public class ShiftDTO {
     private LocalDate date; // Fecha del turno
     private LocalTime time; // Hora del turno
     private Boolean state; // Estado vigente
-    private Specialist specialist; // ID del especialista
-    private Affiliate affiliated; // ID del afiliado
+    private Long specialistId; // ID del especialista
+    private Long affiliatedId; // ID del afiliado
 }

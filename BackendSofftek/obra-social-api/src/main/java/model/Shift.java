@@ -1,5 +1,6 @@
 package model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -10,6 +11,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Data //genera los metodos necesarios
 @Entity //marcar la calse como entidad y asi generar la tabla de la bd
@@ -25,12 +27,14 @@ public class Shift {
     private LocalTime time; // horario
     private Boolean state; //estado vigente
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "specialist_id")
+    @JsonBackReference("specialist-shift")
     private Specialist specialist;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "affiliated_id")
-    private Affiliate affiliated;
+    @JsonBackReference
+    private Affiliate affiliate;
 
 }

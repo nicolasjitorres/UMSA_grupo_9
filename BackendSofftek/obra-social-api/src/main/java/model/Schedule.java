@@ -19,14 +19,9 @@ public class Schedule{
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@Column(name = "start_time")
     private LocalTime startTime;
-	
-	@Column(name = "end_time")
     private LocalTime endTime;
 	
-	@Column(name = "day_of_week")
 	@Enumerated
     private Day dayOfWeek;
 	

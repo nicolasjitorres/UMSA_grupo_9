@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-@Path("/afiliado")
+@Path("/afiliados")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Gestion de afiliados", description = "Métodos relacionados con la gestión de afiliados."
