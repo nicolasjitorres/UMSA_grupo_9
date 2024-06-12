@@ -1,9 +1,13 @@
 package dto.mappers;
 
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import dto.SpecialistDTO;
+import model.Schedule;
 import model.Specialist;
+import model.enums.Role;
 
 public class SpecialistMapper {
 
@@ -18,8 +22,7 @@ public class SpecialistMapper {
 		return passwordEncoder.encode(password);
 	}
 
-	public static Specialist dtoToEntity(SpecialistDTO specialistDTO) {
-
+	public static Specialist createSpecialistDto(SpecialistDTO specialistDTO) {
 		if (specialistDTO == null) {
 			return null;
 		}
@@ -30,16 +33,39 @@ public class SpecialistMapper {
 		specialist.setFirstName(specialistDTO.getFirstName());
 		specialist.setLastName(specialistDTO.getLastName());
 		specialist.setId(specialistDTO.getId());
-		specialist.setRole(specialistDTO.getRole());
+		specialist.setSpeciality(specialistDTO.getSpeciality());
+		specialist.setRole(Role.USER);
 		specialist.setLocation(specialistDTO.getLocation());
+		List<Schedule> schedules = specialistDTO.getSchedules();
+	    if (schedules != null) {
+	        for (Schedule schedule : schedules) {
+	            schedule.setSpecialist(specialist);
+	        }
+	    }
 		specialist.setSchedules(specialistDTO.getSchedules());
-
-//			Aqui utilizamos el metodo para hashear la contraseña y asi guardarla de manera segura en la BD, para en un futuro realizar validaciones
+		
+//		Aqui utilizamos el metodo para hashear la contraseña y asi guardarla de manera segura en la BD, para en un futuro realizar validaciones
 		if (specialistDTO.getPassword() != null) {
 			String hashedPassword = hashPassword(specialistDTO.getPassword());
 			specialist.setPassword(hashedPassword);
 		}
-
+		
+		System.out.println(specialist.getLocation());
+		
+		return specialist;
+	}
+	
+	public static Specialist updateSpecialistDto(SpecialistDTO specialistDTO) {
+		if (specialistDTO == null) {
+			return null;
+		}
+		Specialist specialist = new Specialist();
+		specialist.setDni(specialistDTO.getDni());
+		specialist.setFirstName(specialistDTO.getFirstName());
+		specialist.setLastName(specialistDTO.getLastName());
+		specialist.setId(specialistDTO.getId());
+		specialist.setLocation(specialistDTO.getLocation());
+		specialist.setSchedules(specialistDTO.getSchedules());
 		return specialist;
 	}
 
@@ -56,11 +82,10 @@ public class SpecialistMapper {
 		specialistDTO.setLastName(specialist.getLastName());
 		specialistDTO.setId(specialist.getId());
 		specialistDTO.setRole(specialist.getRole());
+		specialistDTO.setSpeciality(specialist.getSpeciality());
 		specialistDTO.setLocation(specialist.getLocation());
 		specialistDTO.setSchedules(specialist.getSchedules());
-
-//			Aqui devolvemos la contrasena en "null" por razones de seguridad y mantener la privacidad
-		specialistDTO.setPassword(null);
+		specialistDTO.setPassword(specialist.getPassword());
 
 		return specialistDTO;
 	}

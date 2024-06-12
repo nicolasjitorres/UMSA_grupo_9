@@ -18,7 +18,7 @@ public class SpecialistDTO
     private String firstName;
     private String lastName;
     private String dni;
-    private String speciality;
+    private Speciality speciality;
     private List<Schedule> schedules;
     private Location location;
     private Role role;

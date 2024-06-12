@@ -4,12 +4,13 @@ package service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import dto.AffiliateDTO;
-import dto.SpecialistDTO;
 import model.Affiliate;
 import model.Specialist;
 import repository.AffiliateRepository;
 import repository.SpecialistRepository;
+import service.interfaces.IAffiliateService;
+import service.interfaces.IShiftService;
+import service.interfaces.ISpecialistService;
 import repository.ShiftRepository;
 import model.Shift;
 import dto.ShiftDTO;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @Transactional
 @ApplicationScoped //esta anotacion se usa para los service
-public class ShiftService {
+public class ShiftService implements IShiftService{
 
     @Inject
     private ShiftRepository shiftRepository;
@@ -29,10 +30,11 @@ public class ShiftService {
     private AffiliateRepository affiliateRepository;
 
     @Inject
-    private AffiliateService affiliateService;
+    private IAffiliateService affiliateService;
 
     @Inject
-    private SpecialistService specialistService;
+    private ISpecialistService specialistService;
+    
     @Transactional
     public List<Shift> GetAllShift(){
         return shiftRepository.findAll().stream().toList();
@@ -58,7 +60,7 @@ public class ShiftService {
     }
 
     @Transactional
-    public void addShift(ShiftDTO shiftDTO) throws Exception
+    public Shift addShift(ShiftDTO shiftDTO) throws Exception
     {
 //        if(shiftDTO!=null)
 //        {
@@ -77,44 +79,59 @@ public class ShiftService {
 //        else {
 //            throw new Exception ("No se mandaron datos");
 //        }
+    	return null;
     }
 
     @Transactional
-    public void editShift(Long id,ShiftDTO shiftDTO) throws Exception {
-        Shift existingShift =shiftRepository.findById(id);
-        if(existingShift!=null)
-        {
-            if(shiftDTO!=null)
-            {
-                Specialist existSpecialist= specialistService.DTOtoSpecialist(specialistService.findById(shiftDTO.getSpecialist().getId()).readEntity(SpecialistDTO.class));
-                if(existSpecialist!= null)
-                {
-                    existingShift.setSpecialist(existSpecialist);
-                    existingShift.setDate(shiftDTO.getDate());
-                    existingShift.setTime(shiftDTO.getTime());
-                    existingShift.setDescription(shiftDTO.getDescription());
-                    shiftRepository.getEntityManager().merge(existingShift);
-                }
-                else {
-                    throw new Exception ("No existe ese especialista");
-                }
-            }
-            else
-                {
-                throw new Exception ("No se mandaron datos en body");
-                }
-        }else
-            {
-                throw new Exception ("No existe ese shift");
-            }
+    public Shift editShift(Long id,ShiftDTO shiftDTO) throws Exception {
+//        Shift existingShift =shiftRepository.findById(id);
+//        if(existingShift!=null)
+//        {
+//            if(shiftDTO!=null)
+//            {
+//                Specialist existSpecialist= specialistService.DTOtoSpecialist(specialistService.findSpecialistById(shiftDTO.getSpecialist().getId()).ge(SpecialistDTO.class));
+//                if(existSpecialist!= null)
+//                {
+//                    existingShift.setSpecialist(existSpecialist);
+//                    existingShift.setDate(shiftDTO.getDate());
+//                    existingShift.setTime(shiftDTO.getTime());
+//                    existingShift.setDescription(shiftDTO.getDescription());
+//                    shiftRepository.getEntityManager().merge(existingShift);
+//                }
+//                else {
+//                    throw new Exception ("No existe ese especialista");
+//                }
+//            }
+//            else
+//                {
+//                throw new Exception ("No se mandaron datos en body");
+//                }
+//        }else
+//            {
+//                throw new Exception ("No existe ese shift");
+//            }
+    	return null;
     }
 
-    @Transactional
-    public void DeleteShift(Long id) throws Exception {
+    @Override
+	public List<Shift> findShifts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Shift findShiftById(Long id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Transactional
+    public Shift deleteShift(Long id) throws Exception {
         Shift existingShift = shiftRepository.findById(id);
         if (existingShift == null) throw new Exception("no existe este turno en la base de datos");
         if (LocalDate.now().isAfter(existingShift.getDate()))
             throw new Exception("no se puede cancelar un turno que ya sucedio");
         shiftRepository.deleteById(id);
+        return null;
     }
 }

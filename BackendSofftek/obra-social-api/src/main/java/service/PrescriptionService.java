@@ -5,6 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import repository.PrescriptionRepository;
+import service.interfaces.IPrescriptionService;
 //import repository.ShiftRepository;
 import model.Prescription;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Transactional
 @ApplicationScoped
-public class PrescriptionService {
+public class PrescriptionService implements IPrescriptionService{
     @Inject
     private PrescriptionRepository prescriptionRepository;
 //    @Inject
@@ -23,7 +24,37 @@ public class PrescriptionService {
         return prescriptionRepository.findAll().stream().toList();
     }
 
-    public Prescription getPrescription(Long idPrescription) throws Exception {
+    @Override
+	public List<Prescription> getPrescriptions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Prescription getPrescriptionById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Prescription addPrescription(Prescription prescription) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Prescription deletePrescription(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Prescription editPrescription(Long id, Prescription prescription) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Prescription getPrescription(Long idPrescription) throws Exception {
         Prescription existingPrescription = prescriptionRepository.findById(idPrescription);
         if(existingPrescription == null) throw new Exception("no se encontro ninguna receta con este id");
         return existingPrescription;

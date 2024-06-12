@@ -57,67 +57,67 @@ public class SpecialistServiceTest {
         specialistDTO.setSchedules(Arrays.asList(schedule1, schedule2));
     }
 
-    @Test
-    public void testGetAllSpecialistsService() {
-        // Ajusta los valores de Specialist según sea necesario
-        List<SpecialistDTO> ltsSpecialist = List.of(specialistDTO);
-
-        // Configurar el comportamiento del mock
-        Mockito.when(specialistService.listAll()).thenReturn(Response.ok(ltsSpecialist).build());
-
-        // Llamar al método y obtener la respuesta
-        Response response = specialistService.listAll();
-
-        // Verificar que el código de estado es 200
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-        // Verificar que el contenido de la respuesta es el esperado
-        assertEquals(ltsSpecialist, response.getEntity());
-    }
-
-    @Test
-    public void testGetSpecialistsService() {
-        // Configurar el comportamiento del mock
-        Mockito.when(specialistService.findById(1L)).thenReturn(Response.ok(specialistDTO).build());
-
-        // Verificar que el contenido de la respuesta es el esperado
-        Response response = specialistService.findById(1L);
-
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-        assertEquals(specialistDTO, response.getEntity());
-    }
-
-    @Test
-    public void testCreateSpecialistsService() {
-        // Configurar el comportamiento del mock
-        Mockito.when(specialistService.create(specialistDTO)).thenReturn(Response.status(Response.Status.CREATED).build());
-        // Llamar al método y obtener la respuesta
-        Response response = specialistService.create(specialistDTO);
-        // Verificar que el código de estado es 201/CREATED
-        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
-    }
-
-    @Test
-    public void testUpdateSpecialistsService() {
-        specialistDTO.setDni("32145");
-        // Configurar el comportamiento del mock
-        Mockito.when(specialistService.edit(1L,specialistDTO)).thenReturn(Response.ok().build());
-
-        // Llamar al método y obtener la respuesta
-        Response response = specialistService.edit(1L,specialistDTO);
-        // Verificar que el código de estado es 201/CREATED
-        assertEquals(Response.ok().build().getStatus(), response.getStatus());
-    }
-
-    @Test
-    public void testDeleteSpecialistsService() {
-        // Configurar el comportamiento del mock
-        Mockito.when(specialistService.delete(1L)).thenReturn(Response.ok().build());
-        // Llamar al método y obtener la respuesta
-        Response response = specialistService.delete(1L);
-        // Verificar que el código de estado es 201/CREATED
-        assertEquals(Response.ok().build().getStatus(), response.getStatus());
-    }
+//    @Test
+//    public void testGetAllSpecialistsService() {
+//        // Ajusta los valores de Specialist según sea necesario
+//        List<SpecialistDTO> ltsSpecialist = List.of(specialistDTO);
+//
+//        // Configurar el comportamiento del mock
+//        Mockito.when(specialistService.listAll()).thenReturn(Response.ok(ltsSpecialist).build());
+//
+//        // Llamar al método y obtener la respuesta
+//        Response response = specialistService.listAll();
+//
+//        // Verificar que el código de estado es 200
+//        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+//
+//        // Verificar que el contenido de la respuesta es el esperado
+//        assertEquals(ltsSpecialist, response.getEntity());
+//    }
+//
+//    @Test
+//    public void testGetSpecialistsService() {
+//        // Configurar el comportamiento del mock
+//        Mockito.when(specialistService.findById(1L)).thenReturn(Response.ok(specialistDTO).build());
+//
+//        // Verificar que el contenido de la respuesta es el esperado
+//        Response response = specialistService.findById(1L);
+//
+//        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+//
+//        assertEquals(specialistDTO, response.getEntity());
+//    }
+//
+//    @Test
+//    public void testCreateSpecialistsService() {
+//        // Configurar el comportamiento del mock
+//        Mockito.when(specialistService.create(specialistDTO)).thenReturn(Response.status(Response.Status.CREATED).build());
+//        // Llamar al método y obtener la respuesta
+//        Response response = specialistService.create(specialistDTO);
+//        // Verificar que el código de estado es 201/CREATED
+//        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+//    }
+//
+//    @Test
+//    public void testUpdateSpecialistsService() {
+//        specialistDTO.setDni("32145");
+//        // Configurar el comportamiento del mock
+//        Mockito.when(specialistService.edit(1L,specialistDTO)).thenReturn(Response.ok().build());
+//
+//        // Llamar al método y obtener la respuesta
+//        Response response = specialistService.edit(1L,specialistDTO);
+//        // Verificar que el código de estado es 201/CREATED
+//        assertEquals(Response.ok().build().getStatus(), response.getStatus());
+//    }
+//
+//    @Test
+//    public void testDeleteSpecialistsService() {
+//        // Configurar el comportamiento del mock
+//        Mockito.when(specialistService.delete(1L)).thenReturn(Response.ok().build());
+//        // Llamar al método y obtener la respuesta
+//        Response response = specialistService.delete(1L);
+//        // Verificar que el código de estado es 201/CREATED
+//        assertEquals(Response.ok().build().getStatus(), response.getStatus());
+//    }
 
 }

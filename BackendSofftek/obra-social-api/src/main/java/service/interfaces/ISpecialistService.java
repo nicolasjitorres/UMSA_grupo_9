@@ -1,14 +1,13 @@
 package service.interfaces;
 
-import java.util.List;
-
 import model.Specialist;
 
-public interface ISpecialistService {
+import java.util.List;
 
-	List<Specialist> getAllSpecialists();
-	Specialist getOneSpecialist(Long id);
-	void createSpecialist(Specialist specialist);
-	void updateSpecialist(Long id);
-	void deleteSpecialist(Long id);
+public interface ISpecialistService {
+    public List<Specialist> getAllSpecialists();
+    public Specialist getSpecialistById(Long id);
+    public Specialist addSpecialist(Specialist specialist);
+    public Specialist deleteSpecialist(Long id);
+    public Specialist editSpecialist(Long id, Specialist specialist);
 }

@@ -24,19 +24,18 @@ public class AffiliateResource {
 
 	@Inject
 	private IAffiliateService affiliateService;
-	
+
 	@GET
-	public Response getAllAffiliates(){
+	public Response getAllAffiliates() {
 		List<Affiliate> affiliates = affiliateService.getAllAffiliates();
-		List<AffiliateDTO> affiliateDTOs = affiliates.stream()
-				.map(AffiliateMapper::entityToDto)
+		List<AffiliateDTO> affiliateDTOs = affiliates.stream().map(AffiliateMapper::entityToDto)
 				.collect(Collectors.toList());
 		return Response.ok(affiliateDTOs).build();
 	}
-	
+
 	@GET
 	@Path("{id}")
-	public Response getAffiliate(@PathParam("id") Long id){
+	public Response getAffiliate(@PathParam("id") Long id) {
 		Affiliate affiliate = affiliateService.getAffiliateById(id);
 		if (affiliate == null) {
 			return Response.status(Status.NOT_FOUND).entity("No existe afiliado con el id " + id).build();
@@ -44,23 +43,19 @@ public class AffiliateResource {
 			return Response.ok(AffiliateMapper.entityToDto(affiliate)).build();
 		}
 	}
-	
+
 	@POST
 	public Response createAffiliate(AffiliateDTO newAffiliateDTO) {
-		Affiliate newAffiliate = AffiliateMapper.dtoToEntity(newAffiliateDTO);
-		try {
-			Affiliate affiliate = affiliateService.addAffiliate(newAffiliate);
-			return Response.status(Response.Status.CREATED).entity(AffiliateMapper.entityToDto(affiliate)).build();		
-		} catch (Exception e) {
-			return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
-		}
+		Affiliate affiliate = affiliateService.addAffiliate(AffiliateMapper.createAffiliateDto(newAffiliateDTO));
+		return Response.ok(AffiliateMapper.entityToDto(affiliate)).build();
 	}
 
 	@PUT
 	@Path("{id}")
 	public Response updateAffiliate(@PathParam("id") Long id, AffiliateDTO editAffiliateDTO) {
 		try {
-			Affiliate updatedAffiliate =  affiliateService.editAffiliate(id, AffiliateMapper.dtoToEntity(editAffiliateDTO));
+			Affiliate updatedAffiliate = affiliateService.editAffiliate(id,
+					AffiliateMapper.updateAffiliateDto(editAffiliateDTO));
 			return Response.ok(AffiliateMapper.entityToDto(updatedAffiliate)).build();
 		} catch (Exception e) {
 			return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();

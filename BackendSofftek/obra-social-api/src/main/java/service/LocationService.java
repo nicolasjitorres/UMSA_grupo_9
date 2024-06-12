@@ -17,57 +17,56 @@ public class LocationService implements ILocationService {
 	private LocationRepository locationRepository;
 
 	@Override
-	public List<Location> findLocations() {
-		return locationRepository.findAll().stream().toList();
+	public List<Location> getAllLocations() {
+		return locationRepository.listAll();
 	}
 
 	@Override
-	public Location findLocationById(Long id) {
+	public Location getLocationById(Long id) {
 		return locationRepository.findById(id);
 	}
 
 	@Override
-	public Location addLocation(Location location) throws Exception {
-		if (location.getStreet() != null) {
+	public Location addLocation(Location location) {
+		Location existingLocation = locationRepository.findByDetails(location.getStreet(), location.getLocality(), location.getProvince(), location.getCountry());
+		if (existingLocation == null) {
 			locationRepository.persist(location);
-			return location;
+			return location;			
 		} else {
-			throw new Exception("Faltan agregar campos");
-		}
-
-	}
-
-	public Location deleteLocation(Long id) throws Exception {
-		Location deletedLocation = locationRepository.findById(id);
-		if (deletedLocation != null) {
-			locationRepository.deleteById(id);
-			return deletedLocation;
-		} else {
-			throw new Exception("No existe esa ubicación con id: " + id);
+			return null;
 		}
 	}
 
 	@Override
-	public Location editLocation(Long id, Location location) throws Exception {
+	public Location editLocation(Long id, Location location) {
 		Location existingLocation = locationRepository.findById(id);
 		if (existingLocation != null) {
-			if (location.getStreet() != null) {
+			Location sameLocation = locationRepository.findByDetails(location.getStreet(), location.getLocality(), location.getProvince(), location.getCountry());
+			if (sameLocation == null || sameLocation.getId().equals(existingLocation.getId())) {
 				existingLocation.setStreet(location.getStreet());
-			}
-			if (location.getLocality() != null) {
 				existingLocation.setLocality(location.getLocality());
-			}
-			if (location.getProvince() != null) {
 				existingLocation.setProvince(location.getProvince());
-			}
-			if (location.getCountry() != null) {
 				existingLocation.setCountry(location.getCountry());
+				locationRepository.persistAndFlush(existingLocation);
+				return existingLocation;
+			} else {
+				return null;
 			}
-			locationRepository.getEntityManager().merge(existingLocation);
-			return existingLocation;
 		} else {
-			throw new Exception("No existe esa ubicación con id: " + id);
+			return null;
+//			throw new Exception("No existe esa ubicación con id: " + id);
 		}
 	}
 
+	@Override
+	public Location deleteLocation(Long id) {
+		Location existingLocation = locationRepository.findById(id);
+		if (existingLocation != null) {
+			locationRepository.deleteById(id);
+			return existingLocation;
+		} else {
+			return null;
+//			throw new Exception("No existe esa ubicación con id: " + id);
+		}
+	}
 }

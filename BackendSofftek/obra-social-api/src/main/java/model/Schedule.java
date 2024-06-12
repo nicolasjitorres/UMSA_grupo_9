@@ -1,7 +1,5 @@
 package model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,12 +8,18 @@ import model.enums.Day;
 
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Schedule extends PanacheEntity{
+public class Schedule{
 
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	@Column(name = "start_time")
     private LocalTime startTime;
 	
@@ -25,10 +29,10 @@ public class Schedule extends PanacheEntity{
 	@Column(name = "day_of_week")
 	@Enumerated
     private Day dayOfWeek;
-
-    @JsonIgnore //ignora al especialista en el json enviado y evita el overflow
+	
     @ManyToOne
     @JoinColumn(name = "specialist_id")
-    private Specialist specialist; // Especialista
+    @JsonBackReference
+    private Specialist specialist;
 
 }
