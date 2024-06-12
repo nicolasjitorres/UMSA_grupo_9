@@ -17,11 +17,13 @@ public class SpecialistService implements ISpecialistService{
 
 	private SpecialistRepository specialistRepository;
 	private LocationRepository locationRepository;
+	private LocationService locationService;
 	
 	@Inject
-	public SpecialistService(SpecialistRepository specialistRepository, LocationRepository locationRepository) {	
+	public SpecialistService(SpecialistRepository specialistRepository, LocationRepository locationRepository, LocationService locationService) {	
 		this.specialistRepository = specialistRepository;
 		this.locationRepository = locationRepository;
+		this.locationService = locationService;
 	}
 	
 	
@@ -48,7 +50,8 @@ public class SpecialistService implements ISpecialistService{
         if (existingLocation != null) {
             newSpecialist.setLocation(existingLocation);
         } else {
-            locationRepository.persist(location);
+        	locationService.addLocation(location);
+//            locationRepository.persist(location);
         }
 		specialistRepository.persist(newSpecialist);
 		return newSpecialist;

@@ -5,7 +5,7 @@ import model.Prescription;
 import java.util.List;
 
 public interface IPrescriptionService {
-    public List<Prescription> getPrescriptions();
+    public List<Prescription> getAllPrescriptions();
     public Prescription getPrescriptionById(Long id);
     public Prescription addPrescription(Prescription prescription);
     public Prescription deletePrescription(Long id);

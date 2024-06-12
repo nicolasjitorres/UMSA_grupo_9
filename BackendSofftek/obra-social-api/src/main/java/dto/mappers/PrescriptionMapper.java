@@ -1,11 +1,24 @@
 package dto.mappers;
 
 import dto.PrescriptionDTO;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import model.Prescription;
+import model.Shift;
+import service.interfaces.IShiftService;
 
+@ApplicationScoped
 public class PrescriptionMapper {
+	
+	private IShiftService shiftService;
 
-	public static Prescription dtoToEntity(PrescriptionDTO prescriptionDTO) {
+	@Inject
+	public PrescriptionMapper(IShiftService shiftService) {
+		super();
+		this.shiftService = shiftService;
+	}
+
+	public Prescription dtoToEntity(PrescriptionDTO prescriptionDTO) {
 		if (prescriptionDTO == null) {
 			return null;
 		}
@@ -13,12 +26,14 @@ public class PrescriptionMapper {
 		Prescription prescription = new Prescription();
 		prescription.setId(prescriptionDTO.getId());
 		prescription.setDescription(prescriptionDTO.getDescription());
-		prescription.setIdShift(prescriptionDTO.getIdShift());
+		
+		Shift shift = shiftService.getShiftById(prescriptionDTO.getIdShift());
+		prescription.setShift(shift);
 		
 		return prescription;
 	}
 	
-	public static PrescriptionDTO entityToDto(Prescription prescription) {
+	public PrescriptionDTO entityToDto(Prescription prescription) {
 		if (prescription == null) {
 			return null;
 		}
@@ -26,7 +41,7 @@ public class PrescriptionMapper {
 		PrescriptionDTO prescriptionDto = new PrescriptionDTO();
 		prescriptionDto.setId(prescription.getId());
 		prescriptionDto.setDescription(prescription.getDescription());
-		prescriptionDto.setIdShift(prescription.getIdShift());
+		prescriptionDto.setIdShift(prescription.getShift().getId());
 		
 		return prescriptionDto;
 	}

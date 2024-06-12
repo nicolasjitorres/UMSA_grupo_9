@@ -3,6 +3,7 @@ package resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,7 +19,7 @@ import service.interfaces.ISpecialistService;
 public class SpecialistResource {
 	@Inject
 	private ISpecialistService specialistService;
-
+	
 	@GET
 	public Response getAllSpecialists() {
 		List<Specialist> specialists = specialistService.getAllSpecialists();
@@ -30,7 +31,12 @@ public class SpecialistResource {
 	@GET
 	@Path("{id}")
 	public Response getOneSpecialist(@PathParam("id") Long id) {
-		return Response.ok(specialistService.getSpecialistById(id)).build();
+		Specialist existSpecialist = specialistService.getSpecialistById(id);
+		if (existSpecialist == null) {
+			return Response.status(Response.Status.NOT_FOUND).entity("No existe el usuario con el id " + id + ".").build();
+		} else {
+			return Response.ok(SpecialistMapper.entityToDto(existSpecialist)).build();
+		}
 	}
 
 	@POST

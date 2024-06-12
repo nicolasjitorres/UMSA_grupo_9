@@ -57,7 +57,7 @@ public class ShiftResource {
     @Path("/{id}")
     public Response updateShift(@PathParam("id") Long id, ShiftDTO shiftDto){
         try {
-        	Shift shift = shiftMapper.createShiftDto(shiftDto);
+        	Shift shift = shiftMapper.updateShiftDto(shiftDto);
             return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shift)).build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

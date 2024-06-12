@@ -20,13 +20,6 @@ public class Prescription{
 
     @OneToOne(optional = false)
     @JoinColumn(name = "shift_id", nullable = false)
-    private Shift idShift;
+    private Shift shift;
 
-    @Override//puse esto o genera overflow cuando se muestre
-    public String toString() {
-        return "Prescription{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

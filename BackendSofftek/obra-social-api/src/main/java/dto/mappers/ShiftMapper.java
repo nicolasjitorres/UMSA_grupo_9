@@ -41,6 +41,19 @@ public class ShiftMapper {
 		return shift;
 	}
 	
+	public Shift updateShiftDto(ShiftDTO shiftDTO) {
+		if (shiftDTO == null) {
+			return null;
+		}
+		Shift shift = new Shift();
+		shift.setId(shiftDTO.getId());
+		shift.setDate(shiftDTO.getDate());
+		shift.setState(shiftDTO.getState());
+		shift.setTime(shiftDTO.getTime());
+		
+		return shift;
+	}
+	
 	public ShiftDTO entityToDto(Shift shift) {
 		if (shift == null) {
 			return null;

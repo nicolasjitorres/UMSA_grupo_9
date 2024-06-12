@@ -1,6 +1,5 @@
 package service.interfaces;
 
-import dto.ShiftDTO;
 import model.Shift;
 
 import java.util.List;
