@@ -14,17 +14,19 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "schedules")
 public class Schedule{
 
 	@Id
 	@GeneratedValue
 	private Long id;
+    @Column(name = "start_time")
     private LocalTime startTime;
+    @Column(name = "end_time")
     private LocalTime endTime;
-	
 	@Enumerated
     private Day dayOfWeek;
-	
+
     @ManyToOne
     @JoinColumn(name = "specialist_id")
     @JsonBackReference
