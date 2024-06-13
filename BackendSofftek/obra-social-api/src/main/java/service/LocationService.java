@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import model.Location;
+import model.Specialist;
 import repository.LocationRepository;
 import service.interfaces.ILocationService;
 
@@ -15,6 +16,7 @@ public class LocationService implements ILocationService {
 
 	@Inject
 	private LocationRepository locationRepository;
+
 	@Override
 	public List<Location> findLocations() {
 		return locationRepository.findAll().stream().toList();
@@ -41,7 +43,12 @@ public class LocationService implements ILocationService {
 	public Location deleteLocation(Long id) throws Exception {
 		Location deletedLocation = locationRepository.findById(id);
 		if (deletedLocation != null) {
+			if (!deletedLocation.getSpecialists().isEmpty()) {
+				throw new Exception("No se puede borrar la ubicación porque está asociada a algún especialista.");
+			}
+			else {
 			locationRepository.deleteById(id);
+			}
 			return deletedLocation;
 		} else {
 			throw new Exception("No existe esa ubicación con id: " + id);
