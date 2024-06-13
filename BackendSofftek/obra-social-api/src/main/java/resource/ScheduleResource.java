@@ -18,16 +18,15 @@ public class ScheduleResource
     private IScheduleService scheduleService;
 
     @GET
-    public Response getSchedules()
+    public List<Schedule> getSchedules()
     {
-    	List<Schedule> schedules = scheduleService.getAllSchedules();
-        return Response.ok(schedules).build();
+        return scheduleService.findSchedules();
     }
     @GET
     @Path("/{id}")
-    public Response getScheduleById(@PathParam("id") Long id)
+    public Schedule getScheduleById(@PathParam("id") Long id)
     {
-        return Response.ok(scheduleService.getScheduleById(id)).build();
+        return scheduleService.findScheduleById(id);
     }
 
     @POST
@@ -37,18 +36,6 @@ public class ScheduleResource
             return Response.status(Response.Status.CREATED).entity(schedule).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        }
-    }
-    
-    @PUT
-    @Path("/{id}")
-    public Response updateSchedule(@PathParam("id") Long id, Schedule schedule)
-    {
-        try {
-            Schedule updatedSchedule = scheduleService.editSchedule(id, schedule);
-            return Response.ok(updatedSchedule).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -64,4 +51,16 @@ public class ScheduleResource
         }
 
     }
+    @PUT
+    @Path("/{id}")
+    public Response updateSchedule(@PathParam("id") Long id, Schedule schedule)
+    {
+        try {
+            Schedule updatedSchedule = scheduleService.editSchedule(id, schedule);
+            return Response.ok(updatedSchedule).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
+    }
+
 }
