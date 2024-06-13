@@ -4,13 +4,12 @@ import model.Location;
 
 import java.util.List;
 
-
 public interface ILocationService {
 
-    public List<Location> getAllLocations();
-    public Location getLocationById(Long id);
-    public Location addLocation(Location location);
-    public Location editLocation(Long id, Location location);
-    public Location deleteLocation(Long id);
+    public List<Location> findLocations();
+    public Location findLocationById(Long id);
+    public Location addLocation(Location location) throws Exception;
+    public Location deleteLocation(Long id) throws Exception;
+    public Location editLocation(Long id, Location location) throws Exception ;
 
 }

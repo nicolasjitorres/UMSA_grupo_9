@@ -5,7 +5,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.Location;
-import service.interfaces.ILocationService;
+import service.LocationService;
 
 import java.util.List;
 
@@ -16,31 +16,43 @@ import java.util.List;
 public class LocationResource {
 
 	@Inject
-	private ILocationService locationService;
+	private LocationService locationService;
 
 	@GET
 	public List<Location> getAllLocations() {
-		return locationService.getAllLocations();
+		return locationService.findLocations();
 	}
 
 	@GET
 	@Path("/{id}")
 	public Response getLocationById(@PathParam("id") Long id) {
-		Location location = locationService.getLocationById(id);
-		return Response.ok(location).build();
+		Location location = locationService.findLocationById(id);
+		if (location != null) {
+			return Response.ok(location).build();
+		} else {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
 	}
 
 	@POST
 	public Response addLocation(Location location) {
-		locationService.addLocation(location);
-		return Response.status(Response.Status.CREATED).entity(location).build();
+		try {
+			locationService.addLocation(location);
+			return Response.status(Response.Status.CREATED).entity(location).build();
+		} catch (Exception e){
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+		}
 	}
 
 	@PUT
 	@Path("/{id}")
 	public Response updateLocation(@PathParam("id") Long id, Location location) {
-		Location updatedLocation = locationService.editLocation(id, location);
-		return Response.ok(updatedLocation).build();
+		try {
+			Location updatedLocation = locationService.editLocation(id, location);
+			return Response.ok(updatedLocation).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+		}
 	}
 
 	@DELETE

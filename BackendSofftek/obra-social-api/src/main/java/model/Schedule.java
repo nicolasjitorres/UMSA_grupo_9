@@ -21,10 +21,10 @@ public class Schedule{
 	private Long id;
     private LocalTime startTime;
     private LocalTime endTime;
-	
+
 	@Enumerated
     private Day dayOfWeek;
-	
+
     @ManyToOne
     @JoinColumn(name = "specialist_id")
     @JsonBackReference
