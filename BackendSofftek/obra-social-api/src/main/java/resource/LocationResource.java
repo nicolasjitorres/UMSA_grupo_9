@@ -5,6 +5,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.Location;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import service.LocationService;
 
 import java.util.List;
@@ -19,12 +22,21 @@ public class LocationResource {
 	private LocationService locationService;
 
 	@GET
+	@Operation(summary = "Obtener todas las ubicaciones", description = "Retorna una lista de todas las ubicaciones.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Ubicaciones obtenidas con éxito"),
+			@APIResponse(responseCode = "404", description = "No se encontraron ubicaciones")
+	})
 	public List<Location> getAllLocations() {
 		return locationService.findLocations();
 	}
-
 	@GET
 	@Path("/{id}")
+	@Operation(summary = "Obtener ubicación por ID", description = "Retorna una ubicación específica por su ID.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Ubicación obtenida con éxito"),
+			@APIResponse(responseCode = "404", description = "Ubicación no encontrada")
+	})
 	public Response getLocationById(@PathParam("id") Long id) {
 		Location location = locationService.findLocationById(id);
 		if (location != null) {
@@ -35,6 +47,11 @@ public class LocationResource {
 	}
 
 	@POST
+	@Operation(summary = "Agregar una nueva ubicación", description = "Agrega una nueva ubicación.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "201", description = "Ubicación creada con éxito"),
+			@APIResponse(responseCode = "400", description = "Solicitud incorrecta")
+	})
 	public Response addLocation(Location location) {
 		try {
 			locationService.addLocation(location);
@@ -46,6 +63,11 @@ public class LocationResource {
 
 	@PUT
 	@Path("/{id}")
+	@Operation(summary = "Actualizar una ubicación", description = "Actualiza una ubicación existente por su ID.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Ubicación actualizada con éxito"),
+			@APIResponse(responseCode = "404", description = "Ubicación no encontrada")
+	})
 	public Response updateLocation(@PathParam("id") Long id, Location location) {
 		try {
 			Location updatedLocation = locationService.editLocation(id, location);
@@ -57,6 +79,11 @@ public class LocationResource {
 
 	@DELETE
 	@Path("/{id}")
+	@Operation(summary = "Eliminar una ubicación", description = "Elimina una ubicación existente por su ID.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Ubicación eliminada con éxito"),
+			@APIResponse(responseCode = "404", description = "Ubicación no encontrada")
+	})
 	public Response deleteLocation(@PathParam("id") Long id) {
 		try {
 			Location deletedLocation = locationService.deleteLocation(id);
