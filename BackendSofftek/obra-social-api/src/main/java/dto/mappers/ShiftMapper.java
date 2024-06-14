@@ -6,13 +6,17 @@ import jakarta.inject.Inject;
 import model.Affiliate;
 import model.Shift;
 import model.Specialist;
+import service.SpecialistService;
 import service.interfaces.IAffiliateService;
 import service.interfaces.ISpecialistService;
 
 @ApplicationScoped
 public class ShiftMapper {
-	
+
+
+
 	private ISpecialistService specialistService;
+
 	private IAffiliateService affiliateService;
 	
 	
@@ -22,7 +26,7 @@ public class ShiftMapper {
 		this.affiliateService = affiliateService;
 	}
 
-	public Shift createShiftDto(ShiftDTO shiftDTO) {
+	public Shift createShiftDto(ShiftDTO shiftDTO) throws Exception{
 		if (shiftDTO == null) {
 			return null;
 		}
@@ -31,11 +35,12 @@ public class ShiftMapper {
 		shift.setId(shiftDTO.getId());
 		shift.setDate(shiftDTO.getDate());
 		shift.setDescription(shiftDTO.getDescription());
-		Specialist existingSpecialist = specialistService.getSpecialistById(shiftDTO.getSpecialistId());
+		Specialist existingSpecialist = this.specialistService.getSpecialistById(shiftDTO.getSpecialistId());
 		Affiliate existingAffiliate = affiliateService.getAffiliateById(shiftDTO.getAffiliatedId());
+		if(existingAffiliate == null) throw new Exception("No existe este afiliado");
+		if(existingSpecialist == null) throw new Exception("No existe este Especialista");
 		shift.setAffiliate(existingAffiliate);
 		shift.setSpecialist(existingSpecialist);
-		shift.setState(shiftDTO.getState());
 		shift.setTime(shiftDTO.getTime());
 		
 		return shift;
@@ -48,7 +53,6 @@ public class ShiftMapper {
 		Shift shift = new Shift();
 		shift.setId(shiftDTO.getId());
 		shift.setDate(shiftDTO.getDate());
-		shift.setState(shiftDTO.getState());
 		shift.setTime(shiftDTO.getTime());
 		
 		return shift;
@@ -65,7 +69,6 @@ public class ShiftMapper {
 		shiftDto.setDate(shift.getDate());
 		shiftDto.setDescription(shift.getDescription());
 		shiftDto.setSpecialistId(shift.getSpecialist().getId());
-		shiftDto.setState(shift.getState());
 		shiftDto.setTime(shift.getTime());
 		
 		return shiftDto;

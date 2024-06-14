@@ -15,7 +15,6 @@ public class ShiftDTO {
     private String description; // Descripción del turno
     private LocalDate date; // Fecha del turno
     private LocalTime time; // Hora del turno
-    private Boolean state; // Estado vigente
     private Long specialistId; // ID del especialista
     private Long affiliatedId; // ID del afiliado
 }

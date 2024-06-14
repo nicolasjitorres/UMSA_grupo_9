@@ -46,8 +46,8 @@ public class ShiftResource {
     @POST
     public Response addShift(ShiftDTO shiftDto){
         try {
-        	Shift newShift = iserviceShift.addShift(shiftMapper.createShiftDto(shiftDto));
-            return Response.ok(shiftMapper.entityToDto(newShift)).build();
+        	Shift newShift = iserviceShift.addShift(shiftDto);
+            return Response.ok(newShift).build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -57,8 +57,7 @@ public class ShiftResource {
     @Path("/{id}")
     public Response updateShift(@PathParam("id") Long id, ShiftDTO shiftDto){
         try {
-        	Shift shift = shiftMapper.updateShiftDto(shiftDto);
-            return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shift)).build();
+            return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shiftDto)).build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
