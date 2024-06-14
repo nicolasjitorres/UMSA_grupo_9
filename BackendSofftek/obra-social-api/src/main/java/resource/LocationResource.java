@@ -28,31 +28,45 @@ public class LocationResource {
 
 	@GET
 	public List<Location> getAllLocations() {
-		return locationService.getAllLocations();
+		return locationService.findLocations();
 	}
 
 	@GET
 	@Path("/{id}")
 	public Response getLocationById(@PathParam("id") Long id) {
-		Location location = locationService.getLocationById(id);
-		return Response.ok(location).build();
+		Location location = locationService.findLocationById(id);
+		if (location != null) {
+			return Response.ok(location).build();
+		} else {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
 	}
 
 	@POST
 	public Response addLocation(Location location) {
-		List<String> locationErrors = locationValidator.validateLocation(location);
-		if (locationErrors != null) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(locationErrors.toString()).build();
+//		List<String> locationErrors = locationValidator.validateLocation(location);
+//		if (locationErrors != null) {
+//			return Response.status(Response.Status.BAD_REQUEST).entity(locationErrors.toString()).build();
+//		}
+//		locationService.addLocation(location);
+//		return Response.status(Response.Status.CREATED).entity(location).build();
+		try {
+			locationService.addLocation(location);
+			return Response.status(Response.Status.CREATED).entity(location).build();
+		} catch (Exception e){
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
-		locationService.addLocation(location);
-		return Response.status(Response.Status.CREATED).entity(location).build();
 	}
 
 	@PUT
 	@Path("/{id}")
 	public Response updateLocation(@PathParam("id") Long id, Location location) {
-		Location updatedLocation = locationService.editLocation(id, location);
-		return Response.ok(updatedLocation).build();
+		try {
+			Location updatedLocation = locationService.editLocation(id, location);
+			return Response.ok(updatedLocation).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+		}
 	}
 
 	@DELETE

@@ -25,7 +25,6 @@ public class Shift {
     private String description; //descripcion
     private LocalDate date; //fecha del turno
     private LocalTime time; // horario
-    private Boolean state; //estado vigente
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "specialist_id")

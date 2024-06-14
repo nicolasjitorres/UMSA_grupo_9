@@ -50,9 +50,13 @@ public class SpecialistService implements ISpecialistService{
         if (existingLocation != null) {
             newSpecialist.setLocation(existingLocation);
         } else {
-        	locationService.addLocation(location);
+			try {
+				locationService.addLocation(location);
+				specialistRepository.persist(newSpecialist);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
         }
-		specialistRepository.persist(newSpecialist);
 		return newSpecialist;
 	}
 

@@ -17,12 +17,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "locations")
 public class Location{
-
 	@Id
 	@GeneratedValue
-	private Long id;
-	
+	private Long id;	
 	@NotBlank(message = ": El campo 'calle' no debe estar vacío.")
     private String street;
 	
@@ -34,7 +33,7 @@ public class Location{
     
 	@NotBlank(message = ": El campo 'país' no debe estar vacío.")
     private String country;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
