@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.Location;
 import service.interfaces.ILocationService;
+import validator.LocationValidator;
 
 import java.util.List;
 
@@ -14,9 +15,16 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 
 public class LocationResource {
-
-	@Inject
+	
 	private ILocationService locationService;
+	private LocationValidator locationValidator;
+	
+	@Inject
+	public LocationResource(ILocationService locationService, LocationValidator locationValidator) {
+		super();
+		this.locationService = locationService;
+		this.locationValidator = locationValidator;
+	}
 
 	@GET
 	public List<Location> getAllLocations() {
@@ -32,6 +40,10 @@ public class LocationResource {
 
 	@POST
 	public Response addLocation(Location location) {
+		List<String> locationErrors = locationValidator.validateLocation(location);
+		if (locationErrors != null) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(locationErrors.toString()).build();
+		}
 		locationService.addLocation(location);
 		return Response.status(Response.Status.CREATED).entity(location).build();
 	}

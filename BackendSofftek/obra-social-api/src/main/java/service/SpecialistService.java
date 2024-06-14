@@ -51,7 +51,6 @@ public class SpecialistService implements ISpecialistService{
             newSpecialist.setLocation(existingLocation);
         } else {
         	locationService.addLocation(location);
-//            locationRepository.persist(location);
         }
 		specialistRepository.persist(newSpecialist);
 		return newSpecialist;
