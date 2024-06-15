@@ -12,20 +12,24 @@ import java.util.List;
 @ApplicationScoped
 @Transactional
 public class ScheduleService implements IScheduleService {
+	
 	@Inject
 	private ScheduleRepository scheduleRepository;
+	
 	@Override
 	public List<Schedule> findSchedules() {
 		return scheduleRepository.findAll().stream().toList();
 	}
+	
 	@Override
 	public Schedule findScheduleById(Long id) {
 		return scheduleRepository.findById(id);
 	}
+	
 	@Override
 	public Schedule addSchedule(Schedule schedule) throws Exception{
-		//validaciones no vacias
 		if(schedule.getDayOfWeek()!=null) {
+			System.out.println("holaaa");
 			scheduleRepository.persist(schedule);
 			return schedule;
 		}
@@ -34,6 +38,7 @@ public class ScheduleService implements IScheduleService {
 			throw new Exception(("Faltan agregar campos para el horario"));
 		}
 	}
+	
 	@Override
 	public Schedule deleteSchedule(Long id) throws Exception{
 		Schedule deletedSchedule = scheduleRepository.findById(id);
@@ -46,6 +51,8 @@ public class ScheduleService implements IScheduleService {
 			throw new Exception(("No existe horario con la id: "+id));
 		}
 	}
+	
+	@Override
 	public Schedule editSchedule(Long id, Schedule schedule)throws Exception {
 		Schedule existingSchedule = scheduleRepository.findById(id);
 		if (existingSchedule != null) {

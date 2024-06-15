@@ -1,12 +1,13 @@
 package model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.enums.Day;
 
-import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -20,10 +21,18 @@ public class Schedule{
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@NotNull(message = ": El campo 'hora de inicio' es obligatorio.")
+    @Pattern(regexp = "^([01]\\d|2[0-3]):([0-5]\\d):([0-5]\\d)$", message = ": El campo 'hora de inicio' debe estar en el formato HH:mm:ss y ser válido.")
     @Column(name = "start_time")
-    private LocalTime startTime;
+    private String startTime;
+	
+	@NotNull(message = ": El campo 'hora de fin' es obligatorio.")
+    @Pattern(regexp = "^([01]\\d|2[0-3]):([0-5]\\d):([0-5]\\d)$", message = ": El campo 'hora de fin' debe estar en el formato HH:mm:ss y ser válido.")
     @Column(name = "end_time")
-    private LocalTime endTime;
+    private String endTime;
+	
+	@NotNull(message = ": El campo 'dia de la semana' es obligatorio.")
 	@Enumerated
     private Day dayOfWeek;
 
