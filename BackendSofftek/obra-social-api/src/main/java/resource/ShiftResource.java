@@ -3,6 +3,7 @@ package resource;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -17,15 +18,8 @@ import service.interfaces.IShiftService;
 @Path("/turnos")
 public class ShiftResource {
 
-    private IShiftService iserviceShift;
-    private ShiftMapper shiftMapper;
-
     @Inject
-    public ShiftResource(IShiftService iserviceShift, ShiftMapper shiftMapper) {
-		super();
-		this.iserviceShift = iserviceShift;
-		this.shiftMapper = shiftMapper;
-	}
+    private IShiftService iserviceShift;
 
 	@GET
     @Path("/")
@@ -44,7 +38,7 @@ public class ShiftResource {
     }
 
     @POST
-    public Response addShift(ShiftDTO shiftDto){
+    public Response addShift(@Valid ShiftDTO shiftDto){
         try {
         	Shift newShift = iserviceShift.addShift(shiftDto);
             return Response.ok(newShift).build();
@@ -55,7 +49,7 @@ public class ShiftResource {
 
     @PUT
     @Path("/{id}")
-    public Response updateShift(@PathParam("id") Long id, ShiftDTO shiftDto){
+    public Response updateShift(@PathParam("id") Long id,@Valid ShiftDTO shiftDto){
         try {
             return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shiftDto)).build();
         }catch (Exception e){

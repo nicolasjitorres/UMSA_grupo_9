@@ -2,8 +2,10 @@ package service.interfaces;
 
 import java.util.List;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import model.Affiliate;
 
+@ApplicationScoped
 public interface IAffiliateService {
     public List<Affiliate> getAllAffiliates();
     public Affiliate getAffiliateById(Long id);

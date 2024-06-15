@@ -3,9 +3,11 @@ package dto.mappers;
 import dto.ShiftDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import model.Affiliate;
 import model.Shift;
 import model.Specialist;
+import service.AffiliateService;
 import service.SpecialistService;
 import service.interfaces.IAffiliateService;
 import service.interfaces.ISpecialistService;
@@ -13,18 +15,12 @@ import service.interfaces.ISpecialistService;
 @ApplicationScoped
 public class ShiftMapper {
 
-
-
-	private ISpecialistService specialistService;
-
-	private IAffiliateService affiliateService;
-	
-	
 	@Inject
-	public ShiftMapper(ISpecialistService specialistService, IAffiliateService affiliateService) {
-		this.specialistService = specialistService;
-		this.affiliateService = affiliateService;
-	}
+	private ISpecialistService iSpecialistService;
+
+	@Inject
+	private IAffiliateService iAffiliateService;
+
 
 	public Shift createShiftDto(ShiftDTO shiftDTO) throws Exception{
 		if (shiftDTO == null) {
@@ -35,8 +31,8 @@ public class ShiftMapper {
 		shift.setId(shiftDTO.getId());
 		shift.setDate(shiftDTO.getDate());
 		shift.setDescription(shiftDTO.getDescription());
-		Specialist existingSpecialist = this.specialistService.getSpecialistById(shiftDTO.getSpecialistId());
-		Affiliate existingAffiliate = affiliateService.getAffiliateById(shiftDTO.getAffiliatedId());
+		Specialist existingSpecialist = iSpecialistService.getSpecialistById(shiftDTO.getSpecialistId());
+		Affiliate existingAffiliate = iAffiliateService.getAffiliateById(shiftDTO.getAffiliatedId());
 		if(existingAffiliate == null) throw new Exception("No existe este afiliado");
 		if(existingSpecialist == null) throw new Exception("No existe este Especialista");
 		shift.setAffiliate(existingAffiliate);

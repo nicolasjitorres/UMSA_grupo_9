@@ -25,7 +25,7 @@ public class Specialist extends User{
 	@JsonManagedReference
 	private List<Schedule> schedules; // Horarios
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "location_id")
 	@JsonBackReference
 	private Location location; // Ubicación

@@ -22,21 +22,20 @@ public class ShiftService implements IShiftService {
 	private ShiftRepository shiftRepository;
 
 	@Inject
-	private ISpecialistService specialistService;
-
-	@Inject
-	private IAffiliateService affiliateService;
+	private ShiftMapper shiftMapper;
 
 	public List<Shift> getAllShifts() {
 		return shiftRepository.listAll();
 	}
 
 	public Shift getShiftById(Long idShift) {
+
 		return shiftRepository.findById(idShift);
 	}
 
 	public Shift addShift(ShiftDTO shiftDTO) throws Exception{
-		Shift shift = new ShiftMapper(specialistService,affiliateService).createShiftDto(shiftDTO);
+		Shift shift = shiftMapper.createShiftDto(shiftDTO);
+		if(shiftRepository.findByDateAndHour(shift.getDate(),shift.getTime())!=null) throw new Exception("ya existe un turno con esta fecha y hora");
 		shiftRepository.persist(shift);
 		return shift;
 	}
@@ -44,17 +43,12 @@ public class ShiftService implements IShiftService {
 	@Transactional
 	public Shift editShift(Long id, ShiftDTO shiftDTO) throws Exception{
 		Shift existingShift = shiftRepository.findById(id);
-
-		if (existingShift != null) {
-			Shift updateShift = new ShiftMapper(specialistService,affiliateService).updateShiftDto(shiftDTO);
-			existingShift.setDate(updateShift.getDate());
-			existingShift.setTime(updateShift.getTime());
-			shiftRepository.persistAndFlush(existingShift);
-			return existingShift;
-		} else {
-			return null;
-//			throw new Exception("El afiliado con id " + id + " no existe.");
-		}
+		if (existingShift == null) throw new Exception("no existe ningun turno con este id");
+		Shift updateShift = shiftMapper.updateShiftDto(shiftDTO);
+		existingShift.setDate(updateShift.getDate());
+		existingShift.setTime(updateShift.getTime());
+		shiftRepository.persistAndFlush(existingShift);
+		return existingShift;
 	}
 
 	@Transactional

@@ -26,12 +26,12 @@ public class Shift {
     private LocalDate date; //fecha del turno
     private LocalTime time; // horario
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "specialist_id")
     @JsonBackReference("specialist-shift")
     private Specialist specialist;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "affiliated_id")
     @JsonBackReference
     private Affiliate affiliate;

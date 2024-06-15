@@ -29,6 +29,6 @@ import jakarta.ws.rs.core.Application;
                 @Server(url = "http://localhost:8080")
         }
 )
-@ApplicationPath("/api")
+@ApplicationPath("/")
 public class SwaggerConfig extends Application{
 }

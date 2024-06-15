@@ -56,7 +56,6 @@ public class SpecialistService implements ISpecialistService{
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-//            locationRepository.persist(location);
         }
 		return newSpecialist;
 	}

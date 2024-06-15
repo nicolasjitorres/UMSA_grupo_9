@@ -5,10 +5,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.Location;
+import service.interfaces.ILocationService;
+import validator.LocationValidator;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
-import service.LocationService;
 
 import java.util.List;
 
@@ -17,9 +18,16 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 
 public class LocationResource {
-
+	
+	private ILocationService locationService;
+	private LocationValidator locationValidator;
+	
 	@Inject
-	private LocationService locationService;
+	public LocationResource(ILocationService locationService, LocationValidator locationValidator) {
+		super();
+		this.locationService = locationService;
+		this.locationValidator = locationValidator;
+	}
 
 	@GET
 	@Operation(summary = "Obtener todas las ubicaciones", description = "Retorna una lista de todas las ubicaciones.")
@@ -30,6 +38,7 @@ public class LocationResource {
 	public List<Location> getAllLocations() {
 		return locationService.findLocations();
 	}
+	
 	@GET
 	@Path("/{id}")
 	@Operation(summary = "Obtener ubicación por ID", description = "Retorna una ubicación específica por su ID.")
@@ -37,6 +46,7 @@ public class LocationResource {
 			@APIResponse(responseCode = "200", description = "Ubicación obtenida con éxito"),
 			@APIResponse(responseCode = "404", description = "Ubicación no encontrada")
 	})
+	
 	public Response getLocationById(@PathParam("id") Long id) {
 		Location location = locationService.findLocationById(id);
 		if (location != null) {
@@ -53,6 +63,12 @@ public class LocationResource {
 			@APIResponse(responseCode = "400", description = "Solicitud incorrecta")
 	})
 	public Response addLocation(Location location) {
+//		List<String> locationErrors = locationValidator.validateLocation(location);
+//		if (locationErrors != null) {
+//			return Response.status(Response.Status.BAD_REQUEST).entity(locationErrors.toString()).build();
+//		}
+//		locationService.addLocation(location);
+//		return Response.status(Response.Status.CREATED).entity(location).build();
 		try {
 			locationService.addLocation(location);
 			return Response.status(Response.Status.CREATED).entity(location).build();

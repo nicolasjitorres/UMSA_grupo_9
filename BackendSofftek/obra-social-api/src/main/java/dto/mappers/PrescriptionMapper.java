@@ -9,14 +9,9 @@ import service.interfaces.IShiftService;
 
 @ApplicationScoped
 public class PrescriptionMapper {
-	
-	private IShiftService shiftService;
 
 	@Inject
-	public PrescriptionMapper(IShiftService shiftService) {
-		super();
-		this.shiftService = shiftService;
-	}
+	private IShiftService shiftService;
 
 	public Prescription dtoToEntity(PrescriptionDTO prescriptionDTO) {
 		if (prescriptionDTO == null) {
@@ -26,7 +21,6 @@ public class PrescriptionMapper {
 		Prescription prescription = new Prescription();
 		prescription.setId(prescriptionDTO.getId());
 		prescription.setDescription(prescriptionDTO.getDescription());
-		
 		Shift shift = shiftService.getShiftById(prescriptionDTO.getIdShift());
 		prescription.setShift(shift);
 		
