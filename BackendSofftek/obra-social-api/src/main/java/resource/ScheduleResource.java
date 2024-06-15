@@ -5,6 +5,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.Schedule;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import service.interfaces.IScheduleService;
 import validator.ScheduleValidator;
 
@@ -23,19 +26,43 @@ public class ScheduleResource {
 		this.scheduleService = scheduleService;
 		this.scheduleValidator = scheduleValidator;
 	}
-
 	@GET
-	public List<Schedule> getSchedules() {
-		return scheduleService.findSchedules();
+	@Operation(summary = "Obtener todos los horarios", description = "Retorna una lista de todos los horarios.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Horarios obtenidos con éxito"),
+			@APIResponse(responseCode = "204", description = "No hay horarios cargados cargados en el sistema")
+	})
+	public Response getSchedules() {
+		List<Schedule> schedules = scheduleService.findSchedules();
+		if (schedules.isEmpty()) {
+			return Response.status(204).build();
+		} else {
+			return Response.ok(schedules).build();
+		}
 	}
 
 	@GET
 	@Path("/{id}")
-	public Schedule getScheduleById(@PathParam("id") Long id) {
-		return scheduleService.findScheduleById(id);
+	@Operation(summary = "Obtener un horario por ID", description = "Retorna un horario basado en el ID proporcionado.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Horario obtenido con éxito"),
+			@APIResponse(responseCode = "404", description = "Horario no encontrado")
+	})
+	public Response getScheduleById(@PathParam("id") Long id) {
+		Schedule schedule = scheduleService.findScheduleById(id);
+		if (schedule == null) {
+			return Response.status(Response.Status.NOT_FOUND).entity("No existe un horario con el id " + id).build();
+		} else {
+			return Response.ok(schedule).build();
+		}
 	}
 
 	@POST
+	@Operation(summary = "Crear un nuevo horario", description = "Agrega un nuevo horario al sistema.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "201", description = "Horario creado con éxito"),
+			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos")
+	})
 	public Response addSchedule(Schedule schedule) {
 		List<String> scheduleErrors = scheduleValidator.validateSchedule(schedule);
 		if (scheduleErrors != null) {
@@ -51,6 +78,11 @@ public class ScheduleResource {
 
 	@DELETE
 	@Path("/{id}")
+	@Operation(summary = "Eliminar un horario", description = "Elimina un horario basado en el ID proporcionado.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Horario eliminado con éxito"),
+			@APIResponse(responseCode = "404", description = "Horario no encontrado")
+	})
 	public Response deleteScheduleById(@PathParam("id") Long id) {
 		try {
 			Schedule deletedSchedule = scheduleService.deleteSchedule(id);
@@ -63,6 +95,12 @@ public class ScheduleResource {
 
 	@PUT
 	@Path("/{id}")
+	@Operation(summary = "Actualizar un horario", description = "Actualiza un horario basado en el ID proporcionado.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Horario actualizado con éxito"),
+			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos"),
+			@APIResponse(responseCode = "404", description = "Horario no encontrado")
+	})
 	public Response updateSchedule(@PathParam("id") Long id, Schedule schedule) {
 		List<String> scheduleErrors = scheduleValidator.validateSchedule(schedule);
 		if (scheduleErrors != null) {
