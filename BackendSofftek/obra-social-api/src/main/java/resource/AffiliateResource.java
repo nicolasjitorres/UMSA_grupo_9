@@ -85,14 +85,6 @@ public class AffiliateResource {
 		}
 	}
 
-	@PUT
-	@Path("{id}")
-	@Operation(summary = "Actualizar un afiliado", description = "Actualiza un afiliado existente.")
-	@APIResponses(value = {
-			@APIResponse(responseCode = "200", description = "Afiliado actualizado con éxito"),
-			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos"),
-			@APIResponse(responseCode = "404", description = "Afiliado no encontrado")
-	})
 	public Response updateAffiliate(@PathParam("id") Long id, AffiliateDTO editAffiliateDTO) {
 		List<String> affiliateErrors = affiliateValidator.validateAffiliate(editAffiliateDTO);
 		if (affiliateErrors != null) {
