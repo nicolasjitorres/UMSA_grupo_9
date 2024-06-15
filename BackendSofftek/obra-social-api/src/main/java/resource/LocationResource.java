@@ -16,7 +16,6 @@ import java.util.List;
 @Path("/ubicaciones")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-
 public class LocationResource {
 	
 	private ILocationService locationService;
@@ -63,17 +62,15 @@ public class LocationResource {
 			@APIResponse(responseCode = "400", description = "Solicitud incorrecta")
 	})
 	public Response addLocation(Location location) {
-//		List<String> locationErrors = locationValidator.validateLocation(location);
-//		if (locationErrors != null) {
-//			return Response.status(Response.Status.BAD_REQUEST).entity(locationErrors.toString()).build();
-//		}
-//		locationService.addLocation(location);
-//		return Response.status(Response.Status.CREATED).entity(location).build();
+		List<String> locationErrors = locationValidator.validateLocation(location);
+		if (locationErrors != null) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(locationErrors.toString()).build();
+		}
 		try {
 			locationService.addLocation(location);
 			return Response.status(Response.Status.CREATED).entity(location).build();
 		} catch (Exception e){
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
 	}
 
@@ -85,6 +82,10 @@ public class LocationResource {
 			@APIResponse(responseCode = "404", description = "Ubicación no encontrada")
 	})
 	public Response updateLocation(@PathParam("id") Long id, Location location) {
+		List<String> locationErrors = locationValidator.validateLocation(location);
+		if (locationErrors != null) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(locationErrors.toString()).build();
+		}
 		try {
 			Location updatedLocation = locationService.editLocation(id, location);
 			return Response.ok(updatedLocation).build();

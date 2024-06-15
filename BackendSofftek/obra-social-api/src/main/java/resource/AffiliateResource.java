@@ -9,6 +9,7 @@ import dto.AffiliateDTO;
 import dto.mappers.AffiliateMapper;
 import model.Affiliate;
 import service.interfaces.IAffiliateService;
+import validator.AffiliateValidator;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +23,15 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 		+ "Mediante estos métodos podemos realizar una correcta gestión de los afiliados de la obra social.")
 public class AffiliateResource {
 
-	@Inject
 	private IAffiliateService affiliateService;
+	private AffiliateValidator affiliateValidator;
+	
+	@Inject
+	public AffiliateResource(IAffiliateService affiliateService, AffiliateValidator affiliateValidator) {
+		super();
+		this.affiliateService = affiliateService;
+		this.affiliateValidator = affiliateValidator;
+	}
 
 	@GET
 	public Response getAllAffiliates() {
@@ -46,13 +54,25 @@ public class AffiliateResource {
 
 	@POST
 	public Response createAffiliate(AffiliateDTO newAffiliateDTO) {
-		Affiliate affiliate = affiliateService.addAffiliate(AffiliateMapper.createAffiliateDto(newAffiliateDTO));
-		return Response.ok(AffiliateMapper.entityToDto(affiliate)).build();
+		List<String> affiliateErrors = affiliateValidator.validateAffiliate(newAffiliateDTO);
+		if (affiliateErrors != null) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(affiliateErrors.toString()).build();
+		}
+		try {
+			Affiliate affiliate = affiliateService.addAffiliate(AffiliateMapper.createAffiliateDto(newAffiliateDTO));
+			return Response.ok(AffiliateMapper.entityToDto(affiliate)).build();			
+		} catch (Exception e) {
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+		}
 	}
 
 	@PUT
 	@Path("{id}")
 	public Response updateAffiliate(@PathParam("id") Long id, AffiliateDTO editAffiliateDTO) {
+		List<String> affiliateErrors = affiliateValidator.validateAffiliate(editAffiliateDTO);
+		if (affiliateErrors != null) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(affiliateErrors.toString()).build();
+		}
 		try {
 			Affiliate updatedAffiliate = affiliateService.editAffiliate(id,
 					AffiliateMapper.updateAffiliateDto(editAffiliateDTO));
