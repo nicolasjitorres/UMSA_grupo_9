@@ -1,10 +1,12 @@
 package service.interfaces;
 
 import dto.ShiftDTO;
+import jakarta.enterprise.context.ApplicationScoped;
 import model.Shift;
 
 import java.util.List;
 
+@ApplicationScoped
 public interface IShiftService {
     public List<Shift> getAllShifts();
     public Shift getShiftById(Long id);

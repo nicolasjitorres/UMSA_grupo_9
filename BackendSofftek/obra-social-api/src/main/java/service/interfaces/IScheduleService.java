@@ -1,9 +1,11 @@
 package service.interfaces;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import model.Schedule;
 
 import java.util.List;
 
+@ApplicationScoped
 public interface IScheduleService {
     public List<Schedule> findSchedules();
     public Schedule findScheduleById(Long id);
