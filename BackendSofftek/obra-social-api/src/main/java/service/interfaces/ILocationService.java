@@ -1,9 +1,11 @@
 package service.interfaces;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import model.Location;
 
 import java.util.List;
 
+@ApplicationScoped
 public interface ILocationService {
 
     public List<Location> findLocations();
