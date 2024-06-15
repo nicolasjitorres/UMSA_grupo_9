@@ -61,7 +61,7 @@ public class SpecialistService implements ISpecialistService{
 	}
 
 	@Override
-	public Specialist editSpecialist(Long id, Specialist editedSpecialist){
+	public Specialist editSpecialist(Long id, Specialist editedSpecialist) throws Exception{
 		Specialist existingSpecialist = specialistRepository.findById(id);
 		
 		if (existingSpecialist != null) {
@@ -71,21 +71,21 @@ public class SpecialistService implements ISpecialistService{
 			specialistRepository.persistAndFlush(existingSpecialist);
 			return existingSpecialist;
 		} else {
-			return null;
-//			throw new Exception("El afiliado con id " + id + " no existe.");
+			//return null;
+			throw new Exception("El especialista con id " + id + " no existe.");
 		}
 		
 	}
 
 	@Override
-	public Specialist deleteSpecialist(Long id){
+	public Specialist deleteSpecialist(Long id) throws Exception{
 		Specialist existingSpecialist = specialistRepository.findById(id);
 		if (existingSpecialist != null) {
 			specialistRepository.deleteById(id);
 			return existingSpecialist;
 		} else {
-			return null;
-//			throw new Exception("El afiliado con id " + id + " no existe.");
+			//return null;
+			throw new Exception("El especialista con id " + id + " no existe.");
 		}
 	}
 	

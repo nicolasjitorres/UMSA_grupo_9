@@ -14,6 +14,9 @@ import model.Specialist;
 import dto.SpecialistDTO;
 import dto.mappers.AffiliateMapper;
 import dto.mappers.SpecialistMapper;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import service.interfaces.ISpecialistService;
 import validator.SpecialistValidator;
 
@@ -33,15 +36,29 @@ public class SpecialistResource {
 	}
 
 	@GET
+	@Operation(summary = "Obtener todos los especialistas", description = "Retorna una lista de todos los especialistas de la obra social.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Especialistas obtenidos con éxito"),
+			@APIResponse(responseCode = "204", description = "No hay especialistas cargados en el sistema")
+	})
 	public Response getAllSpecialists() {
 		List<Specialist> specialists = specialistService.getAllSpecialists();
+		if(!specialists.isEmpty()) {
 		List<SpecialistDTO> specialistDTOs = specialists.stream().map(SpecialistMapper::entityToDto)
 				.collect(Collectors.toList());
-		return Response.ok(specialistDTOs).build();
+				return Response.ok(specialistDTOs).build();
+		} else {
+			return Response.status(204).build();
+		}
 	}
 
 	@GET
 	@Path("{id}")
+	@Operation(summary = "Obtener un especialista por ID", description = "Retorna un especialista basado en el ID proporcionado.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Especialista obtenido con éxito"),
+			@APIResponse(responseCode = "404", description = "Especialista no encontrado")
+	})
 	public Response getOneSpecialist(@PathParam("id") Long id) {
 		Specialist existSpecialist = specialistService.getSpecialistById(id);
 		if (existSpecialist == null) {
@@ -52,6 +69,10 @@ public class SpecialistResource {
 	}
 
 	@POST
+	@Operation(summary = "Crear un especialista", description = "Crea un nuevo especialista.")
+	@APIResponse(responseCode = "200", description = "Especialista creado con éxito")
+	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")
+	//404 NO VA A TIRAR NUNCA
 	public Response createSpecialist(SpecialistDTO newSpecialistDTO) {
 		List<String> specialistErrors = specialistValidator.validateSpecialist(newSpecialistDTO);
 		if (specialistErrors != null) {
@@ -67,6 +88,12 @@ public class SpecialistResource {
 
 	@PUT
 	@Path("{id}")
+	@Operation(summary = "Actualizar un Especialista", description = "Actualiza un especialista existente.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Especialista actualizado con éxito"),
+			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos"),
+			@APIResponse(responseCode = "404", description = "Especialista no encontrado")
+	})
 	public Response updateSpecialist(@PathParam("id") Long id, SpecialistDTO editSpecialistDTO) {
 		List<String> specialistErrors = specialistValidator.validateSpecialist(editSpecialistDTO);
 		if (specialistErrors != null) {
@@ -82,9 +109,19 @@ public class SpecialistResource {
 
 	@DELETE
 	@Path("{id}")
+	@Operation(summary = "Eliminar un especialista", description = "Elimina un especialista existente.")
+	@APIResponses(value = {
+			@APIResponse(responseCode = "200", description = "Especialista eliminado con éxito"),
+			@APIResponse(responseCode = "404", description = "Especialista no encontrado")
+	})
 	public Response deleteSpecialist(@PathParam("id") Long id) {
-		Specialist deletedSpecialist = specialistService.deleteSpecialist(id);
-		return Response.ok(SpecialistMapper.entityToDto(deletedSpecialist)).build();
+		try{
+			Specialist deletedSpecialist = specialistService.deleteSpecialist(id);
+			return Response.ok(SpecialistMapper.entityToDto(deletedSpecialist)).build();
+		}catch (Exception e)
+		{
+			return Response.status(Status.NOT_FOUND).entity((e.getMessage())).build();
+		}
 	}
 
 }

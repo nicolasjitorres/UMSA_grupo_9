@@ -29,7 +29,6 @@ public class ScheduleService implements IScheduleService {
 	@Override
 	public Schedule addSchedule(Schedule schedule) throws Exception{
 		if(schedule.getDayOfWeek()!=null) {
-			System.out.println("holaaa");
 			scheduleRepository.persist(schedule);
 			return schedule;
 		}

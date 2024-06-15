@@ -42,7 +42,7 @@ public class PrescriptionService implements IPrescriptionService {
 	@Override
 	public Prescription editPrescription(Long id, PrescriptionDTO prescriptionDTO) throws Exception{
 		Prescription existingPrescription = prescriptionRepository.findById(id);
-		if (existingPrescription == null) throw new Exception("No hay ninguna receta con este ID");
+		if (existingPrescription == null) throw new Exception("No hay ninguna receta con este ID: "+id);
 		Prescription prescriptionForUpdate = prescriptionMapper.dtoToEntity(prescriptionDTO);
 		existingPrescription.setDescription(prescriptionForUpdate.getDescription());
 		prescriptionRepository.persistAndFlush(existingPrescription);
@@ -52,7 +52,7 @@ public class PrescriptionService implements IPrescriptionService {
 	@Override
 	public Prescription deletePrescription(Long id) throws Exception {
 		Prescription existingPrescription = prescriptionRepository.findById(id);
-		if (existingPrescription == null) throw new Exception("No existe ninguna receta con este id");
+		if (existingPrescription == null) throw new Exception("No existe ninguna receta con este id: "+id);
 		prescriptionRepository.deleteById(id);
 		return existingPrescription;
 	}
