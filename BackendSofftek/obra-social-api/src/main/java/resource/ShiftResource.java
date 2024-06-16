@@ -77,13 +77,16 @@ public class ShiftResource {
     @Operation(summary = "Actualizar un turno", description = "Actualiza un turno existente.")
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Turno actualizado con éxito"),
-            @APIResponse(responseCode = "400", description = "Solicitud incorrecta, error en algún parametro")
+            @APIResponse(responseCode = "400", description = "Solicitud incorrecta, error en algún parametro"),
+            @APIResponse(responseCode = "404", description = "Solicitud incorrecta, turno no encontrado")
     })
     public Response updateShift(@PathParam("id") Long id,@Valid ShiftDTO shiftDto){
         try {
             return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shiftDto)).build();
-        }catch (Exception e){
+        } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 

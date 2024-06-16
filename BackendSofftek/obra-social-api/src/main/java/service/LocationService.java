@@ -54,6 +54,12 @@ public class LocationService implements ILocationService {
         if (existingLocation == null) throw new Exception("No existe esa ubicación con id: " + id);
         List<String> existingErrors = locationValidator.validateLocation(location);
         if (existingErrors != null) throw new IllegalArgumentException(existingErrors.toString());
+
+        existingLocation.setCountry(location.getCountry());
+        existingLocation.setProvince(location.getProvince());
+        existingLocation.setLocality(location.getLocality());
+        existingLocation.setStreet(location.getStreet());
+
         locationRepository.persistAndFlush(existingLocation);
         return existingLocation;
 

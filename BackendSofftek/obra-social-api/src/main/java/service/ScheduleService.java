@@ -52,6 +52,12 @@ public class ScheduleService implements IScheduleService {
         List<String> scheduleErrors = scheduleValidator.validateSchedule(schedule);
         if (existingSchedule == null) throw new Exception(("No existe horario con la id: " + id));
         if (scheduleErrors != null) throw new IllegalArgumentException(scheduleErrors.toString());
+
+        existingSchedule.setDayOfWeek(schedule.getDayOfWeek());
+        existingSchedule.setSpecialist(schedule.getSpecialist());
+        existingSchedule.setStartTime(schedule.getStartTime());
+        existingSchedule.setEndTime(schedule.getEndTime());
+
         scheduleRepository.getEntityManager().merge(existingSchedule);
         return scheduleRepository.findById((id));
 
