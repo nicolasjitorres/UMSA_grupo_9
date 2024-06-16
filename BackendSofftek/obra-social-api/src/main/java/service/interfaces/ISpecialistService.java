@@ -10,6 +10,6 @@ public interface ISpecialistService {
     public List<Specialist> getAllSpecialists();
     public Specialist getSpecialistById(Long id);
     public Specialist addSpecialist(Specialist specialist);
-    public Specialist deleteSpecialist(Long id);
-    public Specialist editSpecialist(Long id, Specialist specialist);
+    public Specialist deleteSpecialist(Long id) throws Exception;
+    public Specialist editSpecialist(Long id, Specialist specialist) throws Exception;
 }

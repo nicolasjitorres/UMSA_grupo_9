@@ -33,7 +33,7 @@ public class AffiliateService implements IAffiliateService {
 	}
 
 	@Override
-	public Affiliate editAffiliate(Long id, Affiliate editedAffiliate) {
+	public Affiliate editAffiliate(Long id, Affiliate editedAffiliate) throws Exception{
 		Affiliate existingAffiliate = affiliateRepository.findById(id);
 		if (existingAffiliate != null) {
 			existingAffiliate.setFirstName(editedAffiliate.getFirstName());
@@ -43,20 +43,20 @@ public class AffiliateService implements IAffiliateService {
 			affiliateRepository.persistAndFlush(existingAffiliate);
 			return existingAffiliate;
 		} else {
-			return null;
-//			throw new Exception("El afiliado con id " + id + " no existe.");
+			//return null;
+			throw new Exception("El afiliado con id " + id + " no existe.");
 		}
 	}
 
 	@Override
-	public Affiliate deleteAffiliate(Long id) {
+	public Affiliate deleteAffiliate(Long id) throws Exception {
 		Affiliate existingAffiliate = affiliateRepository.findById(id);
 		if (existingAffiliate != null) {
 			affiliateRepository.deleteById(id);
 			return existingAffiliate;
 		} else {
-			return null;
-//			throw new Exception("El afiliado con id " + id + " no existe.");
+//			return null;
+			throw new Exception("El afiliado con id " + id + " no existe.");
 		}
 	}
 }
