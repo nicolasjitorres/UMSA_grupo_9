@@ -12,12 +12,14 @@ import java.util.List;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import service.interfaces.IPrescriptionService;
 import model.Prescription;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/recetas")
+@Tag(name = "Recetas medicas")
 public class PrescriptionResource {
 
 	@Inject

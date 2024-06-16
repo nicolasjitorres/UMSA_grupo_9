@@ -8,6 +8,7 @@ import model.Schedule;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import service.interfaces.IScheduleService;
 import validator.ScheduleValidator;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Path("/horarios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Tag(name = "Horarios")
 public class ScheduleResource {
 	@Inject
 	private IScheduleService scheduleService;

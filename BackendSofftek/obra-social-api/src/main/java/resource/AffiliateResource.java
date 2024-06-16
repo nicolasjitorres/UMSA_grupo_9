@@ -22,8 +22,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Path("/afiliados")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Tag(name = "Gestion de afiliados", description = "Métodos relacionados con la gestión de afiliados."
-		+ "Mediante estos métodos podemos realizar una correcta gestión de los afiliados de la obra social.")
+@Tag(name = "Afiliados")
 public class AffiliateResource {
 
 	private IAffiliateService affiliateService;
