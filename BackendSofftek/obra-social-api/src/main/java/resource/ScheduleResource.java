@@ -17,15 +17,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ScheduleResource {
-	private IScheduleService scheduleService;
-	private ScheduleValidator scheduleValidator;
-
 	@Inject
-	public ScheduleResource(IScheduleService scheduleService, ScheduleValidator scheduleValidator) {
-		super();
-		this.scheduleService = scheduleService;
-		this.scheduleValidator = scheduleValidator;
-	}
+	private IScheduleService scheduleService;
 	@GET
 	@Operation(summary = "Obtener todos los horarios", description = "Retorna una lista de todos los horarios.")
 	@APIResponses(value = {
@@ -64,10 +57,6 @@ public class ScheduleResource {
 			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos")
 	})
 	public Response addSchedule(Schedule schedule) {
-		List<String> scheduleErrors = scheduleValidator.validateSchedule(schedule);
-		if (scheduleErrors != null) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(scheduleErrors.toString()).build();
-		}
 		try {
 			scheduleService.addSchedule(schedule);
 			return Response.status(Response.Status.CREATED).entity(schedule).build();
@@ -102,13 +91,11 @@ public class ScheduleResource {
 			@APIResponse(responseCode = "404", description = "Horario no encontrado")
 	})
 	public Response updateSchedule(@PathParam("id") Long id, Schedule schedule) {
-		List<String> scheduleErrors = scheduleValidator.validateSchedule(schedule);
-		if (scheduleErrors != null) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(scheduleErrors.toString()).build();
-		}
 		try {
 			Schedule updatedSchedule = scheduleService.editSchedule(id, schedule);
 			return Response.ok(updatedSchedule).build();
+		} catch (IllegalArgumentException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
