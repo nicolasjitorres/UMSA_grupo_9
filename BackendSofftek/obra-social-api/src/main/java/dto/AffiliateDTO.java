@@ -24,7 +24,7 @@ public class AffiliateDTO{
     private String lastName;
     
     @NotBlank(message = ": El campo 'dni' no debe estar vacío.")
-    @Size(min = 7, max = 8, message = ": El campo 'dni' debe tener entre 7 y 8 dígitos.")
+    @Size(min = 7, max = 9, message = ": El campo 'dni' debe tener entre 7 y 9 dígitos.")
     @Pattern(regexp = "\\d+", message = ": El campo 'dni' debe contener solo dígitos númericos.")
     private String dni;
     

@@ -80,7 +80,7 @@ public class AffiliateResource {
 			Affiliate affiliate = affiliateService.addAffiliate(AffiliateMapper.createAffiliateDto(newAffiliateDTO));
 			return Response.ok(AffiliateMapper.entityToDto(affiliate)).build();			
 		} catch (Exception e) {
-			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+			return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
 	}
 	@PUT

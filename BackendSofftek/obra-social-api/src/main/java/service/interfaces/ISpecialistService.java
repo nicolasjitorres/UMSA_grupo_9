@@ -9,7 +9,7 @@ import java.util.List;
 public interface ISpecialistService {
     public List<Specialist> getAllSpecialists();
     public Specialist getSpecialistById(Long id);
-    public Specialist addSpecialist(Specialist specialist);
+    public Specialist addSpecialist(Specialist specialist)throws Exception;
     public Specialist deleteSpecialist(Long id) throws Exception;
     public Specialist editSpecialist(Long id, Specialist specialist) throws Exception;
 }
