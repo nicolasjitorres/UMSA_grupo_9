@@ -20,6 +20,7 @@ public class Schedule{
 
 	@Id
 	@GeneratedValue
+    @Column(name = "id")
 	private Long id;
 	
 	@NotNull(message = ": El campo 'hora de inicio' es obligatorio.")
@@ -34,6 +35,7 @@ public class Schedule{
 	
 	@NotNull(message = ": El campo 'dia de la semana' es obligatorio.")
 	@Enumerated
+    @Column(name="day_of_weeek")
     private Day dayOfWeek;
 
     @ManyToOne

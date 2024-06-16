@@ -22,8 +22,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Path("/afiliados")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Tag(name = "Gestion de afiliados", description = "Métodos relacionados con la gestión de afiliados."
-		+ "Mediante estos métodos podemos realizar una correcta gestión de los afiliados de la obra social.")
+@Tag(name = "Afiliados")
 public class AffiliateResource {
 
 	private IAffiliateService affiliateService;
@@ -81,10 +80,14 @@ public class AffiliateResource {
 			Affiliate affiliate = affiliateService.addAffiliate(AffiliateMapper.createAffiliateDto(newAffiliateDTO));
 			return Response.ok(AffiliateMapper.entityToDto(affiliate)).build();			
 		} catch (Exception e) {
-			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+			return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
 	}
-
+	@PUT
+	@Operation(summary = "Actualiza un afiliado", description = "Actualiza un afiliado cuyo ID existe en el sistema, no se pueden ingresar datos vacios.")
+	@APIResponse(responseCode = "200", description = "Afiliado actualizado con éxito")
+	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")
+	@APIResponse(responseCode = "404", description = "Solicitud incorrecta, no existe el afiliado en el sistema con la ID ingresada")
 	public Response updateAffiliate(@PathParam("id") Long id, AffiliateDTO editAffiliateDTO) {
 		List<String> affiliateErrors = affiliateValidator.validateAffiliate(editAffiliateDTO);
 		if (affiliateErrors != null) {

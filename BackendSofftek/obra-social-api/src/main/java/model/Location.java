@@ -21,17 +21,22 @@ import lombok.NoArgsConstructor;
 public class Location{
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	private Long id;	
 	@NotBlank(message = ": El campo 'calle' no debe estar vacío.")
+	@Column(name = "street")
     private String street;
 	
 	@NotBlank(message = ": El campo 'localidad' no debe estar vacío.")
+	@Column(name = "locality")
     private String locality;
 	
 	@NotBlank(message = ": El campo 'provincia' no debe estar vacío.")
+	@Column(name = "province")
     private String province;
     
 	@NotBlank(message = ": El campo 'país' no debe estar vacío.")
+	@Column(name = "country")
     private String country;
 
     @JsonIgnore

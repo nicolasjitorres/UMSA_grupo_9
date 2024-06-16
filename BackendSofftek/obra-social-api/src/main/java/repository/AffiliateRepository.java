@@ -6,4 +6,11 @@ import model.Affiliate;
 
 @ApplicationScoped
 public class AffiliateRepository implements PanacheRepository<Affiliate> {
+    public Affiliate findByDni(String dni) {
+        return find("dni", dni).firstResult();
+    }
+    public Affiliate findByHealthInsuranceCode(String healthInsuranceCode) {
+        return find("healthInsuranceCode", healthInsuranceCode).firstResult();
+    }
+
 }
