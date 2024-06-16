@@ -1,6 +1,12 @@
 # Proyecto de Obra Social - API con Java + Quarkus
 
-Somos el grupo 9 de la academia Java + React 2024 de UMSA con Softtek y hemos creado este proyecto modelando una obra social. Esta obra social tiene pacientes, especialistas y turnos y recetas medicas, permitiendo que un paciente pueda sacar un turno relacionado a un especialista específico. La API está documentada utilizando Swagger y se proporciona una colección de Postman para facilitar las pruebas. Esta es la documentación correspondiente al backend; pronto incorporaremos el frontend con su apartado correspondiente.
+Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java + React 2024 de UMSA con Softtek y hemos creado este proyecto modelando una obra social. Esta obra social tiene pacientes, especialistas y turnos y recetas medicas, permitiendo que un paciente pueda sacar un turno relacionado a un especialista específico. La API está documentada utilizando Swagger y se proporciona una colección de Postman para facilitar las pruebas. Esta es la documentación correspondiente al backend; pronto incorporaremos el frontend con su apartado correspondiente.
+
+## Integrantes del Proyecto
+
+- **Javier Kuznik**
+- **Nicolas Torres**
+- **Joaquin Muñoz**
 
 
 ## Entidades creadas
@@ -17,7 +23,7 @@ Somos el grupo 9 de la academia Java + React 2024 de UMSA con Softtek y hemos cr
 - **Java 17** como lenguaje de programación.
 - **Quarkus**: Framework para la creación y ejecución del proyecto.
 - **Maven**: Para instalar las dependencias del proyecto.
-- - **Postman**: Para pruebas de la API mediante una URL y body con los datos correspondientes.
+- **Postman**: Para pruebas de la API mediante una URL y body con los datos correspondientes.
 
 ### Dependencias utilizadas
 - **Swagger**: Para la documentación de cada método implementado en la API.
@@ -39,6 +45,7 @@ El proyecto sigue el patrón de diseño MVC (Modelo-Vista-Controlador) y está d
 ## Requisitos
 
 - **Java 17 o superior**
+- **Tener Maven instalado**
 - **Terminal para correr el proyecto**
 - **Postman o navegador para probar la API**
 
@@ -89,3 +96,5 @@ Cada método devuelve un código de estado HTTP diferente según sea necesario. 
 Cualquier duda o recomendación que quieran a hacer pueden hacerla y responderemos a la brevedad.
 
 ¡Gracias por visitar nuestra API de Obra Social, proximamente llega el frontend!
+
+![LogoSofttekUmsa](https://private-user-images.githubusercontent.com/92613299/340140653-3f4c0edc-26ec-41dc-b4f5-26c594dccca7.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTg1NzgyMjIsIm5iZiI6MTcxODU3NzkyMiwicGF0aCI6Ii85MjYxMzI5OS8zNDAxNDA2NTMtM2Y0YzBlZGMtMjZlYy00MWRjLWI0ZjUtMjZjNTk0ZGNjY2E3LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA2MTYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNjE2VDIyNDUyMlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWU3YWEwMmJmMzYwNzM3MzA0ODQ1YTZjMmUwMGZmYWMwMmQ3MDRmZGM3NDhlYWRjOWE5ZjRlZjIyMjZiMzFiZWEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.9IsoJLS3grazf485IeWRcB6KIYhP0Whr1XbfqLYi7fk)
