@@ -16,4 +16,8 @@ public class SpecialistRepository implements PanacheRepository<Specialist>{
                     street, locality, province, country).firstResultOptional();
     }
 
+    public Specialist findByDni(String dni) {
+        return find("dni", dni).firstResult();
+    }
+
 }
