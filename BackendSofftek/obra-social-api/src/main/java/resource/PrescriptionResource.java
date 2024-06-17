@@ -68,7 +68,8 @@ public class PrescriptionResource {
 	})
 	public Response addPrescription(@Valid PrescriptionDTO prescriptionDTO) {
 		try{
-			return Response.ok(prescriptionService.addPrescription(prescriptionDTO)).build();
+			Prescription prescription = prescriptionService.addPrescription(prescriptionDTO);
+			return Response.ok(prescription).build();
 		} catch (Exception e){
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
