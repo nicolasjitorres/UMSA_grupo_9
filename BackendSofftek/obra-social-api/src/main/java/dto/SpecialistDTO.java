@@ -51,6 +51,6 @@ public class SpecialistDTO{
     
     @NotBlank(message = ": El campo 'contraseña' no debe estar vacío.")
     @Size(min = 8, message = ": El campo 'contraseña' debe tener al menos 8 caracteres.")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = ": El campo 'contraseña' debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.")
+    //@Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = ": El campo 'contraseña' debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.")
 	private String password;
 }
