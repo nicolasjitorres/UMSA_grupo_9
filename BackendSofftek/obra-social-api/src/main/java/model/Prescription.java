@@ -20,8 +20,5 @@ public class Prescription{
     @OneToOne(optional = false)
     @JoinColumn(name = "shift_id", nullable = false)
     private Shift shift;
-    @OneToOne
-    @JoinColumn(name="affiliate_id", nullable=false)
-    private Long affiliateId;
 
 }
