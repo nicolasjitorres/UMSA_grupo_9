@@ -18,6 +18,8 @@ Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java +
 - **Ubicaciones del especialista**
 - **Horarios**
 
+![Entidades](docs/Diagrama.png)
+
 ## Tecnologías
 
 - **Java 17** como lenguaje de programación.
@@ -104,4 +106,6 @@ Cualquier duda o recomendación que quieran a hacer pueden hacerla y responderem
 
 ¡Gracias por visitar nuestra API de Obra Social, proximamente llega el frontend!
 
+
 ![LogoSofttekUmsa](docs/logoUMSA.png)
+

@@ -10,7 +10,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import service.interfaces.IScheduleService;
-import validator.ScheduleValidator;
 
 import java.util.List;
 
@@ -21,12 +20,11 @@ import java.util.List;
 public class ScheduleResource {
 	@Inject
 	private IScheduleService scheduleService;
+
 	@GET
 	@Operation(summary = "Obtener todos los horarios", description = "Retorna una lista de todos los horarios.")
-	@APIResponses(value = {
-			@APIResponse(responseCode = "200", description = "Horarios obtenidos con éxito"),
-			@APIResponse(responseCode = "204", description = "No hay horarios cargados cargados en el sistema")
-	})
+	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Horarios obtenidos con éxito"),
+			@APIResponse(responseCode = "204", description = "No hay horarios cargados cargados en el sistema") })
 	public Response getSchedules() {
 		List<Schedule> schedules = scheduleService.findSchedules();
 		if (schedules.isEmpty()) {
@@ -39,10 +37,8 @@ public class ScheduleResource {
 	@GET
 	@Path("/{id}")
 	@Operation(summary = "Obtener un horario por ID", description = "Retorna un horario basado en el ID proporcionado.")
-	@APIResponses(value = {
-			@APIResponse(responseCode = "200", description = "Horario obtenido con éxito"),
-			@APIResponse(responseCode = "404", description = "Horario no encontrado")
-	})
+	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Horario obtenido con éxito"),
+			@APIResponse(responseCode = "404", description = "Horario no encontrado") })
 	public Response getScheduleById(@PathParam("id") Long id) {
 		Schedule schedule = scheduleService.findScheduleById(id);
 		if (schedule == null) {
@@ -54,10 +50,8 @@ public class ScheduleResource {
 
 	@POST
 	@Operation(summary = "Crear un nuevo horario", description = "Agrega un nuevo horario al sistema.")
-	@APIResponses(value = {
-			@APIResponse(responseCode = "201", description = "Horario creado con éxito"),
-			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos")
-	})
+	@APIResponses(value = { @APIResponse(responseCode = "201", description = "Horario creado con éxito"),
+			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos") })
 	public Response addSchedule(Schedule schedule) {
 		try {
 			scheduleService.addSchedule(schedule);
@@ -70,10 +64,8 @@ public class ScheduleResource {
 	@DELETE
 	@Path("/{id}")
 	@Operation(summary = "Eliminar un horario", description = "Elimina un horario basado en el ID proporcionado.")
-	@APIResponses(value = {
-			@APIResponse(responseCode = "200", description = "Horario eliminado con éxito"),
-			@APIResponse(responseCode = "404", description = "Horario no encontrado")
-	})
+	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Horario eliminado con éxito"),
+			@APIResponse(responseCode = "404", description = "Horario no encontrado") })
 	public Response deleteScheduleById(@PathParam("id") Long id) {
 		try {
 			Schedule deletedSchedule = scheduleService.deleteSchedule(id);
@@ -87,11 +79,9 @@ public class ScheduleResource {
 	@PUT
 	@Path("/{id}")
 	@Operation(summary = "Actualizar un horario", description = "Actualiza un horario basado en el ID proporcionado.")
-	@APIResponses(value = {
-			@APIResponse(responseCode = "200", description = "Horario actualizado con éxito"),
+	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Horario actualizado con éxito"),
 			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos"),
-			@APIResponse(responseCode = "404", description = "Horario no encontrado")
-	})
+			@APIResponse(responseCode = "404", description = "Horario no encontrado") })
 	public Response updateSchedule(@PathParam("id") Long id, Schedule schedule) {
 		try {
 			Schedule updatedSchedule = scheduleService.editSchedule(id, schedule);
