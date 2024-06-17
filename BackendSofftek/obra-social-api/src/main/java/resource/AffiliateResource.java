@@ -74,6 +74,7 @@ public class AffiliateResource {
 
 
 	@PUT
+	@Path("{id}")
 	@Operation(summary = "Actualiza un afiliado", description = "Actualiza un afiliado cuyo ID existe en el sistema, no se pueden ingresar datos vacios.")
 	@APIResponse(responseCode = "200", description = "Afiliado actualizado con éxito")
 	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")

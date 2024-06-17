@@ -37,7 +37,7 @@ public class PrescriptionService implements IPrescriptionService {
 
 	@Override
 	public Prescription addPrescription(PrescriptionDTO prescriptionDTO) throws Exception{
-		if (shiftService.getShiftById(prescriptionDTO.getIdShift()) != null) {
+		if (shiftService.getShiftById(prescriptionDTO.getIdShift()) == null) {
 			throw new Exception("Debe existir al menos un turno.");
 		}
 		Prescription newPrescription = prescriptionMapper.dtoToEntity(prescriptionDTO);
