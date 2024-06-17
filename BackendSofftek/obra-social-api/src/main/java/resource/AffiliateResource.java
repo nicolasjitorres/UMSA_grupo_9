@@ -78,6 +78,7 @@ public class AffiliateResource {
 	@APIResponse(responseCode = "200", description = "Afiliado actualizado con éxito")
 	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")
 	@APIResponse(responseCode = "404", description = "Solicitud incorrecta, no existe el afiliado en el sistema con la ID ingresada")
+
 	public Response updateAffiliate(@PathParam("id") Long id, AffiliateDTO editAffiliateDTO) {
 		try {
 			Affiliate updatedAffiliate = affiliateService.editAffiliate(id,
