@@ -3,12 +3,9 @@ package dto.mappers;
 import dto.ShiftDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import model.Affiliate;
 import model.Shift;
 import model.Specialist;
-import service.AffiliateService;
-import service.SpecialistService;
 import service.interfaces.IAffiliateService;
 import service.interfaces.ISpecialistService;
 
