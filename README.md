@@ -18,6 +18,8 @@ Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java +
 - **Ubicaciones del especialista**
 - **Horarios**
 
+ ![Entidades](docs/Diagrama.png)
+
 ## Tecnologías
 
 - **Java 17** como lenguaje de programación.
