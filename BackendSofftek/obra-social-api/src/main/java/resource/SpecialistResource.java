@@ -9,31 +9,22 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-import model.Affiliate;
 import model.Specialist;
 import dto.SpecialistDTO;
-import dto.mappers.AffiliateMapper;
 import dto.mappers.SpecialistMapper;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import service.interfaces.ISpecialistService;
-import validator.SpecialistValidator;
 
 @Path("/especialistas")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class SpecialistResource {
-	
-	private ISpecialistService specialistService;
-	private SpecialistValidator specialistValidator;
-	
+
 	@Inject
-	public SpecialistResource(ISpecialistService specialistService, SpecialistValidator specialistValidator) {
-		super();
-		this.specialistService = specialistService;
-		this.specialistValidator = specialistValidator;
-	}
+	private ISpecialistService specialistService;
+
 
 	@GET
 	@Operation(summary = "Obtener todos los especialistas", description = "Retorna una lista de todos los especialistas de la obra social.")
@@ -74,13 +65,11 @@ public class SpecialistResource {
 	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")
 	//404 NO VA A TIRAR NUNCA
 	public Response createSpecialist(SpecialistDTO newSpecialistDTO) {
-		List<String> specialistErrors = specialistValidator.validateSpecialist(newSpecialistDTO);
-		if (specialistErrors != null) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(specialistErrors.toString()).build();
-		}
 		try {
 			Specialist specialist = specialistService.addSpecialist(SpecialistMapper.createSpecialistDto(newSpecialistDTO));
 			return Response.ok(SpecialistMapper.entityToDto(specialist)).build();
+		} catch (IllegalArgumentException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {
 			return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
 		}		
@@ -95,13 +84,11 @@ public class SpecialistResource {
 			@APIResponse(responseCode = "404", description = "Especialista no encontrado")
 	})
 	public Response updateSpecialist(@PathParam("id") Long id, SpecialistDTO editSpecialistDTO) {
-		List<String> specialistErrors = specialistValidator.validateSpecialist(editSpecialistDTO);
-		if (specialistErrors != null) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(specialistErrors.toString()).build();
-		}
 		try {
 			Specialist editedSpecialist = specialistService.editSpecialist(id, SpecialistMapper.createSpecialistDto(editSpecialistDTO));
 			return Response.ok(SpecialistMapper.entityToDto(editedSpecialist)).build();
+		} catch (IllegalArgumentException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {
 			return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
