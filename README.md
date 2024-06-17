@@ -106,4 +106,8 @@ Cualquier duda o recomendación que quieran a hacer pueden hacerla y responderem
 
 ¡Gracias por visitar nuestra API de Obra Social, proximamente llega el frontend!
 
+<<<<<<< HEAD
 ![LogoSofttekUmsa](docs/logoUMSA.png)
+=======
+![LogoSofttekUmsa](docs/logoUMSA.png)
+>>>>>>> fa120e749f9ef8b7737a9ffbcc8cbc18b6fbdf1d
