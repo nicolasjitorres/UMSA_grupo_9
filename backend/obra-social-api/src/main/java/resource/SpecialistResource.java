@@ -106,8 +106,7 @@ public class SpecialistResource {
 		try{
 			Specialist deletedSpecialist = specialistService.deleteSpecialist(id);
 			return Response.ok(SpecialistMapper.entityToDto(deletedSpecialist)).build();
-		}catch (Exception e)
-		{
+		} catch (Exception e) {
 			return Response.status(Status.NOT_FOUND).entity((e.getMessage())).build();
 		}
 	}
