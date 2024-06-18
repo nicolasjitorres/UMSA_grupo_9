@@ -95,6 +95,10 @@ public class SpecialistService implements ISpecialistService {
 	public Specialist deleteSpecialist(Long id) throws Exception {
 		Specialist existingSpecialist = specialistRepository.findById(id);
 		if (existingSpecialist != null) {
+			Location location = existingSpecialist.getLocation();
+	        if (location != null) {
+	            location.getSpecialists().remove(existingSpecialist);
+	        }
 			specialistRepository.deleteById(id);
 			return existingSpecialist;
 		} else {

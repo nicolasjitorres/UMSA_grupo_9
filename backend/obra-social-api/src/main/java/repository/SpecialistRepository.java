@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
-import model.Affiliate;
 import model.Specialist;
 
 @ApplicationScoped
