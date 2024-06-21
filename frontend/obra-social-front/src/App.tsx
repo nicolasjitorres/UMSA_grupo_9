@@ -1,16 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import SpecialistList from "./components/specialistList";
+import AffiliatedList from "./components/afiliatesList";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App: React.FC = () => {
   return (
-    <>
-      <h1>holas</h1>
-    </>
-  )
-}
+    <div className="App">
+      <h1>Specialist Directory</h1>
+      <SpecialistList />
+      <AffiliatedList />
+    </div>
+  );
+};
 
-export default App
+export default App;
