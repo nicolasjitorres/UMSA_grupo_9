@@ -22,7 +22,6 @@ public class ShiftDTO {
     private LocalDate date; // Fecha del turno
 
     @NotNull(message = "Debe proporcionar una hora")
-    @FutureOrPresent(message = "La hora debe ser presente o futura")
     private LocalTime time; // Hora del turno
 
     @NotNull(message = "Debe proporcionar el id de un especialsita ")

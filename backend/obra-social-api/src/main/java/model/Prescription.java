@@ -1,20 +1,21 @@
 package model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.*;
 
 @Data //genera los metodos necesarios
 @Entity //marcar la calse como entidad y asi generar la tabla de la bd
 @AllArgsConstructor
 @NoArgsConstructor()
-@Table(name="prescriptions")
 public class Prescription{
 	
 	@Id
 	@GeneratedValue
-    @Column(name = "id")
     private Long id;
-    @Column(name = "description")
     private String description;
 
     @OneToOne(optional = false)

@@ -43,6 +43,7 @@ public class SpecialistService implements ISpecialistService {
 	}
 
 	@Override
+
 	public Specialist addSpecialist(Specialist newSpecialist) throws Exception {
 		if (specialistRepository.findByDni(newSpecialist.getDni()) != null)
 			throw new Exception("Ya existe un especialista con este dni: " + newSpecialist.getDni());

@@ -21,7 +21,8 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Path("/afiliados")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Tag(name = "Afiliados")
+@Tag(name = "Gestion de afiliados", description = "Métodos relacionados con la gestión de afiliados."
+		+ "Mediante estos métodos podemos realizar una correcta gestión de los afiliados de la obra social.")
 public class AffiliateResource {
 
 	@Inject
@@ -67,9 +68,10 @@ public class AffiliateResource {
 		} catch (IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {
-			return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
 	}
+
 
 	@PUT
 	@Path("{id}")
@@ -77,6 +79,7 @@ public class AffiliateResource {
 	@APIResponse(responseCode = "200", description = "Afiliado actualizado con éxito")
 	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")
 	@APIResponse(responseCode = "404", description = "Solicitud incorrecta, no existe el afiliado en el sistema con la ID ingresada")
+
 	public Response updateAffiliate(@PathParam("id") Long id, AffiliateDTO editAffiliateDTO) {
 		try {
 			Affiliate updatedAffiliate = affiliateService.editAffiliate(id,

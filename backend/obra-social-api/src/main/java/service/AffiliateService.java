@@ -33,8 +33,8 @@ public class AffiliateService implements IAffiliateService {
 	}
 
 	@Override
-	public Affiliate addAffiliate(Affiliate newAffiliate) throws Exception {
 
+	public Affiliate addAffiliate(Affiliate newAffiliate) throws Exception {
 		if (affiliateRepository.findByDni(newAffiliate.getDni()) != null)
 			throw new Exception("Ya existe un afiliado con el dni: " + newAffiliate.getDni());
 		if (affiliateRepository.findByHealthInsuranceCode(newAffiliate.getHealthInsuranceCode()) != null)
@@ -45,7 +45,6 @@ public class AffiliateService implements IAffiliateService {
 			throw new IllegalArgumentException(existingErrors.toString());
 		affiliateRepository.persist(newAffiliate);
 		return newAffiliate;
-
 	}
 
 	@Override

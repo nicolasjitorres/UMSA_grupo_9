@@ -1,6 +1,11 @@
 package model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,18 +17,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity //marcar la calse como entidad y asi generar la tabla de la bd
 @AllArgsConstructor
 @NoArgsConstructor()
-@Table(name = "shifts")
 public class Shift {
 	
 	@Id
 	@GeneratedValue
-    @Column(name = "id")
     private Long id;
-    @Column(name = "description")
     private String description; //descripcion
-    @Column(name = "date")
     private LocalDate date; //fecha del turno
-    @Column(name = "time")
     private LocalTime time; // horario
 
     @ManyToOne()

@@ -43,6 +43,7 @@ public class SpecialistDTO{
     
     @NotNull(message = ": El especialista debe tener al menos una ubicación.")
     private Location location;
+
     private Role role;
     
     @NotBlank(message = ": El campo 'email' no debe estar vacío.")

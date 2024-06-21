@@ -12,15 +12,14 @@ import dto.ShiftDTO;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import service.interfaces.IShiftService;
 
 import java.util.List;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Transactional
 @Path("/turnos")
-@Tag(name = "Turnos")
 public class ShiftResource {
 
     @Inject
@@ -58,7 +57,7 @@ public class ShiftResource {
     }
 
     @POST
-    @Operation(summary = "Agregar un turno", description = "Se debe ingresar la id del especialista y afiliado en cuestión, los cuales ya deben de estar cargados en el sistema. No se permiten ingresar campos vacios.")
+    @Operation(summary = "Agregar un turno", description = "Agrega un nuevo turno.")
     @APIResponse(responseCode = "200", description = "Turno agregado con éxito")
     @APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay algún dato mal ingresado")
     public Response addShift(@Valid ShiftDTO shiftDto){
@@ -72,7 +71,7 @@ public class ShiftResource {
 
     @PUT
     @Path("/{id}")
-    @Operation(summary = "Actualizar un turno", description = "Se debe ingresar la id del turno, especialista y afiliado en cuestión, los cuales ya deben de estar cargados en el sistema. No se permiten ingresar campos vacios.")
+    @Operation(summary = "Actualizar un turno", description = "Actualiza un turno existente.")
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Turno actualizado con éxito"),
             @APIResponse(responseCode = "400", description = "Solicitud incorrecta, error en algún parametro"),
@@ -90,7 +89,7 @@ public class ShiftResource {
 
     @DELETE
     @Path("/{id}")
-    @Operation(summary = "Eliminar un turno", description = "Elimina un turno existente. Se debe ingresar la id de un turno existente")
+    @Operation(summary = "Eliminar un turno", description = "Elimina un turno existente.")
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Turno eliminado con éxito"),
             @APIResponse(responseCode = "404", description = "Solicitud incorrecta, no existe dicho turno")

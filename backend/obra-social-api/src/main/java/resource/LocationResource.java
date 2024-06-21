@@ -5,7 +5,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.Location;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import service.interfaces.ILocationService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -16,7 +15,6 @@ import java.util.List;
 @Path("/ubicaciones")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Tag(name = "Ubicaciones")
 public class LocationResource {
 
 	@Inject

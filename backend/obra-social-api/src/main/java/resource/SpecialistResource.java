@@ -15,13 +15,11 @@ import dto.mappers.SpecialistMapper;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import service.interfaces.ISpecialistService;
 
 @Path("/especialistas")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Tag(name = "Especialistas")
 public class SpecialistResource {
 
 	@Inject
@@ -65,6 +63,7 @@ public class SpecialistResource {
 	@Operation(summary = "Crear un especialista", description = "Crea un nuevo especialista.")
 	@APIResponse(responseCode = "200", description = "Especialista creado con éxito")
 	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")
+	//404 NO VA A TIRAR NUNCA
 	public Response createSpecialist(SpecialistDTO newSpecialistDTO) {
 		try {
 			Specialist specialist = specialistService.addSpecialist(SpecialistMapper.createSpecialistDto(newSpecialistDTO));
@@ -72,7 +71,7 @@ public class SpecialistResource {
 		} catch (IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {
-			return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
 		}		
 	}
 
