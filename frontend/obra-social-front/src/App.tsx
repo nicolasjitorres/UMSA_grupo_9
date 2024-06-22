@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SpecialistList from "./components/specialistList";
-import AffiliatedList from "./components/afiliatesList";
+
+import SpecialistList from "./components/specialistList/SpecialistList";
+import AffiliatedList from "./components/afiliatesList/AfiliatesList";
 import SignIn from "./components/Login/SignIn";
 import NotFound from "./components/Errors/Notfound";
 import NavBar from "./components/NavBar/NavBar";
@@ -21,11 +22,12 @@ const App: React.FC = () => {
           <Route path="/table" element={<Table />} />
           <Route path="/home" element={<Home />} />
           <Route path="/especialistasTabla" element={<TablaEspecialistas />} />        
-          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
   );
 };
+
 export default App;
+

@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 // Definición del componente funcional
@@ -11,3 +12,4 @@ const MyComponent: React.FC = () => {
 };
 
 export default MyComponent;
+
