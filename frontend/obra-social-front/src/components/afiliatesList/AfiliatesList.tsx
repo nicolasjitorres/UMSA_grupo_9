@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store/store";
-import { fetchAfiliados } from "../redux/slices/afiliatedSlice";
+import { RootState, AppDispatch } from "../../redux/store/store";
+import { fetchAfiliados } from "../../redux/slices/afiliatedSlice";
 
-const SpecialistList: React.FC = () => {
+const AffiliatesList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const affilates = useSelector(
     (state: RootState) => state.afiliates.afiliados
@@ -49,4 +49,4 @@ const SpecialistList: React.FC = () => {
   );
 };
 
-export default SpecialistList;
+export default AffiliatesList;

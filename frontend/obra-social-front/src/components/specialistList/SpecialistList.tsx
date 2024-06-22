@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store/store";
-import { fetchSpecialists } from "../redux/slices/specialistSlice";
+import { RootState, AppDispatch } from "../../redux/store/store";
+import { fetchSpecialists } from "../../redux/slices/specialistSlice";
 
 const SpecialistList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
