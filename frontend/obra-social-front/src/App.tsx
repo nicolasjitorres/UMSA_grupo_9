@@ -1,28 +1,33 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import SpecialistList from "./components/specialistList/SpecialistList";
 import AffiliatedList from "./components/afiliatesList/AfiliatesList";
-import SignIn from "./components/singin/singIn";
+import SignIn from "./components/Login/SignIn";
 import NotFound from "./components/Errors/Notfound";
-import Home from "./components/home/Home";
+import NavBar from "./components/NavBar/NavBar";
+import Table from "./Table";
+import Home from "./Home";
+import TablaEspecialistas from "./components/TableEspecialistas";
 
 const App: React.FC = () => {
   return (
     <Router>
       <div className="App">
-        {/* Componente Navbar, si tienes uno */}
+        {<NavBar/>}
         <Routes>
-          {/* Definición de las rutas */}
           <Route path="/" element={<SignIn />} />
           <Route path="/specialists" element={<SpecialistList />} />
           <Route path="/affiliates" element={<AffiliatedList />} />
+          <Route path="/table" element={<Table />} />
           <Route path="/home" element={<Home />} />
-          {/* Otras rutas */}
-          {/* Página de error 404 */}
+          <Route path="/especialistasTabla" element={<TablaEspecialistas />} />        
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
   );
 };
+
 export default App;
+

@@ -1,7 +1,15 @@
-import React from "react";
 
-const NotFound: React.FC = () => {
-  return <div>404 Page Not Found</div>;
+import React from 'react';
+
+// Definición del componente funcional
+const MyComponent: React.FC = () => {
+  return (
+    <>
+      <h1>NOT FOUND</h1>
+      
+    </>
+  );
 };
 
-export default NotFound;
+export default MyComponent;
+
