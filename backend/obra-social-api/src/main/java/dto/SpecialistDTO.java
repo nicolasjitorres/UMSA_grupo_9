@@ -38,8 +38,8 @@ public class SpecialistDTO{
     @NotNull(message = ": El campo 'especialidad' no debe estar vacío.")
     private Speciality speciality;
     
-    @NotEmpty(message = ": El especialista debe tener al menos un horario.")
-    private List<Schedule> schedules;
+    //*@NotEmpty(message = ": El especialista debe tener al menos un horario.")
+    //private List<Schedule> schedules;
     
     @NotNull(message = ": El especialista debe tener al menos una ubicación.")
     private Location location;

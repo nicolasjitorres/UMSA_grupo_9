@@ -36,21 +36,20 @@ public class SpecialistMapper {
 		specialist.setSpeciality(specialistDTO.getSpeciality());
 		specialist.setRole(Role.USER);
 		specialist.setLocation(specialistDTO.getLocation());
-		List<Schedule> schedules = specialistDTO.getSchedules();
-	    if (schedules != null) {
-	        for (Schedule schedule : schedules) {
-	            schedule.setSpecialist(specialist);
-	        }
-	    }
-		specialist.setSchedules(specialistDTO.getSchedules());
+		//List<Schedule> schedules = specialistDTO.getSchedules();
+	    //if (schedules != null) {
+//	        for (Schedule schedule : schedules) {
+	            //schedule.setSpecialist(specialist);
+	        //}
+	    //}
+		//specialist.setSchedules(specialistDTO.getSchedules());
 		
 //		Aqui utilizamos el metodo para hashear la contraseña y asi guardarla de manera segura en la BD, para en un futuro realizar validaciones
 		if (specialistDTO.getPassword() != null) {
 			String hashedPassword = hashPassword(specialistDTO.getPassword());
 			specialist.setPassword(hashedPassword);
 		}
-		
-		System.out.println(specialist.getLocation());
+
 		
 		return specialist;
 	}
@@ -65,7 +64,7 @@ public class SpecialistMapper {
 		specialist.setLastName(specialistDTO.getLastName());
 		specialist.setId(specialistDTO.getId());
 		specialist.setLocation(specialistDTO.getLocation());
-		specialist.setSchedules(specialistDTO.getSchedules());
+		//specialist.setSchedules(specialistDTO.getSchedules());
 		return specialist;
 	}
 
@@ -84,7 +83,7 @@ public class SpecialistMapper {
 		specialistDTO.setRole(specialist.getRole());
 		specialistDTO.setSpeciality(specialist.getSpeciality());
 		specialistDTO.setLocation(specialist.getLocation());
-		specialistDTO.setSchedules(specialist.getSchedules());
+		//specialistDTO.setSchedules(specialist.getSchedules());
 		specialistDTO.setPassword(specialist.getPassword());
 
 		return specialistDTO;

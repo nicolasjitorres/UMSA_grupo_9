@@ -42,11 +42,21 @@ public class ShiftService implements IShiftService {
 		return shiftRepository.findById(idShift);
 	}
 
+	@Override
+	public List<Shift> getShiftBySpecialistId(Long idSpecialist) {
+		return shiftRepository.findShiftsBySpecialistId(idSpecialist);
+	}
+
+	@Override
+	public List<Shift> getShiftByAffiliateId(Long idAffiliate) {
+		return shiftRepository.findShiftsByAffiliateId(idAffiliate);
+	}
+
 	public Shift addShift(ShiftDTO shiftDTO) throws Exception{
 		Shift shift = shiftMapper.createShiftDto(shiftDTO);
 		if(shiftRepository.findByDateAndHour(shift.getDate(),shift.getTime())!=null) throw new Exception("Ya existe un turno con esta fecha y hora");
-		if(DiaCorrecto(shift)==false) throw new Exception("El especialista no trabaja en el dia seleccionado");
-		HorarioCorrecto(shift);
+		/*if(DiaCorrecto(shift)==false) throw new Exception("El especialista no trabaja en el dia seleccionado");
+		HorarioCorrecto(shift);*/
 		shiftRepository.persist(shift);
 		return shift;
 	}
@@ -71,7 +81,7 @@ public class ShiftService implements IShiftService {
 		shiftRepository.deleteById(id);
 		return existingShift;
 	}
-
+/*
 	public Boolean DiaCorrecto(Shift shift) throws Exception{
 		List<Integer> diasQueTrabaja = new ArrayList<>();
 		for(Schedule s : shift.getSpecialist().getSchedules()){
@@ -86,6 +96,6 @@ public class ShiftService implements IShiftService {
 				if(shift.getTime().isBefore(LocalTime.parse(s.getStartTime())) || shift.getTime().isAfter(LocalTime.parse(s.getEndTime().toString()))) throw new Exception("el horario no esta dentro del horario atencion del especialista");
 			}
 		}
-	}
+	}*/
 }
 

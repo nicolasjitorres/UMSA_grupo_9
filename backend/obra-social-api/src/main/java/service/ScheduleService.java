@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import model.Schedule;
+import model.Specialist;
 import repository.ScheduleRepository;
 import service.interfaces.IScheduleService;
 import validator.ScheduleValidator;
@@ -19,6 +20,9 @@ public class ScheduleService implements IScheduleService {
 	@Inject
 	private ScheduleValidator scheduleValidator;
 
+	@Inject
+	private SpecialistService specialistService;
+
 	@Override
 	public List<Schedule> findSchedules() {
 		return scheduleRepository.findAll().stream().toList();
@@ -30,10 +34,13 @@ public class ScheduleService implements IScheduleService {
 	}
 
 	@Override
-	public Schedule addSchedule(Schedule schedule) throws Exception {
+	public Schedule addSchedule(Long idSpecialist, Schedule schedule) throws Exception {
 		List<String> scheduleErrors = scheduleValidator.validateSchedule(schedule);
-		if (scheduleErrors != null)
-			throw new IllegalArgumentException(scheduleErrors.toString());
+		if (scheduleErrors != null) throw new IllegalArgumentException(scheduleErrors.toString());
+
+		Specialist existingSpecialist  = specialistService.getSpecialistById(idSpecialist);
+		if(existingSpecialist==null) throw new IllegalArgumentException("No existe el especialista con la ID: "+idSpecialist);
+		schedule.setSpecialist(existingSpecialist);
 		scheduleRepository.persist(schedule);
 		return schedule;
 	}
@@ -65,5 +72,20 @@ public class ScheduleService implements IScheduleService {
 		return scheduleRepository.findById((id));
 
 	}
+
+	@Override
+	public List<Schedule> findScheduleByIDSpecialist(Long idSpecialist) {
+		return scheduleRepository.findSchedulesBySpecialistId(idSpecialist);
+	}
+
+	@Override
+	public void deleteSchedulesByIDSpecialist(Long idSpecialist) throws Exception{
+		List<Schedule> schedules = scheduleRepository.findSchedulesBySpecialistId(idSpecialist);
+		for (Schedule schedule : schedules)
+		{
+			scheduleRepository.deleteById(schedule.getId());
+		}
+	}
+
 
 }

@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import model.Affiliate;
+import model.Shift;
 import repository.AffiliateRepository;
 import service.interfaces.IAffiliateService;
 import validator.AffiliateValidator;
@@ -21,6 +22,9 @@ public class AffiliateService implements IAffiliateService {
 
 	@Inject
 	private AffiliateValidator affiliateValidator;
+
+	@Inject
+	private ShiftService shiftService;
 
 	@Override
 	public List<Affiliate> getAllAffiliates() {
@@ -71,6 +75,7 @@ public class AffiliateService implements IAffiliateService {
 		if (existingAffiliate == null)
 			throw new Exception("El afiliado con id " + id + " no existe.");
 
+		if(!shiftService.getShiftByAffiliateId(id).isEmpty())throw new Exception("No se puede borrar el afiliado con ID: "+id+" debido a que está asociado a un turno.");
 		affiliateRepository.deleteById(id);
 		return existingAffiliate;
 	}

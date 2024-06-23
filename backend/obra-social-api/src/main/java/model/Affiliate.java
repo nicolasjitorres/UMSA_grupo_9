@@ -17,9 +17,5 @@ public class Affiliate extends User {
 	@GeneratedValue
 	private Long id;
 	private String healthInsuranceCode;
-	
-	@OneToMany(mappedBy = "affiliate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JsonManagedReference
-	private List<Shift> shifts;
 
 }
