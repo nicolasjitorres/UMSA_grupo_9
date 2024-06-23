@@ -26,8 +26,17 @@ export const fetchShift = createAsyncThunk("shift/fetchShift", async () => {
   return response.data;
 });
 
+export const deleteShift = createAsyncThunk(
+  "shift/deleteShift",
+  async (shiftId: number) => {
+    console.log(shiftId);
+    await axios.delete(`http://localhost:8080/turnos/${shiftId}`);
+    return shiftId;
+  }
+);
+
 const shiftSlice = createSlice({
-  name: "afiliados",
+  name: "turnos",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -43,6 +52,22 @@ const shiftSlice = createSlice({
         }
       )
       .addCase(fetchShift.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Something went wrong";
+      })
+      .addCase(deleteShift.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        deleteShift.fulfilled,
+        (state, action: PayloadAction<number>) => {
+          state.status = "succeeded";
+          state.shifts = state.shifts.filter(
+            (shift) => shift.id !== action.payload
+          );
+        }
+      )
+      .addCase(deleteShift.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Something went wrong";
       });

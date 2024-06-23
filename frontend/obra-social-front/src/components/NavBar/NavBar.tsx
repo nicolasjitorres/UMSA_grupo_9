@@ -1,9 +1,9 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { Link as RouterLink } from 'react-router-dom';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { Link as RouterLink } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   return (
@@ -14,9 +14,13 @@ const Navbar: React.FC = () => {
         </Typography>
         <Button color="inherit" component={RouterLink} to="/specialists">
           Especialistas
-        <Button color="inherit" component={RouterLink} to="/especialistasTabla">
-          Tabla Especialistas
-        </Button>
+          <Button
+            color="inherit"
+            component={RouterLink}
+            to="/especialistasTabla"
+          >
+            Tabla Especialistas
+          </Button>
         </Button>
         <Button color="inherit" component={RouterLink} to="/affiliates">
           Afiliados
@@ -27,7 +31,7 @@ const Navbar: React.FC = () => {
         <Button color="inherit" component={RouterLink} to="/">
           Sign In
         </Button>
-        <Button color="inherit" component={RouterLink} to="/">
+        <Button color="inherit" component={RouterLink} to="/turnos">
           Turnos
         </Button>
         <Button color="inherit" component={RouterLink} to="/home">
