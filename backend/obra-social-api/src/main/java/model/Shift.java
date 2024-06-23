@@ -1,11 +1,6 @@
 package model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -26,12 +21,12 @@ public class Shift {
     private LocalDate date; //fecha del turno
     private LocalTime time; // horario
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "specialist_id")
     @JsonBackReference("specialist-shift")
     private Specialist specialist;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "affiliated_id")
     @JsonBackReference
     private Affiliate affiliate;

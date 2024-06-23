@@ -38,7 +38,6 @@ public class Schedule{
 
     @ManyToOne
     @JoinColumn(name = "specialist_id")
-    @JsonBackReference
     private Specialist specialist;
 
 }

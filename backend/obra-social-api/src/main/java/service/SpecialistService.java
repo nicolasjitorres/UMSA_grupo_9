@@ -22,6 +22,10 @@ public class SpecialistService implements ISpecialistService {
 	private LocationRepository locationRepository;
 	private LocationService locationService;
 	private SpecialistValidator specialistValidator;
+	@Inject
+	private ScheduleService scheduleService;
+	@Inject
+	private ShiftService shiftService;
 
 	@Inject
 	public SpecialistService(SpecialistRepository specialistRepository, LocationRepository locationRepository,
@@ -67,6 +71,7 @@ public class SpecialistService implements ISpecialistService {
 			}
 		}
 
+
 		specialistRepository.persist(newSpecialist);
 		return newSpecialist;
 	}
@@ -95,16 +100,18 @@ public class SpecialistService implements ISpecialistService {
 	@Override
 	public Specialist deleteSpecialist(Long id) throws Exception {
 		Specialist existingSpecialist = specialistRepository.findById(id);
-		if (existingSpecialist != null) {
-			Location location = existingSpecialist.getLocation();
-	        if (location != null) {
-	            location.getSpecialists().remove(existingSpecialist);
-	        }
-			specialistRepository.deleteById(id);
-			return existingSpecialist;
-		} else {
-			throw new Exception("El especialista con id " + id + " no existe.");
+		if(!shiftService.getShiftBySpecialistId(id).isEmpty())throw new Exception("No se puede borrar el especialista con ID: "+id+" debido a que está asociado a un turno.");
+		if (existingSpecialist == null) throw new Exception("El especialista con id " + id + " no existe.");
+
+		Location location = existingSpecialist.getLocation();
+		if (location != null) {
+			location.getSpecialists().remove(existingSpecialist);
 		}
+
+		scheduleService.deleteSchedulesByIDSpecialist(id);
+		specialistRepository.deleteById(id);
+		return existingSpecialist;
+
 	}
 
 }
