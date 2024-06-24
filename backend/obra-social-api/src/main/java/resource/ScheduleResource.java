@@ -1,6 +1,6 @@
 package resource;
 
-import dto.mappers.MapperEntityToDTO;
+import dto.mappers.Mapper;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -44,7 +44,7 @@ public class ScheduleResource {
 		if (schedule == null) {
 			return Response.status(Response.Status.NOT_FOUND).entity("No existe un horario con el id " + id).build();
 		} else {
-			return Response.ok(MapperEntityToDTO.entityToDTO(schedule)).build();
+			return Response.ok(Mapper.toScheduleDTO(schedule)).build();
 		}
 	}
 	@GET

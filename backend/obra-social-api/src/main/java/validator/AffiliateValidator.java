@@ -2,7 +2,7 @@ package validator;
 
 import java.util.List;
 
-import dto.AffiliateDTO;
+import model.Affiliate;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Validator;
 
@@ -15,8 +15,8 @@ public class AffiliateValidator {
 		super();
 		this.validator = validator;
 	}
-	
-	public List<String> validateAffiliate(AffiliateDTO affiliate) {
+
+	public List<String> validateAffiliate(Affiliate affiliate) {
 		var errors = validator.validate(affiliate);
 		if (errors.isEmpty()) {
 			return null;
@@ -24,5 +24,5 @@ public class AffiliateValidator {
 			return errors.stream().map(violation ->violation.getPropertyPath() + violation.getMessage()).toList();
 		}
 	}
-	
+
 }

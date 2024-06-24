@@ -3,6 +3,7 @@ package service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import model.Affiliate;
 import model.Shift;
 import repository.AffiliateRepository;
@@ -40,31 +41,30 @@ public class AffiliateService implements IAffiliateService {
 
 	public Affiliate addAffiliate(Affiliate newAffiliate) throws Exception {
 		if (affiliateRepository.findByDni(newAffiliate.getDni()) != null)
-			throw new Exception("Ya existe un afiliado con el dni: " + newAffiliate.getDni());
+			throw new IllegalArgumentException("Ya existe un afiliado con el dni: " + newAffiliate.getDni());
 		if (affiliateRepository.findByHealthInsuranceCode(newAffiliate.getHealthInsuranceCode()) != null)
-			throw new Exception(
+			throw new IllegalArgumentException(
 					"Ya existe un afiliado con el codigo de obra social: " + newAffiliate.getHealthInsuranceCode());
-		List<String> existingErrors = affiliateValidator.validateAffiliate(AffiliateMapper.entityToDto(newAffiliate));
-		if (existingErrors != null)
-			throw new IllegalArgumentException(existingErrors.toString());
+
+		List<String> existInvalidData = affiliateValidator.validateAffiliate(newAffiliate);
+		if(existInvalidData!=null) throw new IllegalArgumentException(existInvalidData.toString());
 		affiliateRepository.persist(newAffiliate);
 		return newAffiliate;
 	}
 
 	@Override
-	public Affiliate editAffiliate(Long id, Affiliate editedAffiliate) throws Exception {
+	public Affiliate editAffiliate(Long id, @Valid Affiliate affiliate) throws Exception {
 		Affiliate existingAffiliate = affiliateRepository.findById(id);
 		if (existingAffiliate == null)
 			throw new Exception("El afiliado con id " + id + " no existe.");
-		List<String> existingErrors = affiliateValidator
-				.validateAffiliate(AffiliateMapper.entityToDto(editedAffiliate));
-		if (existingErrors != null)
-			throw new IllegalArgumentException(existingErrors.toString());
+		List<String> existInvalidData = affiliateValidator.validateAffiliate(affiliate);
+		if(existInvalidData!=null) throw new IllegalArgumentException(existInvalidData.toString());
 
-		existingAffiliate.setFirstName(editedAffiliate.getFirstName());
-		existingAffiliate.setLastName(editedAffiliate.getLastName());
-		existingAffiliate.setDni(editedAffiliate.getDni());
-		existingAffiliate.setHealthInsuranceCode(editedAffiliate.getHealthInsuranceCode());
+		existingAffiliate.setFirstName(affiliate.getFirstName());
+		existingAffiliate.setLastName(affiliate.getLastName());
+		existingAffiliate.setDni(affiliate.getDni());
+		existingAffiliate.setHealthInsuranceCode(affiliate.getHealthInsuranceCode());
+		existingAffiliate.setEmail((affiliate.getEmail()));
 		affiliateRepository.persistAndFlush(existingAffiliate);
 		return existingAffiliate;
 	}

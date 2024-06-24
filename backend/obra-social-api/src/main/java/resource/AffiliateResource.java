@@ -1,12 +1,11 @@
 package resource;
 
+import dto.mappers.Mapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-import dto.AffiliateDTO;
-import dto.mappers.AffiliateMapper;
 import model.Affiliate;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -14,7 +13,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import service.interfaces.IAffiliateService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -35,9 +33,7 @@ public class AffiliateResource {
 	public Response getAllAffiliates() {
 		List<Affiliate> affiliates = affiliateService.getAllAffiliates();
 		if (!affiliates.isEmpty()) {
-			List<AffiliateDTO> affiliateDTOs = affiliates.stream().map(AffiliateMapper::entityToDto)
-					.collect(Collectors.toList());
-			return Response.ok(affiliateDTOs).build();
+			return Response.ok(Mapper.toAffiliateDTOList(affiliates)).build();
 		} else {
 			return Response.status(204).build();
 		}
@@ -48,12 +44,13 @@ public class AffiliateResource {
 	@Operation(summary = "Obtener un afiliado por ID", description = "Retorna un afiliado basado en el ID proporcionado.")
 	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Afiliado obtenido con éxito"),
 			@APIResponse(responseCode = "404", description = "Afiliado no encontrado") })
+
 	public Response getAffiliate(@PathParam("id") Long id) {
 		Affiliate affiliate = affiliateService.getAffiliateById(id);
 		if (affiliate == null) {
 			return Response.status(Status.NOT_FOUND).entity("No existe afiliado con el id " + id).build();
 		} else {
-			return Response.ok(AffiliateMapper.entityToDto(affiliate)).build();
+			return Response.ok(Mapper.toAffiliateDTO(affiliate)).build();
 		}
 	}
 
@@ -61,17 +58,14 @@ public class AffiliateResource {
 	@Operation(summary = "Crear un afiliado", description = "Crea un nuevo afiliado.")
 	@APIResponse(responseCode = "200", description = "Afiliado creado con éxito")
 	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")
-	public Response createAffiliate(AffiliateDTO newAffiliateDTO) {
+	public Response createAffiliate(Affiliate newAffiliate) {
 		try {
-			Affiliate affiliate = affiliateService.addAffiliate(AffiliateMapper.createAffiliateDto(newAffiliateDTO));
-			return Response.ok(AffiliateMapper.entityToDto(affiliate)).build();
-		} catch (IllegalArgumentException e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			Affiliate affiliate = affiliateService.addAffiliate(newAffiliate);
+			return Response.ok(Mapper.toAffiliateDTO(affiliate)).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
 	}
-
 
 	@PUT
 	@Path("{id}")
@@ -80,11 +74,10 @@ public class AffiliateResource {
 	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")
 	@APIResponse(responseCode = "404", description = "Solicitud incorrecta, no existe el afiliado en el sistema con la ID ingresada")
 
-	public Response updateAffiliate(@PathParam("id") Long id, AffiliateDTO editAffiliateDTO) {
+	public Response updateAffiliate(@PathParam("id") Long id, Affiliate editAffiliateDTO) {
 		try {
-			Affiliate updatedAffiliate = affiliateService.editAffiliate(id,
-					AffiliateMapper.updateAffiliateDto(editAffiliateDTO));
-			return Response.ok(AffiliateMapper.entityToDto(updatedAffiliate)).build();
+			Affiliate updatedAffiliate = affiliateService.editAffiliate(id,editAffiliateDTO);
+			return Response.ok(Mapper.toAffiliateDTO(updatedAffiliate)).build();
 		} catch (IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {
@@ -95,12 +88,12 @@ public class AffiliateResource {
 	@DELETE
 	@Path("{id}")
 	@Operation(summary = "Eliminar un afiliado", description = "Elimina un afiliado existente.")
-	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Afiliado eliminado con éxito"),
+	@APIResponses(value = { @APIResponse(responseCode = "204", description = "Afiliado eliminado con éxito"),
 			@APIResponse(responseCode = "404", description = "Afiliado no encontrado") })
 	public Response deleteAffiliateById(@PathParam("id") Long id) {
 		try {
 			Affiliate deletedAffiliate = affiliateService.deleteAffiliate(id);
-			return Response.status(Response.Status.OK).entity(AffiliateMapper.entityToDto(deletedAffiliate)).build();
+			return Response.status(204).build();
 		} catch (Exception e) {
 			return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
