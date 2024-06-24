@@ -9,6 +9,7 @@ import service.interfaces.ILocationService;
 import validator.LocationValidator;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
@@ -67,6 +68,17 @@ public class LocationService implements ILocationService {
 		locationRepository.persistAndFlush(existingLocation);
 		return existingLocation;
 
+	}
+
+	@Override
+	public Location findLocationByDetails(Location location) throws Exception {
+		Optional<Location> existingLocation = locationRepository.findByDetails(location.getStreet(), location.getLocality(),
+				location.getProvince(), location.getCountry());
+		if(existingLocation.isPresent()){
+			return existingLocation.get();
+		}else{
+			return this.addLocation(location);
+		}
 	}
 
 }

@@ -37,21 +37,18 @@ public class SpecialistDTO{
     
     @NotNull(message = ": El campo 'especialidad' no debe estar vacío.")
     private Speciality speciality;
-    
-    //*@NotEmpty(message = ": El especialista debe tener al menos un horario.")
-    //private List<Schedule> schedules;
-    
+
     @NotNull(message = ": El especialista debe tener al menos una ubicación.")
     private Location location;
 
     private Role role;
     
-    @NotBlank(message = ": El campo 'email' no debe estar vacío.")
-    @Email(message = ": El campo 'email' debe contener un email válido.")
-	private String email;
-    
-    @NotBlank(message = ": El campo 'contraseña' no debe estar vacío.")
-    @Size(min = 8, message = ": El campo 'contraseña' debe tener al menos 8 caracteres.")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&+-¡¿]{8,}$", message = ": El campo 'contraseña' debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.")
-	private String password;
+//    @NotBlank(message = ": El campo 'email' no debe estar vacío.")
+//    @Email(message = ": El campo 'email' debe contener un email válido.")
+//	private String email;
+//
+//    @NotBlank(message = ": El campo 'contraseña' no debe estar vacío.")
+//    @Size(min = 8, message = ": El campo 'contraseña' debe tener al menos 8 caracteres.")
+//    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&+-¡¿]{8,}$", message = ": El campo 'contraseña' debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.")
+//	private String password;
 }

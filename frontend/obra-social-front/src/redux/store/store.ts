@@ -3,6 +3,7 @@ import specialistsReducer from "../slices/specialistSlice";
 import afiliatedReducer from "../slices/afiliatedSlice";
 import shiftReduce from "../slices/shiftSlice";
 import prescriptionReducer from "../slices/prescriptionSlice";
+import schedulesReducer from "../slices/schedulesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     afiliates: afiliatedReducer,
     shift: shiftReduce,
     prescription: prescriptionReducer,
+    schedules: schedulesReducer,
   },
 });
 

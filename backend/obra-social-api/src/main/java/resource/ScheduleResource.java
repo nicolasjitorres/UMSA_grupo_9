@@ -2,6 +2,7 @@ package resource;
 
 import dto.mappers.MapperEntityToDTO;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -65,7 +66,7 @@ public class ScheduleResource {
 	@Operation(summary = "Crear un nuevo horario", description = "Agrega un nuevo horario al sistema.")
 	@APIResponses(value = { @APIResponse(responseCode = "201", description = "Horario creado con éxito"),
 			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos") })
-	public Response addSchedule(@PathParam("idSpecialist") Long id, Schedule schedule) {
+	public Response addSchedule(@PathParam("idSpecialist") Long id,@Valid Schedule schedule) {
 		try {
 			scheduleService.addSchedule(id, schedule);
 			return Response.status(Response.Status.CREATED).entity(schedule).build();

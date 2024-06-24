@@ -10,4 +10,5 @@ public class MapperEntityToDTO
         ScheduleDTO dto = new ScheduleDTO(schedule.getId(), schedule.getStartTime(), schedule.getEndTime(), schedule.getDayOfWeek(), schedule.getSpecialist().getId());
         return dto;
     }
+
 }

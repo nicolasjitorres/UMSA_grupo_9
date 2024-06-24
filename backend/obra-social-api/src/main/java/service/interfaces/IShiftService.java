@@ -13,6 +13,6 @@ public interface IShiftService {
     public List<Shift> getShiftBySpecialistId(Long idSpecialist);
     public List<Shift> getShiftByAffiliateId(Long idAffiliate);
     public Shift addShift(ShiftDTO shiftDTO) throws Exception;
-    public Shift deleteShift(Long id) throws Exception;
+    public void deleteShift(Long id) throws Exception;
     public Shift editShift(Long id, ShiftDTO shiftDTO) throws Exception;
 }
