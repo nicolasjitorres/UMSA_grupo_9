@@ -45,11 +45,10 @@ public class SpecialistService implements ISpecialistService {
 	public Specialist addSpecialist(Specialist newSpecialist) throws Exception {
 		if (specialistRepository.findByDni(newSpecialist.getDni()) != null)
 			throw new Exception("Ya existe un especialista con este dni: " + newSpecialist.getDni());
-
-		List<String> existingErrors = specialistValidator
-				.validateSpecialist(SpecialistMapper.entityToDto(newSpecialist));
-		if (existingErrors != null)
-			throw new IllegalArgumentException(existingErrors.toString());
+		List<String> existInvalidData = specialistValidator
+				.validateSpecialist(newSpecialist);
+		if (existInvalidData != null)
+			throw new IllegalArgumentException(existInvalidData.toString());
 
 		Location existingLocation = locationService.findLocationByDetails(newSpecialist.getLocation());
 
@@ -63,17 +62,19 @@ public class SpecialistService implements ISpecialistService {
 
 	@Override
 	public Specialist editSpecialist(Long id, Specialist editedSpecialist) throws Exception {
-		List<String> existingErrors = specialistValidator
-				.validateSpecialist(SpecialistMapper.entityToDto(editedSpecialist));
-		if (existingErrors != null)
-			throw new IllegalArgumentException(existingErrors.toString());
+		List<String> existInvalidData = specialistValidator
+				.validateSpecialist(editedSpecialist);
+		if (existInvalidData != null)
+			throw new IllegalArgumentException(existInvalidData.toString());
 
 		Specialist existingSpecialist = specialistRepository.findById(id);
 
 		if (existingSpecialist != null) {
 			existingSpecialist.setFirstName(editedSpecialist.getFirstName());
 			existingSpecialist.setLastName(editedSpecialist.getLastName());
+			existingSpecialist.setSpeciality(editedSpecialist.getSpeciality());
 			existingSpecialist.setDni(editedSpecialist.getDni());
+			existingSpecialist.setEmail(editedSpecialist.getEmail());
 			specialistRepository.persistAndFlush(existingSpecialist);
 			return existingSpecialist;
 		} else {

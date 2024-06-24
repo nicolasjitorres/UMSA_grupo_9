@@ -5,6 +5,7 @@ import java.util.List;
 import dto.SpecialistDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Validator;
+import model.Specialist;
 
 @ApplicationScoped
 public class SpecialistValidator {
@@ -16,7 +17,7 @@ public class SpecialistValidator {
 		this.validator = validator;
 	}
 	
-	public List<String> validateSpecialist(SpecialistDTO specialist) {
+	public List<String> validateSpecialist(Specialist specialist) {
 		var errors = validator.validate(specialist);
 		if (errors.isEmpty()) {
 			return null;

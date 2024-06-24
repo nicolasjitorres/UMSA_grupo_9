@@ -62,7 +62,7 @@ public class SpecialistMapper {
 		specialist.setDni(specialistDTO.getDni());
 		specialist.setFirstName(specialistDTO.getFirstName());
 		specialist.setLastName(specialistDTO.getLastName());
-		specialist.setId(specialistDTO.getId());
+		//specialist.setId(specialistDTO.getId());
 		specialist.setLocation(specialistDTO.getLocation());
 		//specialist.setSchedules(specialistDTO.getSchedules());
 		return specialist;
@@ -79,7 +79,7 @@ public class SpecialistMapper {
 //		specialistDTO.setEmail(specialist.getEmail());
 		specialistDTO.setFirstName(specialist.getFirstName());
 		specialistDTO.setLastName(specialist.getLastName());
-		specialistDTO.setId(specialist.getId());
+		//specialistDTO.setId(specialist.getId());
 		specialistDTO.setRole(specialist.getRole());
 		specialistDTO.setSpeciality(specialist.getSpeciality());
 		specialistDTO.setLocation(specialist.getLocation());
