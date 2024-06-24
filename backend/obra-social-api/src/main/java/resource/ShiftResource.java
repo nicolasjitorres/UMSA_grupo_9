@@ -96,7 +96,8 @@ public class ShiftResource {
     })
     public Response deleteShift(@PathParam("id") Long id) {
         try {
-            return Response.ok("se elimino con exito").entity(iserviceShift.deleteShift(id)).build();
+            iserviceShift.deleteShift(id);
+            return Response.ok("se elimino con exito").build();
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }

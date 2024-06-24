@@ -1,6 +1,8 @@
 package resource;
 
+import dto.mappers.MapperEntityToDTO;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -42,17 +44,31 @@ public class ScheduleResource {
 		if (schedule == null) {
 			return Response.status(Response.Status.NOT_FOUND).entity("No existe un horario con el id " + id).build();
 		} else {
-			return Response.ok(schedule).build();
+			return Response.ok(MapperEntityToDTO.entityToDTO(schedule)).build();
+		}
+	}
+	@GET
+	@Path("/especialista/{idSpecialist}")
+	@Operation(summary = "Obtener un horario de determinado especialista ID", description = "Retorna un horario basado en el ID del especialista proporcionado.")
+	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Horario obtenido con éxito"),
+			@APIResponse(responseCode = "204", description = "Especialista sin horario no encontrado") })
+	public Response getScheduleByIdSpecialist(@PathParam("idSpecialist") Long idSpecialist) {
+		List<Schedule> schedules = scheduleService.findScheduleByIDSpecialist(idSpecialist);
+		if (schedules.isEmpty()) {
+			return Response.status(204).build();
+		} else {
+			return Response.ok(schedules).build();
 		}
 	}
 
 	@POST
+	@Path("/{idSpecialist}")
 	@Operation(summary = "Crear un nuevo horario", description = "Agrega un nuevo horario al sistema.")
 	@APIResponses(value = { @APIResponse(responseCode = "201", description = "Horario creado con éxito"),
 			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos") })
-	public Response addSchedule(Schedule schedule) {
+	public Response addSchedule(@PathParam("idSpecialist") Long id,@Valid Schedule schedule) {
 		try {
-			scheduleService.addSchedule(schedule);
+			scheduleService.addSchedule(id, schedule);
 			return Response.status(Response.Status.CREATED).entity(schedule).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

@@ -29,28 +29,27 @@ public class SpecialistMapper {
 
 		Specialist specialist = new Specialist();
 		specialist.setDni(specialistDTO.getDni());
-		specialist.setEmail(specialistDTO.getEmail());
+//		specialist.setEmail(specialistDTO.getEmail());
 		specialist.setFirstName(specialistDTO.getFirstName());
 		specialist.setLastName(specialistDTO.getLastName());
 		specialist.setId(specialistDTO.getId());
 		specialist.setSpeciality(specialistDTO.getSpeciality());
 		specialist.setRole(Role.USER);
 		specialist.setLocation(specialistDTO.getLocation());
-		List<Schedule> schedules = specialistDTO.getSchedules();
-	    if (schedules != null) {
-	        for (Schedule schedule : schedules) {
-	            schedule.setSpecialist(specialist);
-	        }
-	    }
-		specialist.setSchedules(specialistDTO.getSchedules());
+		//List<Schedule> schedules = specialistDTO.getSchedules();
+	    //if (schedules != null) {
+//	        for (Schedule schedule : schedules) {
+	            //schedule.setSpecialist(specialist);
+	        //}
+	    //}
+		//specialist.setSchedules(specialistDTO.getSchedules());
 		
 //		Aqui utilizamos el metodo para hashear la contraseña y asi guardarla de manera segura en la BD, para en un futuro realizar validaciones
-		if (specialistDTO.getPassword() != null) {
-			String hashedPassword = hashPassword(specialistDTO.getPassword());
-			specialist.setPassword(hashedPassword);
-		}
-		
-		System.out.println(specialist.getLocation());
+//		if (specialistDTO.getPassword() != null) {
+//			String hashedPassword = hashPassword(specialistDTO.getPassword());
+//			specialist.setPassword(hashedPassword);
+//		}
+
 		
 		return specialist;
 	}
@@ -65,7 +64,7 @@ public class SpecialistMapper {
 		specialist.setLastName(specialistDTO.getLastName());
 		specialist.setId(specialistDTO.getId());
 		specialist.setLocation(specialistDTO.getLocation());
-		specialist.setSchedules(specialistDTO.getSchedules());
+		//specialist.setSchedules(specialistDTO.getSchedules());
 		return specialist;
 	}
 
@@ -77,15 +76,15 @@ public class SpecialistMapper {
 
 		SpecialistDTO specialistDTO = new SpecialistDTO();
 		specialistDTO.setDni(specialist.getDni());
-		specialistDTO.setEmail(specialist.getEmail());
+//		specialistDTO.setEmail(specialist.getEmail());
 		specialistDTO.setFirstName(specialist.getFirstName());
 		specialistDTO.setLastName(specialist.getLastName());
 		specialistDTO.setId(specialist.getId());
 		specialistDTO.setRole(specialist.getRole());
 		specialistDTO.setSpeciality(specialist.getSpeciality());
 		specialistDTO.setLocation(specialist.getLocation());
-		specialistDTO.setSchedules(specialist.getSchedules());
-		specialistDTO.setPassword(specialist.getPassword());
+		//specialistDTO.setSchedules(specialist.getSchedules());
+//		specialistDTO.setPassword(specialist.getPassword());
 
 		return specialistDTO;
 	}

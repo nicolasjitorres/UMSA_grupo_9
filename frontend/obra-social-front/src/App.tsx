@@ -9,7 +9,7 @@ import NavBar from "./components/NavBar/NavBar";
 import Table from "./Table";
 import Home from "./Home";
 import Turnos from "./components/shiftList/ShiftList";
-import TablaEspecialistas from "./components/TableEspecialistas";
+import TablaEspecialistas from "./components/specialistList/SpecialistList";
 
 const App: React.FC = () => {
   return (
