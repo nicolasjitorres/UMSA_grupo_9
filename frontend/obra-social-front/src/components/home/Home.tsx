@@ -1,12 +1,20 @@
 import React from "react";
+import Header from "./Header";
+import AboutSection from "./AboutSection";
+import ServicesSection from "./ServicesSection";
+import ContactSection from "./ContactSection";
+import './home.css';
 
 const Home: React.FC = () => {
   return (
-    <section>
-      <div className="HOme">
-        <h1>Bienvenido al home</h1>
+    <div className="home-container">
+      <Header />
+      <AboutSection />
+      <div className="home-sections">
+        <ServicesSection />
+        <ContactSection />
       </div>
-    </section>
+    </div>
   );
 };
 

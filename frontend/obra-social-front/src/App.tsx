@@ -6,7 +6,7 @@ import AffiliatedList from "./components/afiliatesList/AfiliatesList";
 import SignIn from "./components/Login/SignIn";
 import NotFound from "./components/Errors/Notfound";
 import NavBar from "./components/NavBar/NavBar";
-import Home from "./Home";
+import Home from "./components/Home/Home";
 import Turnos from "./components/shiftList/ShiftList";
 import TablaEspecialistas from "./components/specialistList/SpecialistList";
 
