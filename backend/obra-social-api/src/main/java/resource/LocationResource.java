@@ -80,13 +80,13 @@ public class LocationResource {
 	@DELETE
 	@Path("/{id}")
 	@Operation(summary = "Eliminar una ubicación", description = "Elimina una ubicación existente por su ID.")
-	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Ubicación eliminada con éxito"),
+	@APIResponses(value = { @APIResponse(responseCode = "204", description = "Ubicación eliminada con éxito"),
 			@APIResponse(responseCode = "400", description = "Ubicación no encontrada"),
 			@APIResponse(responseCode = "404", description = "Error al intentar borrar la ubicación") })
 	public Response deleteLocation(@PathParam("id") Long id) {
 		try {
 			Location deletedLocation = locationService.deleteLocation(id);
-			return Response.ok(deletedLocation).build();
+			return Response.status(204).build();
 		} catch (IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {

@@ -1,4 +1,4 @@
-package dto.mappers;
+package mappers;
 
 import dto.ShiftDTO;
 import jakarta.enterprise.context.ApplicationScoped;

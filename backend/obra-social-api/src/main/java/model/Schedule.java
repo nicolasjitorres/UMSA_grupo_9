@@ -32,7 +32,7 @@ public class Schedule{
     @Column(name = "end_time")
     private String endTime;
 	
-	@NotNull(message = ": El campo 'dia de la semana' es obligatorio.")
+	@NotNull(message = ": El campo 'dia de la semana' es obligatorio y debe ser un día de la semana")
 	@Enumerated
     private Day dayOfWeek;
 

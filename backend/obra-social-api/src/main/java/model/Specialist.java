@@ -1,6 +1,7 @@
 package model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import model.enums.Speciality;
@@ -18,6 +19,7 @@ public class Specialist extends User{
 	@GeneratedValue
 	private Long id;
 
+	@NotNull(message = ": El campo 'especialidad' no debe estar vacío.")
 	@Enumerated(EnumType.STRING)
 	private Speciality speciality;
 

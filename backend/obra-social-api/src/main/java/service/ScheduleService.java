@@ -7,7 +7,7 @@ import model.Schedule;
 import model.Specialist;
 import repository.ScheduleRepository;
 import service.interfaces.IScheduleService;
-import validator.ScheduleValidator;
+import validator.Validator;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class ScheduleService implements IScheduleService {
 	@Inject
 	private ScheduleRepository scheduleRepository;
 	@Inject
-	private ScheduleValidator scheduleValidator;
+	private Validator validator;
 
 	@Inject
 	private SpecialistService specialistService;
@@ -35,7 +35,7 @@ public class ScheduleService implements IScheduleService {
 
 	@Override
 	public Schedule addSchedule(Long idSpecialist, Schedule schedule) throws Exception {
-		List<String> scheduleErrors = scheduleValidator.validateSchedule(schedule);
+		List<String> scheduleErrors = validator.validateSchedule(schedule);
 		if (scheduleErrors != null) throw new IllegalArgumentException(scheduleErrors.toString());
 
 		Specialist existingSpecialist  = specialistService.getSpecialistById(idSpecialist);
@@ -57,7 +57,7 @@ public class ScheduleService implements IScheduleService {
 	@Override
 	public Schedule editSchedule(Long id, Schedule schedule) throws Exception {
 		Schedule existingSchedule = scheduleRepository.findById(id);
-		List<String> scheduleErrors = scheduleValidator.validateSchedule(schedule);
+		List<String> scheduleErrors = validator.validateSchedule(schedule);
 		if (existingSchedule == null)
 			throw new Exception(("No existe horario con la id: " + id));
 		if (scheduleErrors != null)
