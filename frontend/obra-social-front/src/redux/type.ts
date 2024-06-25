@@ -25,7 +25,6 @@ export interface Specialist {
   location: Location; // Usa la ubicación con `id`
   role: string;
   email: string;
-  password: string;
 }
 
 export enum DayOfWeek {
@@ -43,7 +42,7 @@ export interface Schedule {
   startTime: string;
   endTime: string;
   dayOfWeek: DayOfWeek;
-  specialist: Specialist;
+  specialistId: number;
 }
 
 export interface Affiliate {

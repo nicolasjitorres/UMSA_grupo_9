@@ -30,15 +30,21 @@ export const deleteShift = createAsyncThunk(
 );
 export const addShift = createAsyncThunk(
   "shift/addShift",
-  async (shiftDTO: ShiftDTO) => {
+  async (shiftDTO: ShiftDTO, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
+      const response = await axios.post<Shift>(
         "http://localhost:8080/turnos",
         shiftDTO
       );
       return response.data; // Suponiendo que el backend devuelve el turno creado
-    } catch (error) {
-      console.log(error); // Lanza el error para que Redux Toolkit lo maneje
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(
+          error.response.data.message || "Failed to add shift"
+        );
+      } else {
+        return rejectWithValue("Failed to add shift");
+      }
     }
   }
 );
@@ -84,7 +90,12 @@ const shiftSlice = createSlice({
       })
       .addCase(addShift.fulfilled, (state, action: PayloadAction<Shift>) => {
         state.status = "succeeded";
-        state.shifts.push(action.payload);
+        // Verifica que state.shifts es un array antes de hacer push
+        if (Array.isArray(state.shifts)) {
+          state.shifts.push(action.payload);
+        } else {
+          console.error("shifts no es un array!", state.shifts);
+        }
       })
       .addCase(addShift.rejected, (state, action) => {
         state.status = "failed";

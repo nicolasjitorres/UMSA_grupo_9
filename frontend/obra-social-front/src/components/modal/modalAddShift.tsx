@@ -9,7 +9,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import { AppDispatch, RootState } from "../../redux/store/store";
 import { addShift } from "../../redux/slices/shiftSlice"; // Asegúrate de importar addShift
 import { Specialist, Schedule, DayOfWeek } from "../../redux/type"; // Asegúrate de importar los modelos correctamente
 import {
@@ -72,7 +72,7 @@ function BasicModal() {
     const todayIndex = today.getDay();
     const daysUntilNext = (dayIndex - todayIndex + 7) % 7;
     const nextDate = new Date(today);
-    nextDate.setDate(today.getDate() + (daysUntilNext - 1));
+    nextDate.setDate(today.getDate() + daysUntilNext);
     return nextDate.toISOString().split("T")[0]; // Formato YYYY-MM-DD
   };
 
@@ -100,7 +100,7 @@ function BasicModal() {
   const renderDayOptions = () => {
     if (selectedSpecialist === null) return null;
     const days = schedules
-      .filter((schedule) => schedule.specialist.id === selectedSpecialist)
+      .filter((schedule) => schedule.specialistId === selectedSpecialist)
       .map((schedule) => schedule.dayOfWeek);
     return days.map((day) => {
       return (
@@ -123,7 +123,7 @@ function BasicModal() {
 
     const filteredSchedules = schedules.filter(
       (schedule) =>
-        schedule.specialist.id === selectedSpecialist &&
+        schedule.specialistId === selectedSpecialist &&
         schedule.dayOfWeek === selectedDay
     );
 
