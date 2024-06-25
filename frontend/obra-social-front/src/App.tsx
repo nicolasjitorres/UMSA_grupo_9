@@ -7,7 +7,7 @@ import SignIn from "./components/Login/SignIn";
 import NotFound from "./components/Errors/Notfound";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./Home";
-import Turnos from "./components/shiftList/ShiftList";
+import Turnos from "./components/shiftList/Shift";
 import TablaEspecialistas from "./components/specialistList/SpecialistList";
 
 const App: React.FC = () => {

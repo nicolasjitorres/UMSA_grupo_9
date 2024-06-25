@@ -32,7 +32,6 @@ function Copyright(props: any) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
@@ -40,11 +39,19 @@ export default function SignInSide() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    navigate("/home");
+    const email = data.get("email");
+    const password = data.get("password");
+
+    // Simulación de validación de usuario
+    if (email === "admin@example.com" && password === "admin123") {
+      localStorage.setItem("user", JSON.stringify({ email, role: "ADMIN" }));
+      navigate("/admin-dashboard"); // Redirigir al dashboard de admin
+    } else if (email === "javier@example.com" && password === "javier123") {
+      localStorage.setItem("user", JSON.stringify({ email, role: "USER" }));
+      navigate("/user-dashboard"); // Redirigir al dashboard de usuario
+    } else {
+      alert("Credenciales incorrectas");
+    }
   };
 
   return (
@@ -114,7 +121,6 @@ export default function SignInSide() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-
               <Button
                 type="submit"
                 fullWidth
