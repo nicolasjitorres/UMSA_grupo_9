@@ -1,13 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Shift, ShiftDTO } from "../type";
 // import { RootState } from '../store/store';
-
-interface Shift {
-  id: number;
-  description: string;
-  date: string;
-  time: string;
-}
 
 interface ShiftState {
   shifts: Shift[];
@@ -32,6 +26,20 @@ export const deleteShift = createAsyncThunk(
     console.log(shiftId);
     await axios.delete(`http://localhost:8080/turnos/${shiftId}`);
     return shiftId;
+  }
+);
+export const addShift = createAsyncThunk(
+  "shift/addShift",
+  async (shiftDTO: ShiftDTO) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/turnos",
+        shiftDTO
+      );
+      return response.data; // Suponiendo que el backend devuelve el turno creado
+    } catch (error) {
+      console.log(error); // Lanza el error para que Redux Toolkit lo maneje
+    }
   }
 );
 
@@ -68,6 +76,17 @@ const shiftSlice = createSlice({
         }
       )
       .addCase(deleteShift.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Something went wrong";
+      })
+      .addCase(addShift.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addShift.fulfilled, (state, action: PayloadAction<Shift>) => {
+        state.status = "succeeded";
+        state.shifts.push(action.payload);
+      })
+      .addCase(addShift.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Something went wrong";
       });

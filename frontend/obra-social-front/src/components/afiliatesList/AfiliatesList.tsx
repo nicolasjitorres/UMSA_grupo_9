@@ -1,11 +1,22 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store/store";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
+} from "@mui/material";
+import Row from "../Row/rowAffiliate";
 import { fetchAfiliados } from "../../redux/slices/afiliatedSlice";
 
 const AffiliatesList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const affilates = useSelector(
+  const affiliates = useSelector(
     (state: RootState) => state.afiliates.afiliados
   );
   const status = useSelector((state: RootState) => state.afiliates.status);
@@ -17,35 +28,58 @@ const AffiliatesList: React.FC = () => {
     }
   }, [status, dispatch]);
 
-  let content;
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   if (status === "loading") {
-    content = <div>Loading...</div>;
-  } else if (status === "succeeded") {
-    content = (
-      <div>
-        {affilates && affilates.length > 0 ? (
-          <ul>
-            {affilates.map((affiliate) => (
-              <li key={affiliate.id}>
-                {affiliate.firstName} {affiliate.lastName}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay especialistas disponibles.</p>
-        )}
-      </div>
-    );
-  } else if (status === "failed") {
-    content = <div>{error}</div>;
+    return <div>Loading...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>{error}</div>;
   }
 
   return (
-    <section>
-      <h2>Afiliados</h2>
-      {content}
-    </section>
+    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Nombre</TableCell>
+              <TableCell align="right">DNI</TableCell>
+              <TableCell align="right">Contacto</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {affiliates
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((affiliate) => (
+                <Row key={affiliate.id} affiliate={affiliate} />
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={affiliates.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>
   );
 };
 

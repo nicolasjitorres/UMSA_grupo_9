@@ -13,7 +13,7 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../Row/row"; // Ajusta la ruta según la ubicación de tu archivo Row
+import Row from "../Row/rowSchedules&Specialist"; // Ajusta la ruta según la ubicación de tu archivo Row
 // import { Specialist, Schedule } from "../../redux/type"; // Ajusta la ruta según la ubicación de tu archivo de tipos
 
 const SpecialistList: React.FC = () => {
