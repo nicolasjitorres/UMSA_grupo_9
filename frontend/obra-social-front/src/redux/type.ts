@@ -1,10 +1,19 @@
 // types.ts
-export interface Location {
-  id: number; // Asegúrate de que todos los lugares incluyan `id`
-  street: string;
-  locality: string;
-  province: string;
-  country: string;
+export interface Shift {
+  id: number; // Hacer que 'id' sea opcional
+  description: string;
+  date: string;
+  time: string;
+  state: boolean;
+}
+
+export interface ShiftDTO {
+  description: string;
+  date: string;
+  time: string;
+  state: boolean;
+  specialistId: number;
+  affiliatedId: number;
 }
 
 export interface Specialist {
@@ -35,4 +44,15 @@ export interface Schedule {
   endTime: string;
   dayOfWeek: DayOfWeek;
   specialist: Specialist;
+}
+
+export interface Affiliate {
+  id: number;
+  firstName: string;
+  lastName: string;
+  dni: string;
+  healthInsuranceCode: string;
+  role: string;
+  email: string;
+  password: string;
 }

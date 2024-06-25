@@ -1,20 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Affiliate } from "../type";
 // import { RootState } from '../store/store';
 
-interface Afiliado {
-  id: 1;
-  firstName: string;
-  lastName: string;
-  dni: string;
-  healthInsuranceCode: string;
-  role: string;
-  email: string;
-  password: string;
-}
-
 interface AfiliadosState {
-  afiliados: Afiliado[];
+  afiliados: Affiliate[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -28,7 +18,7 @@ const initialState: AfiliadosState = {
 export const fetchAfiliados = createAsyncThunk(
   "afiliados/fetchAfiliados",
   async () => {
-    const response = await axios.get<Afiliado[]>(
+    const response = await axios.get<Affiliate[]>(
       "http://localhost:8080/afiliados"
     ); // Ajusta la URL según tu backend
     return response.data;
@@ -46,7 +36,7 @@ const afiliadosSlice = createSlice({
       })
       .addCase(
         fetchAfiliados.fulfilled,
-        (state, action: PayloadAction<Afiliado[]>) => {
+        (state, action: PayloadAction<Affiliate[]>) => {
           state.status = "succeeded";
           state.afiliados = action.payload;
         }

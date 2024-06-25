@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useEffect } from "react";
+import BasicModal from "../modal/modalAddShift";
 
 interface Column {
   id: "id" | "description" | "date" | "time" | "actions";
@@ -139,6 +140,7 @@ const ShiftList: React.FC = () => {
   return (
     <section>
       <h2>Turnos</h2>
+      <BasicModal />
       {content}
     </section>
   );
