@@ -1,13 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Shift, ShiftDTO } from "../type";
 // import { RootState } from '../store/store';
-
-interface Shift {
-  id: number;
-  description: string;
-  date: string;
-  time: string;
-}
 
 interface ShiftState {
   shifts: Shift[];
@@ -26,8 +20,31 @@ export const fetchShift = createAsyncThunk("shift/fetchShift", async () => {
   return response.data;
 });
 
+export const deleteShift = createAsyncThunk(
+  "shift/deleteShift",
+  async (shiftId: number) => {
+    console.log(shiftId);
+    await axios.delete(`http://localhost:8080/turnos/${shiftId}`);
+    return shiftId;
+  }
+);
+export const addShift = createAsyncThunk(
+  "shift/addShift",
+  async (shiftDTO: ShiftDTO) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/turnos",
+        shiftDTO
+      );
+      return response.data; // Suponiendo que el backend devuelve el turno creado
+    } catch (error) {
+      console.log(error); // Lanza el error para que Redux Toolkit lo maneje
+    }
+  }
+);
+
 const shiftSlice = createSlice({
-  name: "afiliados",
+  name: "turnos",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -43,6 +60,33 @@ const shiftSlice = createSlice({
         }
       )
       .addCase(fetchShift.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Something went wrong";
+      })
+      .addCase(deleteShift.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        deleteShift.fulfilled,
+        (state, action: PayloadAction<number>) => {
+          state.status = "succeeded";
+          state.shifts = state.shifts.filter(
+            (shift) => shift.id !== action.payload
+          );
+        }
+      )
+      .addCase(deleteShift.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Something went wrong";
+      })
+      .addCase(addShift.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addShift.fulfilled, (state, action: PayloadAction<Shift>) => {
+        state.status = "succeeded";
+        state.shifts.push(action.payload);
+      })
+      .addCase(addShift.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Something went wrong";
       });

@@ -6,9 +6,10 @@ import jakarta.transaction.Transactional;
 import model.Location;
 import repository.LocationRepository;
 import service.interfaces.ILocationService;
-import validator.LocationValidator;
+import validator.Validator;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
@@ -17,7 +18,7 @@ public class LocationService implements ILocationService {
 	@Inject
 	private LocationRepository locationRepository;
 	@Inject
-	private LocationValidator locationValidator;
+	private Validator validator;
 
 	@Override
 	public List<Location> findLocations() {
@@ -31,7 +32,7 @@ public class LocationService implements ILocationService {
 
 	@Override
 	public Location addLocation(Location location) throws Exception {
-		List<String> existingErrors = locationValidator.validateLocation(location);
+		List<String> existingErrors = validator.validateLocation(location);
 		if (existingErrors != null)
 			throw new IllegalArgumentException(existingErrors.toString());
 		locationRepository.persist(location);
@@ -55,7 +56,7 @@ public class LocationService implements ILocationService {
 		Location existingLocation = locationRepository.findById(id);
 		if (existingLocation == null)
 			throw new Exception("No existe esa ubicación con id: " + id);
-		List<String> existingErrors = locationValidator.validateLocation(location);
+		List<String> existingErrors = validator.validateLocation(location);
 		if (existingErrors != null)
 			throw new IllegalArgumentException(existingErrors.toString());
 
@@ -67,6 +68,17 @@ public class LocationService implements ILocationService {
 		locationRepository.persistAndFlush(existingLocation);
 		return existingLocation;
 
+	}
+
+	@Override
+	public Location findLocationByDetails(Location location) throws Exception {
+		Optional<Location> existingLocation = locationRepository.findByDetails(location.getStreet(), location.getLocality(),
+				location.getProvince(), location.getCountry());
+		if(existingLocation.isPresent()){
+			return existingLocation.get();
+		}else{
+			return this.addLocation(location);
+		}
 	}
 
 }

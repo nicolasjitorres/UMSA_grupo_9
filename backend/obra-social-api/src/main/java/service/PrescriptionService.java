@@ -1,7 +1,7 @@
 package service;
 
 import dto.PrescriptionDTO;
-import dto.mappers.PrescriptionMapper;
+import mappers.PrescriptionMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

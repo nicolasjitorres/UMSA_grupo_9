@@ -37,6 +37,6 @@ public class Location{
     @JsonIgnore
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
-	private List<Specialist> specialists; // especialistas asignados a la misma direccion
+	private List<Specialist> specialists;
 
 }

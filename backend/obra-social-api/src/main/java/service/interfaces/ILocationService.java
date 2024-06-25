@@ -13,5 +13,5 @@ public interface ILocationService {
     public Location addLocation(Location location) throws Exception;
     public Location deleteLocation(Long id) throws Exception;
     public Location editLocation(Long id, Location location) throws Exception ;
-
+    public Location findLocationByDetails(Location location) throws Exception;
 }

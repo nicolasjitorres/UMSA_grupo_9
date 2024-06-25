@@ -1,11 +1,10 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { Link as RouterLink } from 'react-router-dom';
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { Link as RouterLink } from "react-router-dom";
 
-const Navbar: React.FC = () => {
+function BasicModal() {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -14,20 +13,14 @@ const Navbar: React.FC = () => {
         </Typography>
         <Button color="inherit" component={RouterLink} to="/specialists">
           Especialistas
-        <Button color="inherit" component={RouterLink} to="/especialistasTabla">
-          Tabla Especialistas
-        </Button>
         </Button>
         <Button color="inherit" component={RouterLink} to="/affiliates">
           Afiliados
         </Button>
-        <Button color="inherit" component={RouterLink} to="/table">
-          Tablita afiliados
-        </Button>
         <Button color="inherit" component={RouterLink} to="/">
           Sign In
         </Button>
-        <Button color="inherit" component={RouterLink} to="/">
+        <Button color="inherit" component={RouterLink} to="/turnos">
           Turnos
         </Button>
         <Button color="inherit" component={RouterLink} to="/home">
@@ -39,6 +32,6 @@ const Navbar: React.FC = () => {
       </Toolbar>
     </AppBar>
   );
-};
+}
 
-export default Navbar;
+export default BasicModal;

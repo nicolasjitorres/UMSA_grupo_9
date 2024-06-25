@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Data //genera los metodos necesarios
@@ -16,6 +17,7 @@ public class Prescription{
 	@Id
 	@GeneratedValue
     private Long id;
+    @NotBlank(message = "Debe proporcionar una descripción")
     private String description;
 
     @OneToOne(optional = false)

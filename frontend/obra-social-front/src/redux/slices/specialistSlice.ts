@@ -1,43 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-
-enum DayOfWeek {
-  SUNDAY = "SUNDAY",
-  MONDAY = "MONDAY",
-  TUESDAY = "TUESDAY",
-  WEDNESDAY = "WEDNESDAY",
-  THURSDAY = "THURSDAY",
-  FRIDAY = "FRIDAY",
-  SATURDAY = "SATURDAY",
-}
-
-interface Location {
-  id: number;
-  street: string;
-  locality: string;
-  province: string;
-  country: string;
-}
-
-interface Schedule {
-  id: number;
-  startTime: string;
-  endTime: string;
-  dayOfWeek: DayOfWeek;
-}
-
-interface Specialist {
-  id: number;
-  firstName: string;
-  lastName: string;
-  dni: string;
-  speciality: string; // Ajustar según la estructura de `Speciality`
-  schedules: Schedule[]; // Ajustar según la estructura de `Schedule`
-  location: Location; // Ajustar según la estructura de `Location`
-  role: string; // Ajustar según la estructura de `Role`
-  email: string;
-  password: string;
-}
+import { Specialist } from "../type"; // Ajusta la ruta según la ubicación de tu archivo de tipos
 
 interface SpecialistsState {
   specialists: Specialist[];
@@ -46,7 +9,7 @@ interface SpecialistsState {
 }
 
 const initialState: SpecialistsState = {
-  specialists: [], // Inicializar como un array vacío
+  specialists: [],
   status: "idle",
   error: null,
 };

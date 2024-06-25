@@ -1,5 +1,6 @@
 package resource;
 
+import mappers.Mapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -28,7 +29,7 @@ public class ScheduleResource {
 		if (schedules.isEmpty()) {
 			return Response.status(204).build();
 		} else {
-			return Response.ok(schedules).build();
+			return Response.ok(Mapper.toScheduleDtoList(schedules)).build();
 		}
 	}
 
@@ -42,18 +43,32 @@ public class ScheduleResource {
 		if (schedule == null) {
 			return Response.status(Response.Status.NOT_FOUND).entity("No existe un horario con el id " + id).build();
 		} else {
-			return Response.ok(schedule).build();
+			return Response.ok(Mapper.toScheduleDTO(schedule)).build();
+		}
+	}
+	@GET
+	@Path("/especialista/{idSpecialist}")
+	@Operation(summary = "Obtener un horario de determinado especialista ID", description = "Retorna un horario basado en el ID del especialista proporcionado.")
+	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Horario obtenido con éxito"),
+			@APIResponse(responseCode = "204", description = "Especialista sin horario no encontrado") })
+	public Response getScheduleByIdSpecialist(@PathParam("idSpecialist") Long idSpecialist) {
+		List<Schedule> schedules = scheduleService.findScheduleByIDSpecialist(idSpecialist);
+		if (schedules.isEmpty()) {
+			return Response.status(204).build();
+		} else {
+			return Response.ok(Mapper.toScheduleDtoList(schedules)).build();
 		}
 	}
 
 	@POST
+	@Path("/{idSpecialist}")
 	@Operation(summary = "Crear un nuevo horario", description = "Agrega un nuevo horario al sistema.")
 	@APIResponses(value = { @APIResponse(responseCode = "201", description = "Horario creado con éxito"),
 			@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos inválidos") })
-	public Response addSchedule(Schedule schedule) {
+	public Response addSchedule(@PathParam("idSpecialist") Long id,Schedule schedule) {
 		try {
-			scheduleService.addSchedule(schedule);
-			return Response.status(Response.Status.CREATED).entity(schedule).build();
+			scheduleService.addSchedule(id, schedule);
+			return Response.status(Response.Status.CREATED).entity(Mapper.toScheduleDTO(schedule)).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
@@ -62,12 +77,12 @@ public class ScheduleResource {
 	@DELETE
 	@Path("/{id}")
 	@Operation(summary = "Eliminar un horario", description = "Elimina un horario basado en el ID proporcionado.")
-	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Horario eliminado con éxito"),
+	@APIResponses(value = { @APIResponse(responseCode = "204", description = "Horario eliminado con éxito"),
 			@APIResponse(responseCode = "404", description = "Horario no encontrado") })
 	public Response deleteScheduleById(@PathParam("id") Long id) {
 		try {
 			Schedule deletedSchedule = scheduleService.deleteSchedule(id);
-			return Response.ok(deletedSchedule).build();
+			return Response.status(204).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 		}
@@ -83,7 +98,7 @@ public class ScheduleResource {
 	public Response updateSchedule(@PathParam("id") Long id, Schedule schedule) {
 		try {
 			Schedule updatedSchedule = scheduleService.editSchedule(id, schedule);
-			return Response.ok(updatedSchedule).build();
+			return Response.ok(Mapper.toScheduleDTO(updatedSchedule)).build();
 		} catch (IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {
