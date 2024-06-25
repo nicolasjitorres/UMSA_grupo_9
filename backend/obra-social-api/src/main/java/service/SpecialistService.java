@@ -4,16 +4,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import model.Location;
-import model.Schedule;
 import model.Specialist;
-import repository.LocationRepository;
 import repository.SpecialistRepository;
 import service.interfaces.ISpecialistService;
-import validator.SpecialistValidator;
 
 import java.util.List;
 
-import dto.mappers.SpecialistMapper;
+import validator.Validator;
 
 @ApplicationScoped
 @Transactional
@@ -21,7 +18,7 @@ public class SpecialistService implements ISpecialistService {
 	@Inject
 	private SpecialistRepository specialistRepository;
 	@Inject
-	private SpecialistValidator specialistValidator;
+	private Validator validator;
 	@Inject
 	private ScheduleService scheduleService;
 	@Inject
@@ -45,7 +42,7 @@ public class SpecialistService implements ISpecialistService {
 	public Specialist addSpecialist(Specialist newSpecialist) throws Exception {
 		if (specialistRepository.findByDni(newSpecialist.getDni()) != null)
 			throw new Exception("Ya existe un especialista con este dni: " + newSpecialist.getDni());
-		List<String> existInvalidData = specialistValidator
+		List<String> existInvalidData = validator
 				.validateSpecialist(newSpecialist);
 		if (existInvalidData != null)
 			throw new IllegalArgumentException(existInvalidData.toString());
@@ -62,7 +59,7 @@ public class SpecialistService implements ISpecialistService {
 
 	@Override
 	public Specialist editSpecialist(Long id, Specialist editedSpecialist) throws Exception {
-		List<String> existInvalidData = specialistValidator
+		List<String> existInvalidData = validator
 				.validateSpecialist(editedSpecialist);
 		if (existInvalidData != null)
 			throw new IllegalArgumentException(existInvalidData.toString());

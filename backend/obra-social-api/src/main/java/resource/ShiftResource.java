@@ -91,13 +91,13 @@ public class ShiftResource {
     @Path("/{id}")
     @Operation(summary = "Eliminar un turno", description = "Elimina un turno existente.")
     @APIResponses(value = {
-            @APIResponse(responseCode = "200", description = "Turno eliminado con éxito"),
+            @APIResponse(responseCode = "204", description = "Turno eliminado con éxito"),
             @APIResponse(responseCode = "404", description = "Solicitud incorrecta, no existe dicho turno")
     })
     public Response deleteShift(@PathParam("id") Long id) {
         try {
             iserviceShift.deleteShift(id);
-            return Response.ok("se elimino con exito").build();
+            return Response.status(204).build();
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }

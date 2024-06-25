@@ -6,7 +6,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import dto.PrescriptionDTO;
-import dto.mappers.PrescriptionMapper;
+import mappers.PrescriptionMapper;
 import java.util.List;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -94,13 +94,13 @@ public class PrescriptionResource {
     @Path("/{id}")
 	@Operation(summary = "Eliminar una receta", description = "Elimina una receta basada en el ID proporcionado.")
 	@APIResponses(value = {
-			@APIResponse(responseCode = "200", description = "Receta eliminada con éxito"),
+			@APIResponse(responseCode = "204", description = "Receta eliminada con éxito"),
 			@APIResponse(responseCode = "404", description = "Receta no encontrada")
 	})
     public Response deletePrescription(@PathParam("id") Long id){
         try{
 			Prescription prescription = prescriptionService.deletePrescription(id);
-			return Response.ok(prescription).build();
+			return Response.status(204).build();
 		} catch (Exception e){
 			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 		}

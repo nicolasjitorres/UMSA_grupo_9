@@ -1,6 +1,6 @@
 package resource;
 
-import dto.mappers.Mapper;
+import mappers.Mapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

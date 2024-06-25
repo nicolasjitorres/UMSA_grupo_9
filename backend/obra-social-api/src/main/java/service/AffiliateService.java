@@ -5,14 +5,11 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import model.Affiliate;
-import model.Shift;
 import repository.AffiliateRepository;
 import service.interfaces.IAffiliateService;
-import validator.AffiliateValidator;
+import validator.Validator;
 
 import java.util.List;
-
-import dto.mappers.AffiliateMapper;
 
 @ApplicationScoped
 @Transactional
@@ -22,7 +19,7 @@ public class AffiliateService implements IAffiliateService {
 	private AffiliateRepository affiliateRepository;
 
 	@Inject
-	private AffiliateValidator affiliateValidator;
+	private Validator validator;
 
 	@Inject
 	private ShiftService shiftService;
@@ -46,7 +43,7 @@ public class AffiliateService implements IAffiliateService {
 			throw new IllegalArgumentException(
 					"Ya existe un afiliado con el codigo de obra social: " + newAffiliate.getHealthInsuranceCode());
 
-		List<String> existInvalidData = affiliateValidator.validateAffiliate(newAffiliate);
+		List<String> existInvalidData = validator.validateAffiliate(newAffiliate);
 		if(existInvalidData!=null) throw new IllegalArgumentException(existInvalidData.toString());
 		affiliateRepository.persist(newAffiliate);
 		return newAffiliate;
@@ -57,7 +54,7 @@ public class AffiliateService implements IAffiliateService {
 		Affiliate existingAffiliate = affiliateRepository.findById(id);
 		if (existingAffiliate == null)
 			throw new Exception("El afiliado con id " + id + " no existe.");
-		List<String> existInvalidData = affiliateValidator.validateAffiliate(affiliate);
+		List<String> existInvalidData = validator.validateAffiliate(affiliate);
 		if(existInvalidData!=null) throw new IllegalArgumentException(existInvalidData.toString());
 
 		existingAffiliate.setFirstName(affiliate.getFirstName());

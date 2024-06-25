@@ -1,26 +1,21 @@
 package service;
 
 import dto.ShiftDTO;
-import dto.mappers.ShiftMapper;
+import mappers.ShiftMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import model.Schedule;
-import service.interfaces.IAffiliateService;
 
 import service.interfaces.IShiftService;
 import repository.ShiftRepository;
 import model.Shift;
 
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-
-import java.time.LocalTime;
-import java.util.ArrayList;
 
 import java.util.List;
 

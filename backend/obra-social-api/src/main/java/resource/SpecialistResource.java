@@ -1,18 +1,15 @@
 package resource;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
-import dto.mappers.Mapper;
+import mappers.Mapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import model.Specialist;
-import dto.SpecialistDTO;
-import dto.mappers.SpecialistMapper;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;

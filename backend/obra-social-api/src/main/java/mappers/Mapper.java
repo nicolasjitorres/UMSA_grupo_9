@@ -1,13 +1,7 @@
-package dto.mappers;
+package mappers;
 
-import dto.AffiliateDTO;
-import dto.ScheduleDTO;
-import dto.ShiftDTO;
-import dto.SpecialistDTO;
-import model.Affiliate;
-import model.Schedule;
-import model.Shift;
-import model.Specialist;
+import dto.*;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +28,14 @@ public class Mapper
     {
         return new ShiftDTO(shift.getId(), shift.getDescription(), shift.getDate(),shift.getTime(),shift.getSpecialist().getId(),shift.getAffiliate().getId());
     }
+    public static List<ScheduleDTO> toScheduleDtoList(List<Schedule> scheduleList)
+    {
+        List<ScheduleDTO> schedules = new ArrayList<>();
+        for (Schedule schedule: scheduleList){
+            schedules.add((toScheduleDTO(schedule)));
+        }
+        return schedules;
+    }
 
     public static List<ShiftDTO> toShiftDTOList(List<Shift> shiftList) {
         List<ShiftDTO> shiftsDTO = new ArrayList<>();
@@ -53,5 +55,10 @@ public class Mapper
         }
         return specialistDTOS;
     }
+    public PrescriptionDTO toPrescriptionDto(Prescription prescription) {
+        return new PrescriptionDTO(prescription.getId(), prescription.getDescription(),prescription.getShift().getId());
+
+    }
+
 
 }
