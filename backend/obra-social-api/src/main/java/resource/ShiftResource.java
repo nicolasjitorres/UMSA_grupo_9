@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import mappers.ShiftMapper;
 import model.Shift;
 import dto.ShiftDTO;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -37,7 +38,7 @@ public class ShiftResource {
         if(shiftList.isEmpty())
             return Response.status(204).build();
         else {
-            return Response.ok(shiftList).build();
+            return Response.ok(new ShiftMapper().listShiftToDTO(shiftList)).build();
         }
     }
     @GET
@@ -48,7 +49,7 @@ public class ShiftResource {
             @APIResponse(responseCode = "404", description = "Turno no encontrado")
     })
     public Response getShift(@PathParam("id") Long id){
-        Shift shift = iserviceShift.getShiftById(id);
+        ShiftDTO shift = new ShiftMapper().entityToDto(iserviceShift.getShiftById(id));
         if(shift==null){
             return Response.status(Response.Status.NOT_FOUND).build();
         }else {
@@ -62,8 +63,8 @@ public class ShiftResource {
     @APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay algún dato mal ingresado")
     public Response addShift(@Valid ShiftDTO shiftDto){
         try {
-        	Shift newShift = iserviceShift.addShift(shiftDto);
-            return Response.ok(newShift).build();
+            ShiftDTO shift = new ShiftMapper().entityToDto(iserviceShift.addShift(shiftDto));
+            return Response.ok(shift).build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -79,7 +80,7 @@ public class ShiftResource {
     })
     public Response updateShift(@PathParam("id") Long id,@Valid ShiftDTO shiftDto){
         try {
-            return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shiftDto)).build();
+            return Response.ok("se actualizo correctamente").entity(new ShiftMapper().entityToDto(iserviceShift.editShift(id,shiftDto))).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (Exception e) {
