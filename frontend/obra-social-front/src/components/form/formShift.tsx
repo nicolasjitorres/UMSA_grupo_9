@@ -1,7 +1,8 @@
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
+import React, { useEffect } from "react";
 import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Button,
   Checkbox,
   FormControl,
@@ -12,37 +13,47 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-
-import { getClosestDate } from "../../funcionalities/Funcionalities";
-import React from "react";
-import { DayOfWeek, Schedule, Specialist } from "../../redux/type";
+import {
+  dayIndexToDayOfWeek,
+  getClosestDate,
+} from "../../funcionalities/Funcionalities";
+import { DayOfWeek, Schedule, Shift, Specialist } from "../../redux/type";
 import { AppDispatch, RootState } from "../../redux/store/store";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { addShift } from "../../redux/slices/shiftSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addShift, updateShift } from "../../redux/slices/shiftSlice";
 
 interface FormShiftProps {
   handleClose: () => void;
+  shift?: Shift;
 }
 
-const FormShift: React.FC<FormShiftProps> = ({ handleClose }) => {
-  const [description, setDescription] = React.useState(""); //descripcion
-  const [selectedTime, setTime] = React.useState(""); //hora caul va asistir
+const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
+  const [description, setDescription] = React.useState(
+    shift?.description || ""
+  );
+  const [selectedTime, setTime] = React.useState(shift?.time.slice(0, 5) || "");
   const [selectedDay, setSelectedDay] = React.useState<DayOfWeek | null>(null);
-  //esto trae los registros almacenados de specialist y schedules
+  const [selectedSpecialist, setSelectedSpecialist] = React.useState<
+    number | null
+  >(shift?.specialistId || null);
+
   const specialists: Specialist[] = useSelector(
     (state: RootState) => state.specialists.specialists
   );
   const schedules: Schedule[] = useSelector(
     (state: RootState) => state.schedules.schedules
   );
-  const [selectedSpecialist, setSelectedSpecialist] = React.useState<
-    number | null
-  >(null);
-
   const dispatch = useDispatch<AppDispatch>();
 
-  //esto guarda el id del specialist
+  useEffect(() => {
+    if (shift) {
+      const shiftDate = new Date(shift.date);
+      const dayOfWeekIndex = shiftDate.getDay();
+      const dayOfWeek = dayIndexToDayOfWeek[dayOfWeekIndex];
+      setSelectedDay(dayOfWeek);
+    }
+  }, [shift]);
+
   const handleChange = (event: SelectChangeEvent<string>) => {
     setSelectedSpecialist(parseInt(event.target.value));
   };
@@ -52,7 +63,6 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose }) => {
     if (selectedSpecialist !== null && selectedDay !== null) {
       const time = selectedTime + ":00";
       const date = getClosestDate(selectedDay);
-      console.log(date);
       const shiftDTO = {
         description,
         date,
@@ -61,9 +71,14 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose }) => {
         specialistId: selectedSpecialist,
         affiliatedId: 1,
       };
-      console.log(shiftDTO);
-      await dispatch(addShift(shiftDTO));
-      handleClose(); // Cierra el modal después de agregar el turno
+
+      if (shift) {
+        await dispatch(updateShift({ shiftDTO, id: shift.id }));
+      } else {
+        await dispatch(addShift(shiftDTO));
+      }
+
+      handleClose();
     }
   };
 
@@ -167,7 +182,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose }) => {
         </Accordion>
       )}
       <Button type="submit" variant="contained" color="primary">
-        Agregar
+        {shift ? "Actualizar" : "Agregar"}
       </Button>
     </form>
   );

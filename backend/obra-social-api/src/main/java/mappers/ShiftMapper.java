@@ -9,6 +9,9 @@ import model.Specialist;
 import service.interfaces.IAffiliateService;
 import service.interfaces.ISpecialistService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ApplicationScoped
 public class ShiftMapper {
 
@@ -65,6 +68,14 @@ public class ShiftMapper {
 		shiftDto.setTime(shift.getTime());
 		
 		return shiftDto;
+	}
+
+	public List<ShiftDTO> listShiftToDTO(List<Shift> shifts){
+		List<ShiftDTO> listShiftDTO = new ArrayList<>();
+		for(Shift shift : shifts){
+			listShiftDTO.add(this.entityToDto(shift));
+		}
+		return listShiftDTO;
 	}
 
 }

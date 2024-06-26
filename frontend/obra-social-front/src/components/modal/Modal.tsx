@@ -1,9 +1,7 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import FormShift from "../form/formShift";
+import React from "react";
+import { Button, Modal, Box, Typography } from "@mui/material";
+import FormShift from "../form/formShift"; // Asegúrate de importar tu componente FormShift
+import { Shift } from "../../redux/type";
 
 const style = {
   position: "absolute",
@@ -11,7 +9,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.white",
+  bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
@@ -19,17 +17,14 @@ const style = {
 
 interface nameModal {
   name: string;
+  shift?: Shift;
 }
 
-const BasicModal: React.FC<nameModal> = ({ name }) => {
+const BasicModal: React.FC<nameModal> = ({ name, shift }) => {
   const [open, setOpen] = React.useState(false);
 
-  //esto es del modal
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  //esto trasnforma la fecha elegida en la mas proxima si se elige el domingo seria el 30 (?)
-
   return (
     <div>
       <Button variant="contained" color="success" onClick={handleOpen}>
@@ -45,7 +40,7 @@ const BasicModal: React.FC<nameModal> = ({ name }) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {name}
           </Typography>
-          <FormShift handleClose={handleClose} />
+          <FormShift handleClose={handleClose} shift={shift} />
         </Box>
       </Modal>
     </div>

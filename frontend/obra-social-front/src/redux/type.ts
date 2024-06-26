@@ -1,10 +1,12 @@
 // types.ts
 export interface Shift {
-  id: number; // Hacer que 'id' sea opcional
+  id: number;
   description: string;
   date: string;
   time: string;
   state: boolean;
+  specialistId: number;
+  affiliatedId: number;
 }
 
 export interface ShiftDTO {
