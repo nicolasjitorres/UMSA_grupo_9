@@ -5,7 +5,7 @@ import * as React from "react";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import { useEffect } from "react";
-import BasicModal from "../modal/modalAddShift";
+import BasicModal from "../modal/Modal";
 import ShiftList from "./ShiftList";
 
 const Shift: React.FC = () => {
@@ -64,7 +64,7 @@ const Shift: React.FC = () => {
   return (
     <section>
       <h2>Turnos</h2>
-      <BasicModal />
+      <BasicModal name="Agregar Turno" />
       {content}
     </section>
   );

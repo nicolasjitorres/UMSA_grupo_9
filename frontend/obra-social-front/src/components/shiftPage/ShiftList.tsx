@@ -12,6 +12,7 @@ import { Shift } from "../../redux/type"; // Ajusta esta importación según tu 
 import { AppDispatch } from "../../redux/store/store";
 import { useDispatch } from "react-redux";
 import { deleteShift } from "../../redux/slices/shiftSlice";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface Column {
   id: "id" | "description" | "date" | "time" | "actions";
@@ -40,6 +41,8 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
     dispatch(deleteShift(id));
   };
 
+  const handleUpdate = (id: number) => {};
+
   return (
     <TableContainer sx={{ maxHeight: 440 }}>
       <Table stickyHeader aria-label="sticky table">
@@ -66,6 +69,14 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
                       <Button
                         variant="contained"
                         color="secondary"
+                        onClick={() => handleUpdate(shift.id)}
+                      >
+                        Update
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        startIcon={<DeleteIcon />}
                         onClick={() => handleDelete(shift.id)}
                       >
                         Delete
