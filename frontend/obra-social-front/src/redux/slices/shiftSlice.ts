@@ -28,6 +28,7 @@ export const deleteShift = createAsyncThunk(
     return shiftId;
   }
 );
+
 export const addShift = createAsyncThunk(
   "shift/addShift",
   async (shiftDTO: ShiftDTO, { rejectWithValue }) => {
@@ -38,6 +39,7 @@ export const addShift = createAsyncThunk(
       );
       return response.data; // Suponiendo que el backend devuelve el turno creado
     } catch (error: unknown) {
+      console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         return rejectWithValue(
           error.response.data.message || "Failed to add shift"
@@ -90,16 +92,11 @@ const shiftSlice = createSlice({
       })
       .addCase(addShift.fulfilled, (state, action: PayloadAction<Shift>) => {
         state.status = "succeeded";
-        // Verifica que state.shifts es un array antes de hacer push
-        if (Array.isArray(state.shifts)) {
-          state.shifts.push(action.payload);
-        } else {
-          console.error("shifts no es un array!", state.shifts);
-        }
+        state.shifts.push(action.payload);
       })
       .addCase(addShift.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message || "Something went wrong";
+        state.error = action.payload as string;
       });
   },
 });

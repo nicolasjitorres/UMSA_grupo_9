@@ -6,8 +6,8 @@ import AffiliatedList from "./components/afiliatesList/AfiliatesList";
 import SignIn from "./components/Login/SignIn";
 import NotFound from "./components/Errors/Notfound";
 import NavBar from "./components/NavBar/NavBar";
-import Home from "./Home";
-import Turnos from "./components/shiftList/Shift";
+import Turnos from "./components/shiftPage/ShiftPage";
+import Home from "./components/home/Home";
 import TablaEspecialistas from "./components/specialistList/SpecialistList";
 
 const App: React.FC = () => {
