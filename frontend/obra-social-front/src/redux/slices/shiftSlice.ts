@@ -28,17 +28,50 @@ export const deleteShift = createAsyncThunk(
     return shiftId;
   }
 );
+
 export const addShift = createAsyncThunk(
   "shift/addShift",
-  async (shiftDTO: ShiftDTO) => {
+  async (shiftDTO: ShiftDTO, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
+      const response = await axios.post<Shift>(
         "http://localhost:8080/turnos",
         shiftDTO
       );
       return response.data; // Suponiendo que el backend devuelve el turno creado
-    } catch (error) {
-      console.log(error); // Lanza el error para que Redux Toolkit lo maneje
+    } catch (error: unknown) {
+      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(
+          error.response.data.message || "Failed to add shift"
+        );
+      } else {
+        return rejectWithValue("Failed to add shift");
+      }
+    }
+  }
+);
+
+export const updateShift = createAsyncThunk(
+  "shift/updateShift",
+  async (
+    { shiftDTO, id }: { shiftDTO: ShiftDTO; id: number },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.put<Shift>(
+        `http://localhost:8080/turnos/${id}`,
+        shiftDTO
+      );
+      return response.data; // Suponiendo que el backend devuelve el turno actualizado
+    } catch (error: unknown) {
+      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(
+          error.response.data.message || "Failed to update shift"
+        );
+      } else {
+        return rejectWithValue("Failed to update shift");
+      }
     }
   }
 );
@@ -88,7 +121,23 @@ const shiftSlice = createSlice({
       })
       .addCase(addShift.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message || "Something went wrong";
+        state.error = action.payload as string;
+      })
+      .addCase(updateShift.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateShift.fulfilled, (state, action: PayloadAction<Shift>) => {
+        state.status = "succeeded";
+        const index = state.shifts.findIndex(
+          (shift) => shift.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.shifts[index] = action.payload;
+        }
+      })
+      .addCase(updateShift.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload as string;
       });
   },
 });

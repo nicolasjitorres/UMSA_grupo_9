@@ -3,7 +3,7 @@ import Header from "./Header";
 import AboutSection from "./AboutSection";
 import ServicesSection from "./ServicesSection";
 import ContactSection from "./ContactSection";
-import './home.css';
+import "./home.css";
 
 const Home: React.FC = () => {
   return (

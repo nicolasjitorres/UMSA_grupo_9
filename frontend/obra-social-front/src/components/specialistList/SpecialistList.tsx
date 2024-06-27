@@ -13,8 +13,7 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../Row/rowSchedules&Specialist"; // Ajusta la ruta según la ubicación de tu archivo Row
-// import { Specialist, Schedule } from "../../redux/type"; // Ajusta la ruta según la ubicación de tu archivo de tipos
+import Row from "../Row/rowSchedules&Specialist";
 
 const SpecialistList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -92,7 +91,7 @@ const SpecialistList: React.FC = () => {
                   key={specialist.id}
                   specialist={specialist}
                   schedules={schedules.filter(
-                    (schedule) => schedule.specialist.id === specialist.id
+                    (schedule) => schedule.specialistId === specialist.id
                   )}
                 />
               ))}

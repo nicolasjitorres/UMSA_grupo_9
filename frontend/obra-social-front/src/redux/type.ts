@@ -1,10 +1,12 @@
 // types.ts
 export interface Shift {
-  id: number; // Hacer que 'id' sea opcional
+  id: number;
   description: string;
   date: string;
   time: string;
   state: boolean;
+  specialistId: number;
+  affiliatedId: number;
 }
 
 export interface ShiftDTO {
@@ -25,7 +27,6 @@ export interface Specialist {
   location: Location; // Usa la ubicación con `id`
   role: string;
   email: string;
-  password: string;
 }
 
 export enum DayOfWeek {
@@ -43,7 +44,7 @@ export interface Schedule {
   startTime: string;
   endTime: string;
   dayOfWeek: DayOfWeek;
-  specialist: Specialist;
+  specialistId: number;
 }
 
 export interface Affiliate {
