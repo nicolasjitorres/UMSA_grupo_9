@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../../redux/store/store";
+import { RootState, AppDispatch } from "../redux/store/store";
 import {
   Table,
   TableBody,
@@ -11,8 +11,8 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../Row/rowAffiliate";
-import { fetchAfiliados } from "../../redux/slices/afiliatedSlice";
+import Row from "../components/Row/rowAffiliate";
+import { fetchAfiliados } from "../redux/slices/afiliatedSlice";
 
 const AffiliatesList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();

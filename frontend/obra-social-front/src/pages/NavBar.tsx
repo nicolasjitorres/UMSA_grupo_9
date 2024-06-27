@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link as RouterLink } from "react-router-dom";
 
-function BasicModal() {
+function NavBar() {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -34,4 +34,4 @@ function BasicModal() {
   );
 }
 
-export default BasicModal;
+export default NavBar;
