@@ -3,6 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link as RouterLink } from "react-router-dom";
+import "./NavBar.css";
 
 function NavBar() {
   return (

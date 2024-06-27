@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import Router2 from "./routes/Router2";
+import Router from "./routes/Router";
 import { BrowserRouter} from "react-router-dom";
-import NavBar from "../src/pages/NavBar";
+import NavBar from "./components/NavBar/NavBar";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./redux/store/store";
 import { useDispatch } from "react-redux";
@@ -25,10 +25,10 @@ const App: React.FC = () => {
 
   return (
    <BrowserRouter>
-    {<NavBar />}
-      <Router2/>
+    <NavBar />
+    <Router />
    </BrowserRouter>
   );
-};
+}
 
 export default App;
