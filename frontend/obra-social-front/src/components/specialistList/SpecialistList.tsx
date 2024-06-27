@@ -13,7 +13,7 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../Row/rowSchedules&Specialist";
+import RowSchedulesSpecialist from "../rows/RowSchedules&Specialist";
 
 const SpecialistList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -87,7 +87,7 @@ const SpecialistList: React.FC = () => {
             {specialists
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((specialist) => (
-                <Row
+                <RowSchedulesSpecialist
                   key={specialist.id}
                   specialist={specialist}
                   schedules={schedules.filter(
