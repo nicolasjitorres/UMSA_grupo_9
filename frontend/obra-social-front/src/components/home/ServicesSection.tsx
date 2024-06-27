@@ -1,5 +1,5 @@
-// ServicesSection.tsx
 import React from "react";
+import "./home.css";
 
 const ServicesSection: React.FC = () => {
   return (

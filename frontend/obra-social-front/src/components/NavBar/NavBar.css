@@ -1,0 +1,8 @@
+#root > header > div
+{
+    background-color: rgba(64, 64, 64, 0.394);
+}
+#root  > header > div > a:hover {
+    background-color: #bccdde;
+
+  }
