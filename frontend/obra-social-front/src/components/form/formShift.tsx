@@ -43,6 +43,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
   const schedules: Schedule[] = useSelector(
     (state: RootState) => state.schedules.schedules
   );
+  const shifts: Shift[] = useSelector((state: RootState) => state.shift.shifts);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -98,24 +99,36 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
     const endTime = parseInt(schedule.endTime.split(":")[0], 10);
     const timeOptions = [];
 
+    // Filtrar los horarios ya asignados
+    const assignedTimes = shifts
+      .filter(
+        (shift) =>
+          shift.specialistId === selectedSpecialist &&
+          dayIndexToDayOfWeek[new Date(shift.date).getDay()] === selectedDay
+      )
+      .map((shift) => shift.time.slice(0, 5));
+
     for (let i = startTime; i < endTime; i += 0.5) {
       const timeString = `${Math.floor(i).toString().padStart(2, "0")}:${
         i % 1 === 0 ? "00" : "30"
       }`;
-      timeOptions.push(
-        <FormControlLabel
-          key={timeString}
-          control={
-            <Checkbox
-              checked={selectedTime === timeString}
-              onChange={() => setTime(timeString)}
-            />
-          }
-          label={timeString}
-        />
-      );
-    }
 
+      // Excluir horarios ya asignados
+      if (!assignedTimes.includes(timeString)) {
+        timeOptions.push(
+          <FormControlLabel
+            key={timeString}
+            control={
+              <Checkbox
+                checked={selectedTime === timeString}
+                onChange={() => setTime(timeString)}
+              />
+            }
+            label={timeString}
+          />
+        );
+      }
+    }
     return timeOptions;
   };
 

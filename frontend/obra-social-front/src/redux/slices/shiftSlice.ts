@@ -117,6 +117,10 @@ const shiftSlice = createSlice({
       })
       .addCase(addShift.fulfilled, (state, action: PayloadAction<Shift>) => {
         state.status = "succeeded";
+        // Asegúrate de que state.shifts es siempre un array
+        if (!Array.isArray(state.shifts)) {
+          state.shifts = [];
+        }
         state.shifts.push(action.payload);
       })
       .addCase(addShift.rejected, (state, action) => {
