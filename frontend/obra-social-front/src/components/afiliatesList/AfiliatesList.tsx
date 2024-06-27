@@ -11,7 +11,7 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../Row/rowAffiliate";
+import Row from "../rows/RowAffiliate";
 import { fetchAfiliados } from "../../redux/slices/afiliatedSlice";
 
 const AffiliatesList: React.FC = () => {

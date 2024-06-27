@@ -1,11 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Prescription } from "../type";
 // import { RootState } from '../store/store';
-
-interface Prescription {
-  id: number;
-  description: string;
-}
 
 interface ShiftState {
   shifts: Prescription[];
