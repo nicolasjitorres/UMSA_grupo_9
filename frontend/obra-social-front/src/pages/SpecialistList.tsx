@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../../redux/store/store";
-import { fetchSchedules } from "../../redux/slices/schedulesSlice";
-import { fetchSpecialists } from "../../redux/slices/specialistSlice";
+import { RootState, AppDispatch } from "../redux/store/store";
+import { fetchSchedules } from "../redux/slices/schedulesSlice";
+import { fetchSpecialists } from "../redux/slices/specialistSlice";
 import {
   Table,
   TableBody,
@@ -13,6 +13,7 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
+
 import RowSchedulesSpecialist from "../rows/RowSchedules&Specialist";
 
 const SpecialistList: React.FC = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../../redux/store/store";
+import { RootState, AppDispatch } from "../redux/store/store";
 import {
   Table,
   TableBody,

@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../../redux/store/store";
-import { fetchShift } from "../../redux/slices/shiftSlice"; // Asegúrate de importar deleteShift
+import { RootState, AppDispatch } from "../redux/store/store";
+import { fetchShift } from "../redux/slices/shiftSlice"; // Asegúrate de importar deleteShift
 import * as React from "react";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import { useEffect } from "react";
-import BasicModal from "../modal/Modal";
-import ShiftList from "./ShiftList";
+import BasicModal from "../components/modal/Modal";
+import ShiftList from "../components/shiftPage/ShiftList";
 
 const Shift: React.FC = () => {
   const [page, setPage] = React.useState(0);
