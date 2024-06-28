@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store/store";
 import { fetchSchedules } from "../../redux/slices/schedulesSlice";
 import { fetchSpecialists } from "../../redux/slices/specialistSlice";
-import "./SpecialistList.css";
+import "./Table.css";
 import {
   Table,
   TableBody,

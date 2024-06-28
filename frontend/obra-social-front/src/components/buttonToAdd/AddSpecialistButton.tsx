@@ -1,5 +1,5 @@
 import React from 'react';
-import './AddSpecialistButton.css';
+import './Button.css';
 
 const AddSpecialistButton: React.FC = () => {
   return (
