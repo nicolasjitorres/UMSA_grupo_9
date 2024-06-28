@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../components/Home/Header";
-import AboutSection from "../components/Home/AboutSection";
-import ServicesSection from "../components/Home/ServicesSection";
-import ContactSection from "../components/Home/ContactSection";
+import Header from "../components/home/Header";
+import AboutSection from "../components/home/AboutSection";
+import ServicesSection from "../components/home/ServicesSection";
+import ContactSection from "../components/home/ContactSection";
 import "./style.css";
 
 const Home: React.FC = () => {
