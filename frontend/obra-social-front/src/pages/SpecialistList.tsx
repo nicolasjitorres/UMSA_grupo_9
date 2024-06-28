@@ -13,10 +13,12 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../components/Row/rowSchedules&Specialist";
+
+import RowSchedulesSpecialist from "../components/rows/RowSchedules&Specialist";
 
 const SpecialistList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
+
   const specialists = useSelector(
     (state: RootState) => state.specialists.specialists
   );
@@ -28,9 +30,6 @@ const SpecialistList: React.FC = () => {
   );
   const scheduleStatus = useSelector(
     (state: RootState) => state.schedules.status
-  );
-  const specialistError = useSelector(
-    (state: RootState) => state.specialists.error
   );
   const scheduleError = useSelector(
     (state: RootState) => state.schedules.error
@@ -59,14 +58,6 @@ const SpecialistList: React.FC = () => {
     setPage(0);
   };
 
-  if (specialistStatus === "loading" || scheduleStatus === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (specialistStatus === "failed") {
-    return <div>{specialistError}</div>;
-  }
-
   if (scheduleStatus === "failed") {
     return <div>{scheduleError}</div>;
   }
@@ -84,17 +75,25 @@ const SpecialistList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {specialists
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((specialist) => (
-                <Row
-                  key={specialist.id}
-                  specialist={specialist}
-                  schedules={schedules.filter(
-                    (schedule) => schedule.specialistId === specialist.id
-                  )}
-                />
-              ))}
+            {specialists.length > 0 && schedules.length > 0 ? (
+              specialists
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((specialist) => (
+                  <RowSchedulesSpecialist
+                    key={specialist.id}
+                    specialist={specialist}
+                    schedules={schedules.filter(
+                      (schedule) => schedule.specialistId === specialist.id
+                    )}
+                  />
+                ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  No hay Especialistas
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

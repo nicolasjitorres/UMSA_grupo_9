@@ -11,7 +11,7 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../components/Row/rowAffiliate";
+import Row from "../components/rows/RowAffiliate";
 import { fetchAfiliados } from "../redux/slices/afiliatedSlice";
 
 const AffiliatesList: React.FC = () => {
@@ -62,11 +62,19 @@ const AffiliatesList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {affiliates
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((affiliate) => (
-                <Row key={affiliate.id} affiliate={affiliate} />
-              ))}
+            {affiliates.length > 0 ? (
+              affiliates
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((affiliate) => (
+                  <Row key={affiliate.id} affiliate={affiliate} />
+                ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  No hay afiliados
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

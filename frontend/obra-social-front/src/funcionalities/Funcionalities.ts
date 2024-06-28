@@ -31,7 +31,7 @@ export const getClosestDate = (day: DayOfWeek): string => {
   const daysToAdd = daysUntilNext === 0 ? 7 : daysUntilNext;
 
   const nextDate = new Date(today);
-  nextDate.setDate(today.getDate() + (daysToAdd + 2));
+  nextDate.setDate(today.getDate() + (daysToAdd + 1));
 
   return nextDate.toISOString().split("T")[0]; // Formato YYYY-MM-DD
 };
