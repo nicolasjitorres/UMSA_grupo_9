@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store/store";
-import { fetchSchedules } from "../redux/slices/schedulesSlice";
-import { fetchSpecialists } from "../redux/slices/specialistSlice";
+import { RootState, AppDispatch } from "../../redux/store/store";
+import { fetchSchedules } from "../../redux/slices/schedulesSlice";
+import { fetchSpecialists } from "../../redux/slices/specialistSlice";
+import "./SpecialistList.css";
 import {
   Table,
   TableBody,
@@ -13,7 +14,7 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../components/Row/rowSchedules&Specialist";
+import Row from "../Row/rowSchedules&Specialist";
 
 const SpecialistList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -70,6 +71,13 @@ const SpecialistList: React.FC = () => {
   if (scheduleStatus === "failed") {
     return <div>{scheduleError}</div>;
   }
+
+  if (!specialists || specialists.length === 0) {
+    return <div>No specialists found</div>;
+  }
+
+  console.log("Specialists:", specialists);
+  console.log("Schedules:", schedules);
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>

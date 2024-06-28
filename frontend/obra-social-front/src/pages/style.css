@@ -1,12 +1,12 @@
-/* Home.css */
 body {
   background-image: url('./src/assets/fondoHospital2.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  
 }
 
-.home-container { 
+.container { 
   background-color: rgba(64, 64, 64, 0.394);
   padding:20px;
   margin: 0 auto;
