@@ -22,7 +22,6 @@ const AffiliatesList: React.FC = () => {
     (state: RootState) => state.afiliates.afiliados
   );
   const status = useSelector((state: RootState) => state.afiliates.status);
-  const error = useSelector((state: RootState) => state.afiliates.error);
 
   useEffect(() => {
     if (status === "idle") {
@@ -46,10 +45,6 @@ const AffiliatesList: React.FC = () => {
 
   if (status === "loading") {
     return <div>Loading...</div>;
-  }
-
-  if (status === "failed") {
-    return <div>{error}</div>;
   }
 
   return (

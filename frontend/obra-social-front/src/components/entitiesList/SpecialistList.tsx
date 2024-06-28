@@ -32,9 +32,6 @@ const SpecialistList: React.FC = () => {
   const scheduleStatus = useSelector(
     (state: RootState) => state.schedules.status
   );
-  const scheduleError = useSelector(
-    (state: RootState) => state.schedules.error
-  );
 
   useEffect(() => {
     if (specialistStatus === "idle") {
@@ -58,17 +55,6 @@ const SpecialistList: React.FC = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  if (scheduleStatus === "failed") {
-    return <div>{scheduleError}</div>;
-  }
-
-  if (!specialists || specialists.length === 0) {
-    return <div>No specialists found</div>;
-  }
-
-  console.log("Specialists:", specialists);
-  console.log("Schedules:", schedules);
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>

@@ -1,8 +1,8 @@
-import React from 'react';
-import FilterForm from '../components/FilterForm/FilterFormAffiliate';
-import AddAffiliateButton from '../components/buttonToAdd/AddAffiliateButton';
-import AffiliatesList from '../components/entitiesList/AfiliatesList';
-import './Users.css';
+import React from "react";
+import FilterForm from "../components/FilterForm/FilterFormAffiliate";
+import AddAffiliateButton from "../components/buttonToAdd/AddAffiliateButton";
+import AffiliatesList from "../components/entitiesList/AfiliatesList";
+import "./Users.css";
 
 const AffiliatePage: React.FC = () => {
   return (
@@ -14,7 +14,7 @@ const AffiliatePage: React.FC = () => {
           <FilterForm />
         </div>
         <div className="left-section">
-           {/* <AffiliatesList /> */}
+          <AffiliatesList />
         </div>
       </div>
     </div>
