@@ -72,6 +72,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         specialistId: selectedSpecialist,
         affiliatedId: 1,
       };
+      console.log(shiftDTO);
       if (shift) {
         await dispatch(updateShift({ shiftDTO, id: shift.id }));
       } else {
@@ -99,7 +100,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
     const timeOptions = [];
 
     // Filtrar los horarios ya asignados
-    const assignedTimes = shifts
+    const assignedTimes = (shifts || [])
       .filter(
         (shift) =>
           shift.specialistId === selectedSpecialist &&

@@ -43,6 +43,7 @@ export const addShift = createAsyncThunk(
       );
       return response.data; //y retornamos el turno para que lo guarde en el state
     } catch (error: unknown) {
+      console.log(error);
       //en caso de que sea una axios error
       if (axios.isAxiosError(error) && error.response) {
         //de la response verificacmos las violaciones que nos lelgan por el @valid del back
@@ -179,7 +180,10 @@ const shiftSlice = createSlice({
       })
       .addCase(addShift.fulfilled, (state, action: PayloadAction<Shift>) => {
         state.status = "succeeded";
-        //en esete caso lo agregamos el turno a la lsita de turnos
+        if (!Array.isArray(state.shifts)) {
+          state.shifts = [];
+        }
+        //en este caso lo agregamos el turno a la lsita de turnos
         state.shifts.push(action.payload);
       })
       .addCase(addShift.rejected, (state, action) => {
