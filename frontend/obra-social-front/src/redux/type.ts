@@ -57,3 +57,16 @@ export interface Affiliate {
   email: string;
   password: string;
 }
+
+export interface Prescription {
+  id: number;
+  description: string;
+}
+
+export interface Location {
+  id: number;
+  street: string;
+  locality: string;
+  province: string;
+  country: string;
+}

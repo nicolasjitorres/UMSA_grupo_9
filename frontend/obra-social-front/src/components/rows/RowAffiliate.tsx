@@ -6,7 +6,7 @@ interface RowProps {
   affiliate: Affiliate;
 }
 
-const Row: React.FC<RowProps> = ({ affiliate }) => {
+const RowAffiliate: React.FC<RowProps> = ({ affiliate }) => {
   return (
     <TableRow>
       <TableCell component="th" scope="row">
@@ -18,4 +18,4 @@ const Row: React.FC<RowProps> = ({ affiliate }) => {
   );
 };
 
-export default Row;
+export default RowAffiliate;

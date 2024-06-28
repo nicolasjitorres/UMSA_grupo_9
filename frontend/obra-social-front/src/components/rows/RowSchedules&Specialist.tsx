@@ -18,7 +18,10 @@ interface RowProps {
   schedules: Schedule[];
 }
 
-const Row: React.FC<RowProps> = ({ specialist, schedules }) => {
+const RowSchedulesSpecialist: React.FC<RowProps> = ({
+  specialist,
+  schedules,
+}) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -74,4 +77,4 @@ const Row: React.FC<RowProps> = ({ specialist, schedules }) => {
   );
 };
 
-export default Row;
+export default RowSchedulesSpecialist;

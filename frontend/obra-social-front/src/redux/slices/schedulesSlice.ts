@@ -25,7 +25,7 @@ export const fetchSchedules = createAsyncThunk(
 );
 
 const schedulesSlice = createSlice({
-  name: "schedules",
+  name: "horarios",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -42,7 +42,7 @@ const schedulesSlice = createSlice({
       )
       .addCase(fetchSchedules.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message || "Something went wrong";
+        state.error = action.error.message || "Algo salio mal";
       });
   },
 });
