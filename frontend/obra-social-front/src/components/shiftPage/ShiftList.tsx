@@ -59,35 +59,43 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {shifts.map((shift) => (
-            <TableRow hover role="checkbox" tabIndex={-1} key={shift.id}>
-              {columns.map((column) => {
-                if (column.id === "actions") {
+          {shifts.length > 0 ? (
+            shifts.map((shift) => (
+              <TableRow hover role="checkbox" tabIndex={-1} key={shift.id}>
+                {columns.map((column) => {
+                  if (column.id === "actions") {
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        <BasicModal name="actualizar Modal" shift={shift} />
+                        <Button
+                          variant="contained"
+                          color="error"
+                          startIcon={<DeleteIcon />}
+                          onClick={() => handleDelete(shift.id)}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    );
+                  }
+                  const value = shift[column.id as keyof Shift];
                   return (
                     <TableCell key={column.id} align={column.align}>
-                      <BasicModal name="actualizar Modal" shift={shift} />
-                      <Button
-                        variant="contained"
-                        color="error"
-                        startIcon={<DeleteIcon />}
-                        onClick={() => handleDelete(shift.id)}
-                      >
-                        Delete
-                      </Button>
+                      {column.format && typeof value === "number"
+                        ? column.format(value)
+                        : value}
                     </TableCell>
                   );
-                }
-                const value = shift[column.id as keyof Shift];
-                return (
-                  <TableCell key={column.id} align={column.align}>
-                    {column.format && typeof value === "number"
-                      ? column.format(value)
-                      : value}
-                  </TableCell>
-                );
-              })}
+                })}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                No hay Turnos
+              </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </TableContainer>

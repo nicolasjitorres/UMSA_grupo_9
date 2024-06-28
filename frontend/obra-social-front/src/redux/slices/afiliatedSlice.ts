@@ -3,13 +3,13 @@ import axios from "axios";
 import { Affiliate } from "../type";
 // import { RootState } from '../store/store';
 
-interface AfiliadosState {
+interface AffiliateState {
   afiliados: Affiliate[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
-const initialState: AfiliadosState = {
+const initialState: AffiliateState = {
   afiliados: [],
   status: "idle",
   error: null,
@@ -20,7 +20,7 @@ export const fetchAfiliados = createAsyncThunk(
   async () => {
     const response = await axios.get<Affiliate[]>(
       "http://localhost:8080/afiliados"
-    ); // Ajusta la URL según tu backend
+    );
     return response.data;
   }
 );
@@ -43,7 +43,7 @@ const afiliadosSlice = createSlice({
       )
       .addCase(fetchAfiliados.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message || "Something went wrong";
+        state.error = action.error.message || "Algo salio mal";
       });
   },
 });

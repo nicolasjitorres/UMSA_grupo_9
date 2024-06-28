@@ -62,11 +62,19 @@ const AffiliatesList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {affiliates
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((affiliate) => (
-                <Row key={affiliate.id} affiliate={affiliate} />
-              ))}
+            {affiliates.length > 0 ? (
+              affiliates
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((affiliate) => (
+                  <Row key={affiliate.id} affiliate={affiliate} />
+                ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  No hay afiliados
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

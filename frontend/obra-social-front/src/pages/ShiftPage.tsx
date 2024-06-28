@@ -37,9 +37,7 @@ const Shift: React.FC = () => {
 
   if (status === "loading") {
     content = <div>Loading...</div>;
-  } else if (shiftList.length == 0) {
-    content = <div>no hay shifts...</div>;
-  } else if (shiftList.length > 0) {
+  } else {
     content = (
       <div>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>

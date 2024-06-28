@@ -27,7 +27,6 @@ export const fetchShift = createAsyncThunk("shift/fetchShift", async () => {
 export const deleteShift = createAsyncThunk(
   "shift/deleteShift",
   async (shiftId: number) => {
-    console.log(shiftId);
     await axios.delete(`http://localhost:8080/turnos/${shiftId}`);
     return shiftId;
   }
@@ -44,7 +43,6 @@ export const addShift = createAsyncThunk(
       );
       return response.data; //y retornamos el turno para que lo guarde en el state
     } catch (error: unknown) {
-      console.log(error);
       //en caso de que sea una axios error
       if (axios.isAxiosError(error) && error.response) {
         //de la response verificacmos las violaciones que nos lelgan por el @valid del back
