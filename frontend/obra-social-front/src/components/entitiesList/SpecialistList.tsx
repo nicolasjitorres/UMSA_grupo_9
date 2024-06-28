@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store/store";
-import { fetchSchedules } from "../redux/slices/schedulesSlice";
-import { fetchSpecialists } from "../redux/slices/specialistSlice";
+import { RootState, AppDispatch } from "../../redux/store/store";
+import { fetchSchedules } from "../../redux/slices/schedulesSlice";
+import { fetchSpecialists } from "../../redux/slices/specialistSlice";
+import "./Table.css";
 import {
   Table,
   TableBody,
@@ -14,7 +15,7 @@ import {
   TablePagination,
 } from "@mui/material";
 
-import RowSchedulesSpecialist from "../components/rows/RowSchedules&Specialist";
+import RowSchedulesSpecialist from "../rows/RowSchedules&Specialist";
 
 const SpecialistList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -30,9 +31,6 @@ const SpecialistList: React.FC = () => {
   );
   const scheduleStatus = useSelector(
     (state: RootState) => state.schedules.status
-  );
-  const scheduleError = useSelector(
-    (state: RootState) => state.schedules.error
   );
 
   useEffect(() => {
@@ -57,10 +55,6 @@ const SpecialistList: React.FC = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  if (scheduleStatus === "failed") {
-    return <div>{scheduleError}</div>;
-  }
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>

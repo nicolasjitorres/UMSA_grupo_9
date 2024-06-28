@@ -12,10 +12,10 @@ function NavBar() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Obra Social - AlMedin
         </Typography>
-        <Button color="inherit" component={RouterLink} to="/specialists">
+        <Button color="inherit" component={RouterLink} to="/especialistas">
           Especialistas
         </Button>
-        <Button color="inherit" component={RouterLink} to="/affiliates">
+        <Button color="inherit" component={RouterLink} to="/afiliados">
           Afiliados
         </Button>
         <Button color="inherit" component={RouterLink} to="/">
