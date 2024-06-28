@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal, Box, Typography } from "@mui/material";
-import FormShift from "../form/formShift"; // Asegúrate de importar tu componente FormShift
+import FormShift from "../form/FormShift"; // Asegúrate de importar tu componente FormShift
 import { Shift } from "../../redux/type";
 
 const style = {

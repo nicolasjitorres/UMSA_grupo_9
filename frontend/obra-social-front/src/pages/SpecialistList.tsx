@@ -14,7 +14,7 @@ import {
   TablePagination,
 } from "@mui/material";
 
-import RowSchedulesSpecialist from "../rows/RowSchedules&Specialist";
+import RowSchedulesSpecialist from "../components/rows/RowSchedules&Specialist";
 
 const SpecialistList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();

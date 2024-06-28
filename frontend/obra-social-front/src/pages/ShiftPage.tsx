@@ -26,7 +26,6 @@ const Shift: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const shiftList = useSelector((state: RootState) => state.shift.shifts);
   const status = useSelector((state: RootState) => state.shift.status);
-  const error = useSelector((state: RootState) => state.shift.error);
 
   useEffect(() => {
     if (status === "idle") {
@@ -40,7 +39,7 @@ const Shift: React.FC = () => {
     content = <div>Loading...</div>;
   } else if (shiftList.length == 0) {
     content = <div>no hay shifts...</div>;
-  } else if (status === "succeeded" && shiftList.length > 0) {
+  } else if (shiftList.length > 0) {
     content = (
       <div>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -57,8 +56,6 @@ const Shift: React.FC = () => {
         </Paper>
       </div>
     );
-  } else if (status === "failed") {
-    content = <div>{error}</div>;
   }
 
   return (

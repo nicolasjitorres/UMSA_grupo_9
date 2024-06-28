@@ -11,8 +11,8 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../rows/RowAffiliate";
-import { fetchAfiliados } from "../../redux/slices/afiliatedSlice";
+import Row from "../components/rows/RowAffiliate";
+import { fetchAfiliados } from "../redux/slices/afiliatedSlice";
 
 const AffiliatesList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
