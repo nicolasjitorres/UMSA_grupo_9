@@ -66,7 +66,11 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
                   if (column.id === "actions") {
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        <BasicModal name="actualizar turno" shift={shift} />
+                        <BasicModal
+                          name="actualizar turno"
+                          shift={shift}
+                          proveniencia="shift"
+                        />
                         <Button
                           variant="contained"
                           color="error"

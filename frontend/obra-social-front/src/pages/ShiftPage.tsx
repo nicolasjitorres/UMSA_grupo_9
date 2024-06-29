@@ -59,7 +59,7 @@ const Shift: React.FC = () => {
   return (
     <section>
       <h2>Turnos</h2>
-      <BasicModal name="Agregar Turno" />
+      <BasicModal name="Agregar Turno" proveniencia="shift" />
       {content}
     </section>
   );
