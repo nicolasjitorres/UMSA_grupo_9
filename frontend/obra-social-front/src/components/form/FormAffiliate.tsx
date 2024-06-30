@@ -49,7 +49,7 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
       };
       if (affiliate) {
         await dispatch(
-          updateAffiliate({ afffiliateDTO: affiliatedDTO, id: affiliate.id })
+          updateAffiliate({ affiliateDTO: affiliatedDTO, id: affiliate.id })
         );
       } else {
         await dispatch(addAffiliate(affiliatedDTO));

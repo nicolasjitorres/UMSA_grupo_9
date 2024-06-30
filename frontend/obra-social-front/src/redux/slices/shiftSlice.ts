@@ -141,7 +141,7 @@ const shiftSlice = createSlice({
         const index = state.shifts.findIndex(
           (shift) => shift.id === action.payload.id
         );
-        //si es menor a 0 guarda el el dato en el lugar de la shift[index]
+        //si es superios a -1 guarda el el dato en el lugar de la shift[index]
         if (index !== -1) {
           state.shifts[index] = action.payload;
         }

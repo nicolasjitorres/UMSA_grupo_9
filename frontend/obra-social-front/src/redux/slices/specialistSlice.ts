@@ -110,7 +110,7 @@ const specialistsSlice = createSlice({
           if (!Array.isArray(state.specialists)) {
             state.specialists = [];
           }
-          //en este caso lo agregamos el turno a la lsita de turnos
+          //en este caso lo agregamos el especialista a la lsita de especialistas
           state.specialists.push(action.payload);
         }
       )
@@ -130,7 +130,7 @@ const specialistsSlice = createSlice({
           const index = state.specialists.findIndex(
             (shift) => shift.id === action.payload.id
           );
-          //si es menor a 0 guarda el el dato en el lugar de la specialists[index]
+          //si es superios a -1 guarda el dato en el lugar de la specialists[index]
           if (index !== -1) {
             state.specialists[index] = action.payload;
           }
@@ -148,7 +148,7 @@ const specialistsSlice = createSlice({
         deleteSpecialist.fulfilled,
         (state, action: PayloadAction<number>) => {
           state.status = "succeeded";
-          //si salio bien guarda un nuevo listado de shift donde
+          //si salio bien guarda un nuevo listado de especialistas donde
           //incluyen todos los que no tengan el id indicado
           state.specialists = state.specialists.filter(
             (specialist) => specialist.id !== action.payload

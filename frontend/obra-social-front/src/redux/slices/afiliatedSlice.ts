@@ -79,7 +79,7 @@ const afiliadosSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      //case de getAll
+      //casos de getAll
       .addCase(fetchAfiliados.pending, (state) => {
         state.status = "loading";
       })
@@ -94,7 +94,7 @@ const afiliadosSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message || "Algo salio mal";
       })
-      //case de Add afiliado
+      //casos de Add afiliado
       .addCase(addAffiliate.pending, (state) => {
         state.status = "loading";
       })
@@ -105,7 +105,7 @@ const afiliadosSlice = createSlice({
           if (!Array.isArray(state.afiliados)) {
             state.afiliados = [];
           }
-          //en este caso lo agregamos el afiliado a la lsita de afiliados
+          //en este caso lo agregamos el afiliado a la lista de afiliados
           state.afiliados.push(action.payload);
         }
       )
@@ -125,7 +125,7 @@ const afiliadosSlice = createSlice({
           const index = state.afiliados.findIndex(
             (affiliate) => affiliate.id === action.payload.id
           );
-          //si es menor a 0 guarda el el dato en el lugar del afiliados[index]
+          //si es superios a -1 guarda el el dato en el lugar del afiliados[index]
           if (index !== -1) {
             state.afiliados[index] = action.payload;
           }
