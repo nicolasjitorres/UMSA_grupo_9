@@ -31,6 +31,7 @@ interface ShiftListProps {
 }
 
 const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
+
   return (
     <TableContainer sx={{ maxHeight: 440 }}>
       <Table stickyHeader aria-label="sticky table">

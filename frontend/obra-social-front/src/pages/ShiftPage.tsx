@@ -1,68 +1,30 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store/store";
-import { fetchShift } from "../redux/slices/shiftSlice"; // Asegúrate de importar deleteShift
-import * as React from "react";
-import Paper from "@mui/material/Paper";
-import TablePagination from "@mui/material/TablePagination";
-import { useEffect } from "react";
-import BasicModal from "../components/modal/Modal";
+
+import React from "react";
+import FilterForm from "../components/FilterForm/FilterFormShift";
+import AddShiftButton from "../components/buttonToAdd/AddShiftButton";
+//import BasicModal from "../components/modal/Modal";
 import ShiftList from "../components/entitiesList/ShiftList";
+import "./Users.css";
+import { RootState } from "../redux/store/store";
+import { useSelector } from "react-redux";
 
-const Shift: React.FC = () => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  const dispatch: AppDispatch = useDispatch();
+const ShiftPage: React.FC = () => {
   const shiftList = useSelector((state: RootState) => state.shift.shifts);
-  const status = useSelector((state: RootState) => state.shift.status);
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchShift());
-    }
-  }, [status, dispatch]);
-
-  let content;
-
-  if (status === "loading") {
-    content = <div>Loading...</div>;
-  } else {
-    content = (
-      <div>
-        <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <ShiftList shifts={shiftList} />
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={shiftList.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </div>
-    );
-  }
 
   return (
-    <section>
-      <h2>Turnos</h2>
-      <BasicModal name="Agregar Turno" proveniencia="shift" />
-      {content}
-    </section>
+    <div className="container">
+      <h1>Gestión de Turnos</h1>
+      <div className="content">
+        <div className="right-section">
+          <AddShiftButton />
+          <FilterForm />
+        </div>
+        <div className="left-section">
+             <ShiftList shifts={shiftList}/>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Shift;
+export default ShiftPage;
