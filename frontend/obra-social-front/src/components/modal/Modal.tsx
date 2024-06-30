@@ -48,7 +48,7 @@ const BasicModal: React.FC<propModal> = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <div className="modal-content">
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {name}
           </Typography>
@@ -57,7 +57,7 @@ const BasicModal: React.FC<propModal> = ({
           ) : proveniencia === "affiliate" ? (
             <FormAffiliate affiliate={affiliate} />
           ) : null}
-        </Box>
+        </div>
       </Modal>
     </div>
   );

@@ -21,6 +21,8 @@ import { DayOfWeek, Schedule, Shift, Specialist } from "../../redux/type";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { addShift, updateShift } from "../../redux/slices/shiftSlice";
+import "./Form.css";
+import "../buttonToAdd/Button.css";
 
 interface FormShiftProps {
   handleClose: () => void;
@@ -153,16 +155,17 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form-container">
       <TextField
         fullWidth
         label="Descripción"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         margin="normal"
+        className="form-field"
       />
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">
+      <FormControl fullWidth className="form-field">
+        <InputLabel id="demo-simple-select-label" className="select-label">
           Seleccionar Especialista
         </InputLabel>
         <Select
@@ -182,20 +185,28 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         </Select>
       </FormControl>
       {selectedSpecialist !== null && (
-        <Accordion>
-          <AccordionSummary>Seleccionar Día</AccordionSummary>
+        <Accordion className="form-field">
+          <AccordionSummary className="accordion-summary">
+            Seleccionar Día
+          </AccordionSummary>
           <AccordionDetails>{renderDayOptions()}</AccordionDetails>
         </Accordion>
       )}
       {selectedDay !== null && (
-        <Accordion>
-          <AccordionSummary>Seleccionar Hora</AccordionSummary>
-          <AccordionDetails>{renderTimeOptions()}</AccordionDetails>
-        </Accordion>
+        <Accordion className="form-field">
+        <AccordionSummary className="accordion-summary">
+          Seleccionar Hora
+        </AccordionSummary>
+        <AccordionDetails className="accordion-details">
+          {renderTimeOptions()}
+        </AccordionDetails>
+      </Accordion>
       )}
-      <Button type="submit" variant="contained" color="primary">
+      <button type="submit" color="primary" className="add-button">
         {shift ? "Actualizar" : "Agregar"}
-      </Button>
+      </button>
+
+      
     </form>
   );
 };
