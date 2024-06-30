@@ -91,3 +91,9 @@ export interface SpecialistDTO {
   role: string;
   email: string;
 }
+
+export interface ScheduleDTO {
+  startTime: string;
+  endTime: string;
+  dayOfWeek: DayOfWeek;
+}
