@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store/store";
-import { fetchSchedules } from "../../redux/slices/schedulesSlice";
-import { fetchSpecialists } from "../../redux/slices/specialistSlice";
+import { fetchSchedules } from "../../redux/slices/SchedulesSlice";
+import { fetchSpecialists } from "../../redux/slices/SpecialistSlice";
 import "./Table.css";
 import {
   Table,

@@ -80,3 +80,14 @@ export interface AffiliateDTO {
   role: string;
   email: string;
 }
+
+export interface SpecialistDTO {
+  id: number;
+  firstName: string;
+  lastName: string;
+  dni: string;
+  speciality: string;
+  location: Location; // Usa la ubicación con `id`
+  role: string;
+  email: string;
+}

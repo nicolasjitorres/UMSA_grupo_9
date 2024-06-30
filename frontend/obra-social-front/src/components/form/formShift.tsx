@@ -20,7 +20,7 @@ import {
 import { DayOfWeek, Schedule, Shift, Specialist } from "../../redux/type";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { addShift, updateShift } from "../../redux/slices/shiftSlice";
+import { addShift, updateShift } from "../../redux/slices/ShiftSlice";
 
 interface FormShiftProps {
   handleClose: () => void;

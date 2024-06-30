@@ -7,7 +7,7 @@ import {
 import {
   addAffiliate,
   updateAffiliate,
-} from "../../redux/slices/afiliatedSlice";
+} from "../../redux/slices/AfiliatedSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store/store";
 import { Affiliate } from "../../redux/type";
