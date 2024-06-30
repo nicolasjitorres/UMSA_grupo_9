@@ -1,8 +1,10 @@
 import React from "react";
+
 import {Modal, Box, Typography } from "@mui/material";
 import FormShift from "../form/formShift"; // Asegúrate de importar tu componente FormShift
-import { Shift } from "../../redux/type";
 import "./Modal.css"; // Importa tu archivo CSS aquí
+import { Affiliate, Shift } from "../../redux/type";
+import FormAffiliate from "../form/FormAffiliate";
 
 const style = {
   position: "absolute",
@@ -16,12 +18,19 @@ const style = {
   p: 4,
 };
 
-interface nameModal {
+interface propModal {
   name: string;
+  proveniencia: string;
   shift?: Shift;
+  affiliate?: Affiliate;
 }
 
-const BasicModal: React.FC<nameModal> = ({ name, shift }) => {
+const BasicModal: React.FC<propModal> = ({
+  name,
+  shift,
+  proveniencia,
+  affiliate,
+}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -46,7 +55,11 @@ const BasicModal: React.FC<nameModal> = ({ name, shift }) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {name}
           </Typography>
-          <FormShift handleClose={handleClose} shift={shift} />
+          {proveniencia === "shift" ? (
+            <FormShift handleClose={handleClose} shift={shift} />
+          ) : proveniencia === "affiliate" ? (
+            <FormAffiliate affiliate={affiliate} />
+          ) : null}
         </Box>
       </Modal>
     </div>

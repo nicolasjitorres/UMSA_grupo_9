@@ -70,9 +70,8 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         time,
         state: true,
         specialistId: selectedSpecialist,
-        affiliatedId: 1,
+        affiliatedId: 2,
       };
-      console.log(shiftDTO);
       if (shift) {
         await dispatch(updateShift({ shiftDTO, id: shift.id }));
       } else {

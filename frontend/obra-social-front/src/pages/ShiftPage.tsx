@@ -1,7 +1,7 @@
+
 import React from "react";
 import FilterForm from "../components/FilterForm/FilterFormShift";
 import AddShiftButton from "../components/buttonToAdd/AddShiftButton";
-
 //import BasicModal from "../components/modal/Modal";
 import ShiftList from "../components/entitiesList/ShiftList";
 import "./Users.css";

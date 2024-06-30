@@ -56,6 +56,7 @@ const AffiliatesList: React.FC = () => {
               <TableCell>Nombre</TableCell>
               <TableCell align="right">DNI</TableCell>
               <TableCell align="right">Contacto</TableCell>
+              <TableCell align="right">Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
