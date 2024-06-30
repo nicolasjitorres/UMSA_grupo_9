@@ -1,7 +1,7 @@
 import React from "react";
 
-import {Modal, Box, Typography } from "@mui/material";
-import FormShift from "../form/formShift"; // Asegúrate de importar tu componente FormShift
+import { Modal, Box, Typography } from "@mui/material";
+import FormShift from "../form/FormShift"; // Asegúrate de importar tu componente FormShift
 import "./Modal.css"; // Importa tu archivo CSS aquí
 import { Affiliate, Shift } from "../../redux/type";
 import FormAffiliate from "../form/FormAffiliate";
@@ -35,13 +35,10 @@ const BasicModal: React.FC<propModal> = ({
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
   return (
     <div>
-       <button        
-        onClick={handleOpen}
-        className="add-button"
-      >
+      <button onClick={handleOpen} className="add-button">
         {name}
       </button>
 
