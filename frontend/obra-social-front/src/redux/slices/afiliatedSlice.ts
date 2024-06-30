@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Affiliate, AffiliateDTO } from "../type";
-import Swal from "sweetalert2";
+import { handleAxiosError } from "./AxiosErrorHandler";
 
 interface AffiliateState {
   afiliados: Affiliate[];
@@ -29,47 +29,17 @@ export const addAffiliate = createAsyncThunk(
   "affiliate/addAffiliate",
   async (affiliate: AffiliateDTO, { rejectWithValue }) => {
     try {
-      //intentamos el llamado a la api con axios y guardamos la respuesta
       const response = await axios.post<Affiliate>(
         "http://localhost:8080/afiliados",
         affiliate
       );
-      return response.data; //y retornamos el turno para que lo guarde en el state
+      return response.data;
     } catch (error: unknown) {
-      console.log(error);
-      //en caso de que sea una axios error
-      if (axios.isAxiosError(error) && error.response) {
-        //de la response verificacmos las violaciones que nos lelgan por el @valid del back
-        const violations = error.response.data.violations;
-        let errorMessage = "Error al agregar el afiliado";
-        //recorremos las vioalciones y la guardamos en uan variable mensaje
-        if (violations && Array.isArray(violations)) {
-          errorMessage = violations
-            .map(
-              (violation: { field: string; message: string }) =>
-                `${violation.message}`
-            )
-            .join("\n");
-        }
-        //y aca usamos la libreria de Swal para hacer las alerts
-        Swal.fire({
-          title: "Error",
-          text: errorMessage,
-          icon: "error",
-          confirmButtonText: "Continue",
-        });
-        //y retornamos el error especifico para que se guarde en el stado de la shift
-        return rejectWithValue(errorMessage);
-      } else {
-        Swal.fire({
-          title: "Error",
-          text: "Error al agregar el afiliado",
-          icon: "error",
-          confirmButtonText: "Continue",
-        });
-        //y retornamos el error creado por nosotros para que se guarde en el stado de la shift
-        return rejectWithValue("Error al agregar el afiliado");
-      }
+      const errorMessage = handleAxiosError(
+        error,
+        "Error al agregar el afiliado"
+      );
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -77,53 +47,24 @@ export const addAffiliate = createAsyncThunk(
 export const updateAffiliate = createAsyncThunk(
   "affiliate/updateAffiliate",
   async (
-    { afffiliateDTO, id }: { afffiliateDTO: AffiliateDTO; id: number },
+    { affiliateDTO, id }: { affiliateDTO: AffiliateDTO; id: number },
     { rejectWithValue }
   ) => {
     try {
       const response = await axios.put<Affiliate>(
         `http://localhost:8080/afiliados/${id}`,
-        afffiliateDTO
+        affiliateDTO
       );
       return response.data;
     } catch (error: unknown) {
-      //en caso de que sea una axios error
-      if (axios.isAxiosError(error) && error.response) {
-        //de la response verificacmos las violaciones que nos lelgan por el @valid del back
-        const violations = error.response.data.violations;
-        let errorMessage = "Error al actualizar el Afiliado";
-        //recorremos las vioalciones y la guardamos en uan variable mensaje
-        if (violations && Array.isArray(violations)) {
-          errorMessage = violations
-            .map(
-              (violation: { field: string; message: string }) =>
-                `${violation.message}`
-            )
-            .join("\n");
-        }
-        //y aca usamos la libreria de Swal para hacer las alerts
-        Swal.fire({
-          title: "Error",
-          text: errorMessage,
-          icon: "error",
-          confirmButtonText: "Continue",
-        });
-        //y retornamos el error especifico para que se guarde en el stado de la shift
-        return rejectWithValue(errorMessage);
-      } else {
-        Swal.fire({
-          title: "Error",
-          text: "Error al actualizar el Afiliado",
-          icon: "error",
-          confirmButtonText: "Continue",
-        });
-        //y retornamos el error creado por nosotros para que se guarde en el stado de la shift
-        return rejectWithValue("Error al actualizar el Afiliado");
-      }
+      const errorMessage = handleAxiosError(
+        error,
+        "Error al actualizar el afiliado"
+      );
+      return rejectWithValue(errorMessage);
     }
   }
 );
-
 export const deleteAffiliate = createAsyncThunk(
   "affiliate/deleteAffiliate",
   async (affiliateID: number) => {

@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Shift, ShiftDTO } from "../type";
-import Swal from "sweetalert2";
-// import { RootState } from '../store/store';
+import { handleAxiosError } from "./AxiosErrorHandler";
 
 //estructura del shift state
 interface ShiftState {
@@ -24,6 +23,7 @@ export const fetchShift = createAsyncThunk("shift/fetchShift", async () => {
   return response.data;
 });
 
+//delete turnos
 export const deleteShift = createAsyncThunk(
   "shift/deleteShift",
   async (shiftId: number) => {
@@ -32,55 +32,24 @@ export const deleteShift = createAsyncThunk(
   }
 );
 
+//add turnos
 export const addShift = createAsyncThunk(
   "shift/addShift",
   async (shiftDTO: ShiftDTO, { rejectWithValue }) => {
     try {
-      //intentamos el llamado a la api con axios y guardamos la respuesta
       const response = await axios.post<Shift>(
         "http://localhost:8080/turnos",
         shiftDTO
       );
-      return response.data; //y retornamos el turno para que lo guarde en el state
+      return response.data;
     } catch (error: unknown) {
-      console.log(error);
-      //en caso de que sea una axios error
-      if (axios.isAxiosError(error) && error.response) {
-        //de la response verificacmos las violaciones que nos lelgan por el @valid del back
-        const violations = error.response.data.violations;
-        let errorMessage = "Error al agregar el turno";
-        //recorremos las vioalciones y la guardamos en uan variable mensaje
-        if (violations && Array.isArray(violations)) {
-          errorMessage = violations
-            .map(
-              (violation: { field: string; message: string }) =>
-                `${violation.message}`
-            )
-            .join("\n");
-        }
-        //y aca usamos la libreria de Swal para hacer las alerts
-        Swal.fire({
-          title: "Error",
-          text: errorMessage,
-          icon: "error",
-          confirmButtonText: "Continue",
-        });
-        //y retornamos el error especifico para que se guarde en el stado de la shift
-        return rejectWithValue(errorMessage);
-      } else {
-        Swal.fire({
-          title: "Error",
-          text: "Error al agregar el turno",
-          icon: "error",
-          confirmButtonText: "Continue",
-        });
-        //y retornamos el error creado por nosotros para que se guarde en el stado de la shift
-        return rejectWithValue("Error al agregar el turno");
-      }
+      const errorMessage = handleAxiosError(error, "Error al agregar el turno");
+      return rejectWithValue(errorMessage);
     }
   }
 );
 
+//update turnos
 export const updateShift = createAsyncThunk(
   "shift/updateShift",
   async (
@@ -94,39 +63,11 @@ export const updateShift = createAsyncThunk(
       );
       return response.data;
     } catch (error: unknown) {
-      //en caso de que sea una axios error
-      if (axios.isAxiosError(error) && error.response) {
-        //de la response verificacmos las violaciones que nos lelgan por el @valid del back
-        const violations = error.response.data.violations;
-        let errorMessage = "Error al actualizar el turno";
-        //recorremos las vioalciones y la guardamos en uan variable mensaje
-        if (violations && Array.isArray(violations)) {
-          errorMessage = violations
-            .map(
-              (violation: { field: string; message: string }) =>
-                `${violation.message}`
-            )
-            .join("\n");
-        }
-        //y aca usamos la libreria de Swal para hacer las alerts
-        Swal.fire({
-          title: "Error",
-          text: errorMessage,
-          icon: "error",
-          confirmButtonText: "Continue",
-        });
-        //y retornamos el error especifico para que se guarde en el stado de la shift
-        return rejectWithValue(errorMessage);
-      } else {
-        Swal.fire({
-          title: "Error",
-          text: "Error al actualizar el turno",
-          icon: "error",
-          confirmButtonText: "Continue",
-        });
-        //y retornamos el error creado por nosotros para que se guarde en el stado de la shift
-        return rejectWithValue("Error al actualizar el turno");
-      }
+      const errorMessage = handleAxiosError(
+        error,
+        "Error al actualizar el turno"
+      );
+      return rejectWithValue(errorMessage);
     }
   }
 );

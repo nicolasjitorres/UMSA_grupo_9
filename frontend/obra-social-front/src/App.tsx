@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import Router from "./routes/Router";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./redux/store/store";
 import { useDispatch } from "react-redux";
-import { fetchShift } from "./redux/slices/shiftSlice";
-import { fetchSpecialists } from "./redux/slices/specialistSlice";
-import { fetchSchedules } from "./redux/slices/schedulesSlice";
+import { fetchShift } from "./redux/slices/ShiftSlice";
+import { fetchSpecialists } from "./redux/slices/SpecialistSlice";
+import { fetchSchedules } from "./redux/slices/SchedulesSlice";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,11 +24,11 @@ const App: React.FC = () => {
   useSelector((state: RootState) => state.shift.shifts);
 
   return (
-   <BrowserRouter>
-    <NavBar />
-    <Router />
-   </BrowserRouter>
+    <BrowserRouter>
+      <NavBar />
+      <Router />
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

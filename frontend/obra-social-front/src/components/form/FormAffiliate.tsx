@@ -7,7 +7,7 @@ import {
 import {
   addAffiliate,
   updateAffiliate,
-} from "../../redux/slices/afiliatedSlice";
+} from "../../redux/slices/AfiliatedSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store/store";
 import { Affiliate } from "../../redux/type";
@@ -49,7 +49,7 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
       };
       if (affiliate) {
         await dispatch(
-          updateAffiliate({ afffiliateDTO: affiliatedDTO, id: affiliate.id })
+          updateAffiliate({ affiliateDTO: affiliatedDTO, id: affiliate.id })
         );
       } else {
         await dispatch(addAffiliate(affiliatedDTO));
