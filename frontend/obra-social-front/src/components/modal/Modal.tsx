@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Modal, Box, Typography } from "@mui/material";
+import {Modal, Box, Typography } from "@mui/material";
 import FormShift from "../form/formShift"; // Asegúrate de importar tu componente FormShift
 import { Shift } from "../../redux/type";
+import "./Modal.css"; // Importa tu archivo CSS aquí
 
 const style = {
   position: "absolute",
@@ -25,11 +26,16 @@ const BasicModal: React.FC<nameModal> = ({ name, shift }) => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  
   return (
     <div>
-      <Button variant="contained" color="success" onClick={handleOpen}>
+       <button        
+        onClick={handleOpen}
+        className="add-button"
+      >
         {name}
-      </Button>
+      </button>
+
       <Modal
         open={open}
         onClose={handleClose}
