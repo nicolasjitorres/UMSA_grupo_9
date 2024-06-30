@@ -23,7 +23,12 @@ interface propModal {
   affiliate?: Affiliate;
 }
 
-const BasicModal: React.FC<propModal> = ({ name, shift, proveniencia }) => {
+const BasicModal: React.FC<propModal> = ({
+  name,
+  shift,
+  proveniencia,
+  affiliate,
+}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -46,7 +51,7 @@ const BasicModal: React.FC<propModal> = ({ name, shift, proveniencia }) => {
           {proveniencia === "shift" ? (
             <FormShift handleClose={handleClose} shift={shift} />
           ) : proveniencia === "affiliate" ? (
-            <FormAffiliate />
+            <FormAffiliate affiliate={affiliate} />
           ) : null}
         </Box>
       </Modal>

@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import { useEffect } from "react";
 import BasicModal from "../components/modal/Modal";
-import ShiftList from "../components/shiftPage/ShiftList";
+import ShiftList from "../components/entitiesList/ShiftList";
 
 const Shift: React.FC = () => {
   const [page, setPage] = React.useState(0);

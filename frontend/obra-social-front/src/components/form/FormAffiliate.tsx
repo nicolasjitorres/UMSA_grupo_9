@@ -4,16 +4,26 @@ import {
   ValidationErrors,
   validateForm,
 } from "../../funcionalities/Validations";
-import { addAffiliate } from "../../redux/slices/afiliatedSlice";
+import {
+  addAffiliate,
+  updateAffiliate,
+} from "../../redux/slices/afiliatedSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store/store";
+import { Affiliate } from "../../redux/type";
 
-const FormAffiliate: React.FC = () => {
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [dni, setDni] = React.useState("");
-  const [healthInsuranceCode, sethealthInsuranceCode] = React.useState("");
-  const [email, setEmail] = React.useState("");
+interface FormShiftProps {
+  affiliate?: Affiliate;
+}
+
+const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
+  const [firstName, setFirstName] = React.useState(affiliate?.firstName || "");
+  const [lastName, setLastName] = React.useState(affiliate?.lastName || "");
+  const [dni, setDni] = React.useState(affiliate?.dni || "");
+  const [healthInsuranceCode, sethealthInsuranceCode] = React.useState(
+    affiliate?.healthInsuranceCode || ""
+  );
+  const [email, setEmail] = React.useState(affiliate?.email || "");
   const [errors, setErrors] = useState<ValidationErrors>({});
   const dispatch = useDispatch<AppDispatch>();
 
@@ -29,7 +39,7 @@ const FormAffiliate: React.FC = () => {
 
     event.preventDefault();
     if (Object.keys(validationErrors).length === 0) {
-      const affiliated = {
+      const affiliatedDTO = {
         firstName,
         lastName,
         dni,
@@ -37,8 +47,13 @@ const FormAffiliate: React.FC = () => {
         email,
         healthInsuranceCode,
       };
-      console.log(affiliated);
-      await dispatch(addAffiliate(affiliated));
+      if (affiliate) {
+        await dispatch(
+          updateAffiliate({ afffiliateDTO: affiliatedDTO, id: affiliate.id })
+        );
+      } else {
+        await dispatch(addAffiliate(affiliatedDTO));
+      }
     }
   };
 

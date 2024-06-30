@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -9,11 +8,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { Shift } from "../../redux/type"; // Ajusta esta importación según tu estructura de carpetas
-import { AppDispatch } from "../../redux/store/store";
-import { useDispatch } from "react-redux";
-import { deleteShift } from "../../redux/slices/shiftSlice";
-import DeleteIcon from "@mui/icons-material/Delete";
-import BasicModal from "../modal/Modal";
+import RowShift from "../rows/RowShift";
 
 interface Column {
   id: "id" | "description" | "date" | "time" | "actions";
@@ -36,12 +31,6 @@ interface ShiftListProps {
 }
 
 const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
-  const dispatch: AppDispatch = useDispatch();
-
-  const handleDelete = (id: number) => {
-    dispatch(deleteShift(id));
-  };
-
   return (
     <TableContainer sx={{ maxHeight: 440 }}>
       <Table stickyHeader aria-label="sticky table">
@@ -60,39 +49,7 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
         </TableHead>
         <TableBody>
           {shifts.length > 0 ? (
-            shifts.map((shift) => (
-              <TableRow hover role="checkbox" tabIndex={-1} key={shift.id}>
-                {columns.map((column) => {
-                  if (column.id === "actions") {
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        <BasicModal
-                          name="actualizar turno"
-                          shift={shift}
-                          proveniencia="shift"
-                        />
-                        <Button
-                          variant="contained"
-                          color="error"
-                          startIcon={<DeleteIcon />}
-                          onClick={() => handleDelete(shift.id)}
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    );
-                  }
-                  const value = shift[column.id as keyof Shift];
-                  return (
-                    <TableCell key={column.id} align={column.align}>
-                      {column.format && typeof value === "number"
-                        ? column.format(value)
-                        : value}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))
+            shifts.map((shift) => <RowShift shift={shift} />)
           ) : (
             <TableRow>
               <TableCell colSpan={4} align="center">

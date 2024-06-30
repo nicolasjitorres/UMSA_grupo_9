@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Affiliate, AffiliateDTO } from "../type";
 import Swal from "sweetalert2";
-// import { RootState } from '../store/store';
 
 interface AffiliateState {
   afiliados: Affiliate[];
@@ -83,7 +82,7 @@ export const updateAffiliate = createAsyncThunk(
   ) => {
     try {
       const response = await axios.put<Affiliate>(
-        `http://localhost:8080/afiliados${id}`,
+        `http://localhost:8080/afiliados/${id}`,
         afffiliateDTO
       );
       return response.data;
@@ -128,7 +127,7 @@ export const updateAffiliate = createAsyncThunk(
 export const deleteAffiliate = createAsyncThunk(
   "affiliate/deleteAffiliate",
   async (affiliateID: number) => {
-    await axios.delete(`http://localhost:8080/turnos/${affiliateID}`);
+    await axios.delete(`http://localhost:8080/afiliados/${affiliateID}`);
     return affiliateID;
   }
 );
