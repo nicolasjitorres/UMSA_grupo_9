@@ -1,0 +1,29 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;    
+  }
+ 
+
+.form-field {
+    margin-top: 20px; /* Espacio superior */
+    background-color: #f0f0f0; /* Color de fondo */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+  }
+  
+  .accordion-summary:hover {
+    background-color: #bccdde;
+  }
+  
+  .accordion-summary.Mui-expanded {
+    background-color: #007bff;
+  }
+  
+  .accordion-details {
+    overflow-y: auto; /* Permitir desplazamiento vertical si el contenido excede el tamaño */
+    max-height: 100px; /* Altura máxima para limitar el tamaño del área desplazable */
+  }
+  
+  

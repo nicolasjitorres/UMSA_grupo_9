@@ -1,0 +1,22 @@
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    max-width: 90%;
+    background-color: rgba(1, 15, 95, 0.71);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    padding: 35px;
+    color: #fff;
+    overflow-y: auto;     
+    max-height: 85%;
+  }
+  
+  @media (max-width: 600px) {
+    .modal-content {
+      width: 90%; /* Ajustar el ancho en pantallas pequeñas */
+    }
+  }
+  
