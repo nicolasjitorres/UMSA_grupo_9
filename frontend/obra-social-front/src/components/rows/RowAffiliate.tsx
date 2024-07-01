@@ -35,8 +35,6 @@ const RowAffiliate: React.FC<RowProps> = ({ affiliate }) => {
           style={{
             width: 170,
             margin: "auto",
-            display: "flex",
-            justifyContent: "center",
             gap: "10px", // Para separar los botones opcionalmente
           }}
         >
