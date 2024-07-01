@@ -3,7 +3,7 @@ import { Shift } from "../../redux/type";
 import BasicModal from "../modal/Modal";
 import { AppDispatch } from "../../redux/store/store";
 import { useDispatch } from "react-redux";
-import { deleteShift } from "../../redux/slices/ShiftSlice";
+import { deleteShift } from "../../redux/slices/shiftSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 interface RowProps {

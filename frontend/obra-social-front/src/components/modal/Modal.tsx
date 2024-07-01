@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Modal, Box, Typography } from "@mui/material";
-import FormShift from "../form/FormShift";
+import { Modal, Typography } from "@mui/material";
+import FormShift from "../form/formShift";
 import "./Modal.css";
 import FormSpecialist from "../form/FormSpecialist";
 import { Affiliate, Shift, Specialist } from "../../redux/type";

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 import Row from "../rows/RowAffiliate";
-import { fetchAfiliados } from "../../redux/slices/AfiliatedSlice";
+import { fetchAfiliados } from "../../redux/slices/afiliatedSlice";
 
 const AffiliatesList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();

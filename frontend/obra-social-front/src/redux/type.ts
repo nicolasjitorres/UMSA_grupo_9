@@ -54,7 +54,7 @@ export interface Prescription {
 }
 
 export interface Location {
-  id: number;
+  id?: number;
   street: string;
   locality: string;
   province: string;
@@ -89,6 +89,7 @@ export interface SpecialistDTO {
   location: Location; // Usa la ubicación con `id`
   role: string;
   email: string;
+  password: string;
 }
 
 export interface ScheduleDTO {

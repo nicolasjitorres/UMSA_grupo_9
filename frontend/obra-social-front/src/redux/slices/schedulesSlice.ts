@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Schedule, ScheduleDTO } from "../type"; // Ajusta la ruta según la ubicación de tu archivo de tipos
+import { Schedule, ScheduleDTO } from "../type";
 import { handleAxiosError } from "./AxiosErrorHandler";
 
 interface SchedulesState {

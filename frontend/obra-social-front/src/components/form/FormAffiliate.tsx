@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import React, { useState } from "react";
 import {
   ValidationErrors,
@@ -7,7 +7,7 @@ import {
 import {
   addAffiliate,
   updateAffiliate,
-} from "../../redux/slices/AfiliatedSlice";
+} from "../../redux/slices/afiliatedSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store/store";
 import { Affiliate } from "../../redux/type";

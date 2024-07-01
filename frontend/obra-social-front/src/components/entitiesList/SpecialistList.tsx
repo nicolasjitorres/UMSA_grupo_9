@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store/store";
-import { fetchSchedules } from "../../redux/slices/SchedulesSlice";
-import { fetchSpecialists } from "../../redux/slices/SpecialistSlice";
+import { fetchSchedules } from "../../redux/slices/schedulesSlice";
+import { fetchSpecialists } from "../../redux/slices/specialistSlice";
 import "./Table.css";
 import {
   Table,
@@ -14,7 +14,6 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-
 import RowSchedulesSpecialist from "../rows/RowSchedules&Specialist";
 
 const SpecialistList: React.FC = () => {
@@ -54,7 +53,7 @@ const SpecialistList: React.FC = () => {
   ) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
+  };  
 
   return (
     <Paper
@@ -87,7 +86,7 @@ const SpecialistList: React.FC = () => {
                       (schedule) => schedule.specialistId === specialist.id
                     )}
                   />
-                ))
+                ))   
             ) : (
               <TableRow>
                 <TableCell colSpan={4} align="center">

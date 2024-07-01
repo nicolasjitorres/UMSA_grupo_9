@@ -21,7 +21,7 @@ import { AppDispatch, RootState } from "../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import "./Form.css";
 import "../buttonToAdd/Button.css";
-import { addShift, updateShift } from "../../redux/slices/ShiftSlice";
+import { addShift, updateShift } from "../../redux/slices/shiftSlice";
 import { parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 
