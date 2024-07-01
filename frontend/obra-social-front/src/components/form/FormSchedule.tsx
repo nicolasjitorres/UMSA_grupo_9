@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import { DayOfWeek, Schedule } from "../../redux/type";
 import {
+  Button,
   FormControl,
   NativeSelect,
   TextField,
   Typography,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { addSchedule } from "../../redux/slices/SchedulesSlice";
+import {
+  addSchedule,
+  deleteSchedules,
+  updateSchedule,
+} from "../../redux/slices/SchedulesSlice";
 import { AppDispatch } from "../../redux/store/store";
 import {
   ValidationErrors,
   validationTime,
 } from "../../funcionalities/Validations";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface FormScheduleProp {
   schedule?: Schedule;
@@ -27,7 +33,9 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
 }) => {
   const [startTime, setStartTime] = useState(schedule?.startTime || "");
   const [endTime, setEndTime] = useState(schedule?.endTime || "");
-  const [selectedDay, setSelectedDay] = useState<DayOfWeek | null>(null);
+  const [selectedDay, setSelectedDay] = useState<DayOfWeek | null>(
+    schedule?.dayOfWeek || null
+  );
   const [errors, setErrors] = useState<ValidationErrors>({});
 
   const dispatch = useDispatch<AppDispatch>();
@@ -48,9 +56,23 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
         dayOfWeek: selectedDay,
       };
 
-      console.log(scheduleDTO);
+      if (!schedule) {
+        await dispatch(
+          addSchedule({ scheduleDTO, idSpecialist: specialistID })
+        );
+      } else {
+        await dispatch(
+          updateSchedule({ scheduleDTO, idSchedule: schedule.id })
+        );
+      }
 
-      await dispatch(addSchedule({ scheduleDTO, idSpecialist: specialistID }));
+      handleClose();
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    if (schedule) {
+      dispatch(deleteSchedules(id));
       handleClose();
     }
   };
@@ -125,8 +147,19 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
         margin="normal"
       />
       <button color="primary" onClick={handleSubmit} className="add-button">
-        Agregar
+        {schedule ? "Actualizar" : "Agregar"}
       </button>
+
+      {schedule && (
+        <Button
+          variant="contained"
+          color="error"
+          startIcon={<DeleteIcon />}
+          onClick={() => handleDelete(schedule.id)}
+        >
+          Borrar
+        </Button>
+      )}
     </form>
   );
 };

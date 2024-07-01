@@ -47,16 +47,17 @@ export const addSchedule = createAsyncThunk<
   }
 );
 //update Horarios
-export const updateSchedule = createAsyncThunk(
+export const updateSchedule = createAsyncThunk<
+  Schedule,
+  { scheduleDTO: ScheduleDTO; idSchedule: number },
+  { rejectValue: string }
+>(
   "schedule/updateSchedule",
-  async (
-    { schedulesDTO, id }: { schedulesDTO: ScheduleDTO; id: number },
-    { rejectWithValue }
-  ) => {
+  async ({ scheduleDTO, idSchedule }, { rejectWithValue }) => {
     try {
       const response = await axios.put<Schedule>(
-        `http://localhost:8080/horarios/${id}`,
-        schedulesDTO
+        `http://localhost:8080/horarios/${idSchedule}`,
+        scheduleDTO
       );
       return response.data;
     } catch (error: unknown) {

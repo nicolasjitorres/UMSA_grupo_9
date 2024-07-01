@@ -15,6 +15,7 @@ import { Schedule, Specialist } from "../../redux/type"; // Ajusta la ruta segú
 import { RootState } from "../../redux/store/store";
 import { useSelector } from "react-redux";
 import AddSchedulesButton from "../buttonToAdd/AddSchedulesButton";
+import BasicModal from "../modal/Modal";
 
 interface RowProps {
   specialist: Specialist;
@@ -36,6 +37,8 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
       setSchedulesFromSpecialist(
         schedules.filter((schedule) => schedule.specialistId === specialist.id)
       );
+    } else {
+      setSchedulesFromSpecialist([]);
     }
   }, [schedules, specialist.id]); // Agrega las dependencias aquí
 
@@ -80,9 +83,10 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
               <Table size="small" aria-label="schedule">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Day</TableCell>
-                    <TableCell align="right">Start Time</TableCell>
-                    <TableCell align="right">End Time</TableCell>
+                    <TableCell>Dia</TableCell>
+                    <TableCell align="right">Hora Inico</TableCell>
+                    <TableCell align="right">Hora Fin</TableCell>
+                    <TableCell align="right">Acciones</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -94,6 +98,15 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
                           {schedule.startTime}
                         </TableCell>
                         <TableCell align="right">{schedule.endTime}</TableCell>
+                        <TableCell align="right">
+                          <BasicModal
+                            name="Editar"
+                            title="Actualizar horario"
+                            schedule={schedule}
+                            proveniencia="schedules"
+                            specialistID={specialist.id}
+                          />
+                        </TableCell>
                       </TableRow>
                     ))
                   ) : (
