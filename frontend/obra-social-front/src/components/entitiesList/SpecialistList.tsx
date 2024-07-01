@@ -23,9 +23,6 @@ const SpecialistList: React.FC = () => {
   const specialists = useSelector(
     (state: RootState) => state.specialists.specialists
   );
-  const schedules = useSelector(
-    (state: RootState) => state.schedules.schedules
-  );
   const specialistStatus = useSelector(
     (state: RootState) => state.specialists.status
   );
@@ -76,16 +73,13 @@ const SpecialistList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {specialists.length > 0 && schedules.length > 0 ? (
+            {specialists.length > 0 ? (
               specialists
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((specialist) => (
                   <RowSchedulesSpecialist
                     key={specialist.id}
                     specialist={specialist}
-                    schedules={schedules.filter(
-                      (schedule) => schedule.specialistId === specialist.id
-                    )}
                   />
                 ))
             ) : (

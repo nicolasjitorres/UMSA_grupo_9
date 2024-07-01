@@ -6,7 +6,7 @@ const AddShiftButton: React.FC = () => {
   return (
     <>
       <h2>Nuevo Turno</h2>
-      <BasicModal name="Agregar" proveniencia="shift" title="Agregar turno"/>
+      <BasicModal name="Agregar" proveniencia="shift" title="Agregar turno" />
     </>
   );
 };
