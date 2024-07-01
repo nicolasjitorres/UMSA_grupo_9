@@ -5,11 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import model.enums.Speciality;
-
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Data
@@ -26,7 +22,7 @@ public class Specialist extends User{
 	@ManyToOne
 	@JoinColumn(name = "location_id")
 	@JsonBackReference
-	private Location location; // Ubicación
+	private Location location;
 
 
 }

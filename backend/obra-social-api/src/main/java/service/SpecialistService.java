@@ -3,13 +3,16 @@ package service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import mappers.Mapper;
 import model.Location;
 import model.Specialist;
 import repository.SpecialistRepository;
+import security.PassHashing;
 import service.interfaces.ISpecialistService;
 
 import java.util.List;
 
+import dto.SpecialistDTO;
 import validator.Validator;
 
 @ApplicationScoped
@@ -25,6 +28,8 @@ public class SpecialistService implements ISpecialistService {
 	private ShiftService shiftService;
 	@Inject
 	private LocationService locationService;
+	@Inject
+	private Mapper mapper;
 
 
 	@Override
@@ -39,7 +44,14 @@ public class SpecialistService implements ISpecialistService {
 
 	@Override
 
-	public Specialist addSpecialist(Specialist newSpecialist) throws Exception {
+	public Specialist addSpecialist(SpecialistDTO newSpecialistDto) throws Exception {
+		
+		List<String> existInvalidDataDto = validator
+				.validateSpecialistDto(newSpecialistDto);
+		if (existInvalidDataDto != null)
+			throw new IllegalArgumentException(existInvalidDataDto.toString());
+		
+		Specialist newSpecialist = mapper.toSpecialist(newSpecialistDto);
 		if (specialistRepository.findByDni(newSpecialist.getDni()) != null)
 			throw new Exception("Ya existe un especialista con este dni: " + newSpecialist.getDni());
 		List<String> existInvalidData = validator
@@ -52,6 +64,8 @@ public class SpecialistService implements ISpecialistService {
 		if (existingLocation != null) {
 			newSpecialist.setLocation(existingLocation);
 		}
+
+		newSpecialist.setPassword(PassHashing.hashPassword(newSpecialist.getPassword()));
 
 		specialistRepository.persist(newSpecialist);
 		return newSpecialist;

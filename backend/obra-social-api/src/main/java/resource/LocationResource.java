@@ -85,7 +85,7 @@ public class LocationResource {
 			@APIResponse(responseCode = "404", description = "Error al intentar borrar la ubicación") })
 	public Response deleteLocation(@PathParam("id") Long id) {
 		try {
-			Location deletedLocation = locationService.deleteLocation(id);
+			locationService.deleteLocation(id);
 			return Response.status(204).build();
 		} catch (IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

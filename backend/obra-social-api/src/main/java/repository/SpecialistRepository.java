@@ -6,8 +6,6 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import model.Specialist;
 
-import java.util.Optional;
-
 @ApplicationScoped
 public class SpecialistRepository implements PanacheRepository<Specialist>{
 
@@ -19,5 +17,9 @@ public class SpecialistRepository implements PanacheRepository<Specialist>{
     public Specialist findByDni(String dni) {
         return find("dni", dni).firstResult();
     }
+
+    public Optional<Specialist> findByEmail(String email){
+        return find("email", email).firstResultOptional();
+    };
 
 }

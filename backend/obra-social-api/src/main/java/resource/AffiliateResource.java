@@ -92,7 +92,7 @@ public class AffiliateResource {
 			@APIResponse(responseCode = "404", description = "Afiliado no encontrado") })
 	public Response deleteAffiliateById(@PathParam("id") Long id) {
 		try {
-			Affiliate deletedAffiliate = affiliateService.deleteAffiliate(id);
+			affiliateService.deleteAffiliate(id);
 			return Response.status(204).build();
 		} catch (Exception e) {
 			return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();

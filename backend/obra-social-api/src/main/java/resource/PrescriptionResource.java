@@ -99,7 +99,7 @@ public class PrescriptionResource {
 	})
     public Response deletePrescription(@PathParam("id") Long id){
         try{
-			Prescription prescription = prescriptionService.deletePrescription(id);
+			prescriptionService.deletePrescription(id);
 			return Response.status(204).build();
 		} catch (Exception e){
 			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
