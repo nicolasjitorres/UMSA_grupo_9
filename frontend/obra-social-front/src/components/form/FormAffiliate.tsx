@@ -58,61 +58,62 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
   };
 
   return (
-    <Box className="form-container">
-      <TextField
-        fullWidth
-        label="Nombre"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        margin="normal"
-        error={!!errors.firstName}
-        helperText={errors.firstName}
-        className="form-field"
-      />
-      <TextField
-        fullWidth
-        label="Apellido"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        margin="normal"
-        error={!!errors.lastName}
-        helperText={errors.lastName}
-        className="form-field"
-      />
-      <TextField
-        fullWidth
-        label="DNI"
-        value={dni}
-        onChange={(e) => setDni(e.target.value)}
-        margin="normal"
-        error={!!errors.dni}
-        helperText={errors.dni}
-        className="form-field"
-      />
-      <TextField
-        fullWidth
-        label="N° Obra social"
-        value={healthInsuranceCode}
-        onChange={(e) => sethealthInsuranceCode(e.target.value)}
-        margin="normal"
-        error={!!errors.healthInsuranceCode}
-        helperText={errors.healthInsuranceCode}
-        className="form-field"
-      />
-      <TextField
-        fullWidth
-        label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        margin="normal"
-        error={!!errors.email}
-        helperText={errors.email}
-        className="form-field"
-      />
-      <button color="primary" onClick={handleSubmit} className="add-button">
-        Agregar
-      </button>
-    </Box>
-  );
-};
+        <form onSubmit={handleSubmit} className="form-container">
+        <TextField
+          fullWidth
+          label="Nombre"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          margin="normal"
+          error={!!errors.firstName}
+          helperText={errors.firstName}
+          className="form-field"
+        />
+        <TextField
+          fullWidth
+          label="Apellido"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          margin="normal"
+          error={!!errors.lastName}
+          helperText={errors.lastName}
+          className="form-field"
+        />
+        <TextField
+          fullWidth
+          label="DNI"
+          value={dni}
+          onChange={(e) => setDni(e.target.value)}
+          margin="normal"
+          error={!!errors.dni}
+          helperText={errors.dni}
+          className="form-field"
+        />
+        <TextField
+          fullWidth
+          label="N° Obra social"
+          value={healthInsuranceCode}
+          onChange={(e) => sethealthInsuranceCode(e.target.value)}
+          margin="normal"
+          error={!!errors.healthInsuranceCode}
+          helperText={errors.healthInsuranceCode}
+          className="form-field"
+        />
+        <TextField
+          fullWidth
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          margin="normal"
+          error={!!errors.email}
+          helperText={errors.email}
+          className="form-field"
+        />
+        <button color="primary" onClick={handleSubmit} className="add-button">
+          Agregar
+        </button>
+      </form>
+    );
+  };
+
 export default FormAffiliate;

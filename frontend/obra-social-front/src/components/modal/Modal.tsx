@@ -1,35 +1,29 @@
 import React from "react";
 
 import { Modal, Box, Typography } from "@mui/material";
-import FormShift from "../form/FormShift"; // Asegúrate de importar tu componente FormShift
-import "./Modal.css"; // Importa tu archivo CSS aquí
-import { Affiliate, Shift } from "../../redux/type";
+import FormShift from "../form/FormShift";
+import "./Modal.css";
+import FormSpecialist from "../form/FormSpecialist";
+import { Affiliate, Shift, Specialist } from "../../redux/type";
 import FormAffiliate from "../form/FormAffiliate";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 interface propModal {
   name: string;
+  title :string;
   proveniencia: string;
   shift?: Shift;
   affiliate?: Affiliate;
+  specialist?: Specialist;
 }
 
 const BasicModal: React.FC<propModal> = ({
   name,
+  title,
   shift,
   proveniencia,
   affiliate,
+  specialist,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -50,13 +44,11 @@ const BasicModal: React.FC<propModal> = ({
       >
         <div className="modal-content">
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {name}
+            {title}
           </Typography>
-          {proveniencia === "shift" ? (
-            <FormShift handleClose={handleClose} shift={shift} />
-          ) : proveniencia === "affiliate" ? (
-            <FormAffiliate affiliate={affiliate} />
-          ) : null}
+          {proveniencia === 'shift' && <FormShift handleClose={handleClose} shift={shift} />}
+          {proveniencia === 'affiliate' && <FormAffiliate affiliate={affiliate} />}
+          {proveniencia === 'specialist' && <FormSpecialist specialist={specialist}/>}
         </div>
       </Modal>
     </div>

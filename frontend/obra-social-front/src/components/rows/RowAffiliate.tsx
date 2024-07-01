@@ -41,7 +41,8 @@ const RowAffiliate: React.FC<RowProps> = ({ affiliate }) => {
           }}
         >
           <BasicModal
-            name="Actualizar afiliado"
+            name="Editar"
+            title="Actualizar Afiliado"
             affiliate={affiliate}
             proveniencia="affiliate" //esto lo ponemos para diferenciar a que form llamar en el modal
           />
