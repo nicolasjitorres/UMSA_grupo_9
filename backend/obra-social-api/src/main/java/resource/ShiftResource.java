@@ -7,20 +7,20 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import mappers.ShiftMapper;
 import model.Shift;
 import dto.ShiftDTO;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import service.interfaces.IShiftService;
 
 import java.util.List;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Transactional
 @Path("/turnos")
-@Tag(name = "Turnos")
 public class ShiftResource {
 
     @Inject
@@ -38,7 +38,7 @@ public class ShiftResource {
         if(shiftList.isEmpty())
             return Response.status(204).build();
         else {
-            return Response.ok(shiftList).build();
+            return Response.ok(new ShiftMapper().listShiftToDTO(shiftList)).build();
         }
     }
     @GET
@@ -49,7 +49,7 @@ public class ShiftResource {
             @APIResponse(responseCode = "404", description = "Turno no encontrado")
     })
     public Response getShift(@PathParam("id") Long id){
-        Shift shift = iserviceShift.getShiftById(id);
+        ShiftDTO shift = new ShiftMapper().entityToDto(iserviceShift.getShiftById(id));
         if(shift==null){
             return Response.status(Response.Status.NOT_FOUND).build();
         }else {
@@ -58,13 +58,13 @@ public class ShiftResource {
     }
 
     @POST
-    @Operation(summary = "Agregar un turno", description = "Se debe ingresar la id del especialista y afiliado en cuestión, los cuales ya deben de estar cargados en el sistema. No se permiten ingresar campos vacios.")
+    @Operation(summary = "Agregar un turno", description = "Agrega un nuevo turno.")
     @APIResponse(responseCode = "200", description = "Turno agregado con éxito")
     @APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay algún dato mal ingresado")
     public Response addShift(@Valid ShiftDTO shiftDto){
         try {
-        	Shift newShift = iserviceShift.addShift(shiftDto);
-            return Response.ok(newShift).build();
+            ShiftDTO shift = new ShiftMapper().entityToDto(iserviceShift.addShift(shiftDto));
+            return Response.ok(shift).build();
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -72,7 +72,7 @@ public class ShiftResource {
 
     @PUT
     @Path("/{id}")
-    @Operation(summary = "Actualizar un turno", description = "Se debe ingresar la id del turno, especialista y afiliado en cuestión, los cuales ya deben de estar cargados en el sistema. No se permiten ingresar campos vacios.")
+    @Operation(summary = "Actualizar un turno", description = "Actualiza un turno existente.")
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Turno actualizado con éxito"),
             @APIResponse(responseCode = "400", description = "Solicitud incorrecta, error en algún parametro"),
@@ -80,7 +80,7 @@ public class ShiftResource {
     })
     public Response updateShift(@PathParam("id") Long id,@Valid ShiftDTO shiftDto){
         try {
-            return Response.ok("se actualizo correctamente").entity(iserviceShift.editShift(id,shiftDto)).build();
+            return Response.ok("se actualizo correctamente").entity(new ShiftMapper().entityToDto(iserviceShift.editShift(id,shiftDto))).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (Exception e) {
@@ -90,14 +90,15 @@ public class ShiftResource {
 
     @DELETE
     @Path("/{id}")
-    @Operation(summary = "Eliminar un turno", description = "Elimina un turno existente. Se debe ingresar la id de un turno existente")
+    @Operation(summary = "Eliminar un turno", description = "Elimina un turno existente.")
     @APIResponses(value = {
-            @APIResponse(responseCode = "200", description = "Turno eliminado con éxito"),
+            @APIResponse(responseCode = "204", description = "Turno eliminado con éxito"),
             @APIResponse(responseCode = "404", description = "Solicitud incorrecta, no existe dicho turno")
     })
     public Response deleteShift(@PathParam("id") Long id) {
         try {
-            return Response.ok("se elimino con exito").entity(iserviceShift.deleteShift(id)).build();
+            iserviceShift.deleteShift(id);
+            return Response.status(204).build();
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }

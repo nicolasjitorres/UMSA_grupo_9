@@ -20,7 +20,6 @@ public class Schedule{
 
 	@Id
 	@GeneratedValue
-    @Column(name = "id")
 	private Long id;
 	
 	@NotNull(message = ": El campo 'hora de inicio' es obligatorio.")
@@ -33,14 +32,12 @@ public class Schedule{
     @Column(name = "end_time")
     private String endTime;
 	
-	@NotNull(message = ": El campo 'dia de la semana' es obligatorio.")
+	@NotNull(message = ": El campo 'dia de la semana' es obligatorio y debe ser un día de la semana")
 	@Enumerated
-    @Column(name="day_of_weeek")
     private Day dayOfWeek;
 
     @ManyToOne
     @JoinColumn(name = "specialist_id")
-    @JsonBackReference
     private Specialist specialist;
 
 }

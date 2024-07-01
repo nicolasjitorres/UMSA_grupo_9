@@ -5,7 +5,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.Location;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import service.interfaces.ILocationService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -16,7 +15,6 @@ import java.util.List;
 @Path("/ubicaciones")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Tag(name = "Ubicaciones")
 public class LocationResource {
 
 	@Inject
@@ -82,13 +80,13 @@ public class LocationResource {
 	@DELETE
 	@Path("/{id}")
 	@Operation(summary = "Eliminar una ubicación", description = "Elimina una ubicación existente por su ID.")
-	@APIResponses(value = { @APIResponse(responseCode = "200", description = "Ubicación eliminada con éxito"),
+	@APIResponses(value = { @APIResponse(responseCode = "204", description = "Ubicación eliminada con éxito"),
 			@APIResponse(responseCode = "400", description = "Ubicación no encontrada"),
 			@APIResponse(responseCode = "404", description = "Error al intentar borrar la ubicación") })
 	public Response deleteLocation(@PathParam("id") Long id) {
 		try {
 			Location deletedLocation = locationService.deleteLocation(id);
-			return Response.ok(deletedLocation).build();
+			return Response.status(204).build();
 		} catch (IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {

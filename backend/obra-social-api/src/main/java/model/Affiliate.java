@@ -5,24 +5,19 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Table(name="affiliates")
 public class Affiliate extends User {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
 	private Long id;
-	@Column(name = "health_insurance_code")
+	@NotBlank(message = ": El campo 'codigo de obra social' no debe estar vacío.")
 	private String healthInsuranceCode;
-	
-	@OneToMany(mappedBy = "affiliate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JsonManagedReference
-	private List<Shift> shifts;
 
 }
