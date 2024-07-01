@@ -9,15 +9,6 @@ export interface Shift {
   affiliatedId: number;
 }
 
-export interface ShiftDTO {
-  description: string;
-  date: string;
-  time: string;
-  state: boolean;
-  specialistId: number;
-  affiliatedId: number;
-}
-
 export interface Specialist {
   id: number;
   firstName: string;
@@ -55,5 +46,53 @@ export interface Affiliate {
   healthInsuranceCode: string;
   role: string;
   email: string;
-  password: string;
+}
+
+export interface Prescription {
+  id: number;
+  description: string;
+}
+
+export interface Location {
+  id: number;
+  street: string;
+  locality: string;
+  province: string;
+  country: string;
+}
+
+//de aca abajo es dto
+
+export interface ShiftDTO {
+  description: string;
+  date: string;
+  time: string;
+  state: boolean;
+  specialistId: number;
+  affiliatedId: number;
+}
+
+export interface AffiliateDTO {
+  firstName: string;
+  lastName: string;
+  dni: string;
+  healthInsuranceCode: string;
+  role: string;
+  email: string;
+}
+
+export interface SpecialistDTO {
+  firstName: string;
+  lastName: string;
+  dni: string;
+  speciality: string;
+  location: Location; // Usa la ubicación con `id`
+  role: string;
+  email: string;
+}
+
+export interface ScheduleDTO {
+  startTime: string;
+  endTime: string;
+  dayOfWeek: DayOfWeek;
 }

@@ -3,7 +3,6 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -20,7 +19,11 @@ import {
 import { DayOfWeek, Schedule, Shift, Specialist } from "../../redux/type";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { addShift, updateShift } from "../../redux/slices/shiftSlice";
+import "./Form.css";
+import "../buttonToAdd/Button.css";
+import { addShift, updateShift } from "../../redux/slices/ShiftSlice";
+import { parseISO } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 
 interface FormShiftProps {
   handleClose: () => void;
@@ -48,8 +51,12 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
 
   useEffect(() => {
     if (shift) {
-      const shiftDate = new Date(shift.date);
-      const dayOfWeekIndex = shiftDate.getDay();
+      // Parse the ISO date string
+      const shiftDate = parseISO(shift.date);
+      // Convert to the correct timezone (Argentina)
+      const timeZone = "America/Argentina/Buenos_Aires";
+      const zonedDate = toZonedTime(shiftDate, timeZone);
+      const dayOfWeekIndex = zonedDate.getDay();
       const dayOfWeek = dayIndexToDayOfWeek[dayOfWeekIndex];
       setSelectedDay(dayOfWeek);
     }
@@ -72,7 +79,6 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         specialistId: selectedSpecialist,
         affiliatedId: 1,
       };
-
       if (shift) {
         await dispatch(updateShift({ shiftDTO, id: shift.id }));
       } else {
@@ -100,7 +106,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
     const timeOptions = [];
 
     // Filtrar los horarios ya asignados
-    const assignedTimes = shifts
+    const assignedTimes = (shifts || [])
       .filter(
         (shift) =>
           shift.specialistId === selectedSpecialist &&
@@ -154,16 +160,17 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form-container">
       <TextField
         fullWidth
         label="Descripción"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         margin="normal"
+        className="form-field"
       />
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">
+      <FormControl fullWidth className="form-field">
+        <InputLabel id="demo-simple-select-label" className="select-label">
           Seleccionar Especialista
         </InputLabel>
         <Select
@@ -183,20 +190,26 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         </Select>
       </FormControl>
       {selectedSpecialist !== null && (
-        <Accordion>
-          <AccordionSummary>Seleccionar Día</AccordionSummary>
+        <Accordion className="form-field">
+          <AccordionSummary className="accordion-summary">
+            Seleccionar Día
+          </AccordionSummary>
           <AccordionDetails>{renderDayOptions()}</AccordionDetails>
         </Accordion>
       )}
       {selectedDay !== null && (
-        <Accordion>
-          <AccordionSummary>Seleccionar Hora</AccordionSummary>
-          <AccordionDetails>{renderTimeOptions()}</AccordionDetails>
+        <Accordion className="form-field">
+          <AccordionSummary className="accordion-summary">
+            Seleccionar Hora
+          </AccordionSummary>
+          <AccordionDetails className="accordion-details">
+            {renderTimeOptions()}
+          </AccordionDetails>
         </Accordion>
       )}
-      <Button type="submit" variant="contained" color="primary">
+      <button type="submit" color="primary" className="add-button">
         {shift ? "Actualizar" : "Agregar"}
-      </Button>
+      </button>
     </form>
   );
 };

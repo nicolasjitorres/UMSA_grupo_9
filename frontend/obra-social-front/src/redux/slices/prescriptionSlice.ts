@@ -1,19 +1,14 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-// import { RootState } from '../store/store';
+import { Prescription } from "../type";
 
-interface Prescription {
-  id: number;
-  description: string;
-}
-
-interface ShiftState {
+interface PrescriptionState {
   shifts: Prescription[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
-const initialState: ShiftState = {
+const initialState: PrescriptionState = {
   shifts: [],
   status: "idle",
   error: null,
@@ -30,7 +25,7 @@ export const fetchPrescription = createAsyncThunk(
 );
 
 const prescriptionSlice = createSlice({
-  name: "afiliados",
+  name: "recetas",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -47,7 +42,7 @@ const prescriptionSlice = createSlice({
       )
       .addCase(fetchPrescription.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message || "Something went wrong";
+        state.error = action.error.message || "Algo salio mal";
       });
   },
 });

@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store/store";
-import { fetchSchedules } from "../redux/slices/schedulesSlice";
-import { fetchSpecialists } from "../redux/slices/specialistSlice";
+import { RootState, AppDispatch } from "../../redux/store/store";
+import { fetchSchedules } from "../../redux/slices/SchedulesSlice";
+import { fetchSpecialists } from "../../redux/slices/SpecialistSlice";
+import "./Table.css";
 import {
   Table,
   TableBody,
@@ -13,10 +14,12 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../components/Row/rowSchedules&Specialist";
+
+import RowSchedulesSpecialist from "../rows/RowSchedules&Specialist";
 
 const SpecialistList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
+
   const specialists = useSelector(
     (state: RootState) => state.specialists.specialists
   );
@@ -28,12 +31,6 @@ const SpecialistList: React.FC = () => {
   );
   const scheduleStatus = useSelector(
     (state: RootState) => state.schedules.status
-  );
-  const specialistError = useSelector(
-    (state: RootState) => state.specialists.error
-  );
-  const scheduleError = useSelector(
-    (state: RootState) => state.schedules.error
   );
 
   useEffect(() => {
@@ -59,21 +56,16 @@ const SpecialistList: React.FC = () => {
     setPage(0);
   };
 
-  if (specialistStatus === "loading" || scheduleStatus === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (specialistStatus === "failed") {
-    return <div>{specialistError}</div>;
-  }
-
-  if (scheduleStatus === "failed") {
-    return <div>{scheduleError}</div>;
-  }
-
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+    <Paper
+      sx={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <TableContainer sx={{ flex: 1, overflowY: "auto" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -84,17 +76,25 @@ const SpecialistList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {specialists
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((specialist) => (
-                <Row
-                  key={specialist.id}
-                  specialist={specialist}
-                  schedules={schedules.filter(
-                    (schedule) => schedule.specialistId === specialist.id
-                  )}
-                />
-              ))}
+            {specialists.length > 0 && schedules.length > 0 ? (
+              specialists
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((specialist) => (
+                  <RowSchedulesSpecialist
+                    key={specialist.id}
+                    specialist={specialist}
+                    schedules={schedules.filter(
+                      (schedule) => schedule.specialistId === specialist.id
+                    )}
+                  />
+                ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  No hay Especialistas
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

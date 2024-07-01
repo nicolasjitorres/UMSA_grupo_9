@@ -1,19 +1,19 @@
-import {Routes, Route } from "react-router-dom";
-import SpecialistList from "../pages/SpecialistList";
-import AffiliatedList from "../pages/AfiliatesList";
+import { Routes, Route } from "react-router-dom";
+import Specialist from "../pages/SpecialistPage";
+import Affiliate from "../pages/AffiliatePage";
 import SignIn from "../pages/SignIn";
 import Turnos from "../pages/ShiftPage";
 import Home from "../pages/Home";
 
 const Router = () => {
   return (
-        <Routes>
-          <Route path="/" element={<SignIn />} />
-          <Route path="/specialists" element={<SpecialistList />} />
-          <Route path="/affiliates" element={<AffiliatedList />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/turnos" element={<Turnos />} />
-        </Routes>  
+    <Routes>
+      <Route path="/" element={<SignIn />} />
+      <Route path="/especialistas" element={<Specialist />} />
+      <Route path="/afiliados" element={<Affiliate />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/turnos" element={<Turnos />} />
+    </Routes>
   );
-}
+};
 export default Router;

@@ -1,47 +1,55 @@
 import React from "react";
-import { Button, Modal, Box, Typography } from "@mui/material";
-import FormShift from "../form/formShift"; // Asegúrate de importar tu componente FormShift
-import { Shift } from "../../redux/type";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { Modal, Box, Typography } from "@mui/material";
+import FormShift from "../form/FormShift";
+import "./Modal.css";
+import FormSpecialist from "../form/FormSpecialist";
+import { Affiliate, Shift, Specialist } from "../../redux/type";
+import FormAffiliate from "../form/FormAffiliate";
 
-interface nameModal {
+
+interface propModal {
   name: string;
+  title :string;
+  proveniencia: string;
   shift?: Shift;
+  affiliate?: Affiliate;
+  specialist?: Specialist;
 }
 
-const BasicModal: React.FC<nameModal> = ({ name, shift }) => {
+const BasicModal: React.FC<propModal> = ({
+  name,
+  title,
+  shift,
+  proveniencia,
+  affiliate,
+  specialist,
+}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   return (
     <div>
-      <Button variant="contained" color="success" onClick={handleOpen}>
+      <button onClick={handleOpen} className="add-button">
         {name}
-      </Button>
+      </button>
+
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <div className="modal-content">
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {name}
+            {title}
           </Typography>
-          <FormShift handleClose={handleClose} shift={shift} />
-        </Box>
+          {proveniencia === 'shift' && <FormShift handleClose={handleClose} shift={shift} />}
+          {proveniencia === 'affiliate' && <FormAffiliate affiliate={affiliate} />}
+          {proveniencia === 'specialist' && <FormSpecialist specialist={specialist}/>}
+        </div>
       </Modal>
     </div>
   );

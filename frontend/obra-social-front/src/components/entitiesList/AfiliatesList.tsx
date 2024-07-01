@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store/store";
+import { RootState, AppDispatch } from "../../redux/store/store";
+import "./Table.css";
 import {
   Table,
   TableBody,
@@ -11,8 +12,9 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import Row from "../components/Row/rowAffiliate";
-import { fetchAfiliados } from "../redux/slices/afiliatedSlice";
+
+import Row from "../rows/RowAffiliate";
+import { fetchAfiliados } from "../../redux/slices/AfiliatedSlice";
 
 const AffiliatesList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -20,7 +22,6 @@ const AffiliatesList: React.FC = () => {
     (state: RootState) => state.afiliates.afiliados
   );
   const status = useSelector((state: RootState) => state.afiliates.status);
-  const error = useSelector((state: RootState) => state.afiliates.error);
 
   useEffect(() => {
     if (status === "idle") {
@@ -46,27 +47,39 @@ const AffiliatesList: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  if (status === "failed") {
-    return <div>{error}</div>;
-  }
-
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+    <Paper
+      sx={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <TableContainer sx={{ flex: 1, overflowY: "auto" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell>Nombre</TableCell>
               <TableCell align="right">DNI</TableCell>
               <TableCell align="right">Contacto</TableCell>
+              <TableCell align="right">Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {affiliates
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((affiliate) => (
-                <Row key={affiliate.id} affiliate={affiliate} />
-              ))}
+            {affiliates.length > 0 ? (
+              affiliates
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((affiliate) => (
+                  <Row key={affiliate.id} affiliate={affiliate} />
+                ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  No hay afiliados
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
