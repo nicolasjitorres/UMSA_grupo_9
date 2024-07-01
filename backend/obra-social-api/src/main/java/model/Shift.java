@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @AllArgsConstructor
 @NoArgsConstructor()
 public class Shift {
-	
-	@Id
-	@GeneratedValue
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description; //descripcion
     private LocalDate date; //fecha del turno

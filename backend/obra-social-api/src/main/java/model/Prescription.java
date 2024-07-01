@@ -1,10 +1,6 @@
 package model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -13,9 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor()
 public class Prescription{
-	
-	@Id
-	@GeneratedValue
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Debe proporcionar una descripción")
     private String description;

@@ -18,9 +18,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "schedules")
 public class Schedule{
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 	
 	@NotNull(message = ": El campo 'hora de inicio' es obligatorio.")
     @Pattern(regexp = "^([01]\\d|2[0-3]):([0-5]\\d):([0-5]\\d)$", message = ": El campo 'hora de inicio' debe estar en el formato HH:mm:ss y ser válido.")
@@ -34,6 +34,7 @@ public class Schedule{
 	
 	@NotNull(message = ": El campo 'dia de la semana' es obligatorio y debe ser un día de la semana")
 	@Enumerated
+    @Column(name="day_of_week")
     private Day dayOfWeek;
 
     @ManyToOne
