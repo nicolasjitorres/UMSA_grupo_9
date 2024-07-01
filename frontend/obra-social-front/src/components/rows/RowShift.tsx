@@ -39,7 +39,8 @@ const RowShift: React.FC<RowProps> = ({ shift }) => {
           return (
             <TableCell key={column.id} align={column.align}>
               <BasicModal
-                name="actualizar turno"
+                name="Editar"
+                title="Actualizar turno"
                 shift={shift}
                 proveniencia="shift"
               />

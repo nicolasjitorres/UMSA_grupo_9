@@ -82,7 +82,6 @@ export interface AffiliateDTO {
 }
 
 export interface SpecialistDTO {
-  id: number;
   firstName: string;
   lastName: string;
   dni: string;

@@ -59,8 +59,9 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
 
   return (
     
-      <Box className="form-container">
-      
+    
+        
+        <form onSubmit={handleSubmit} className="form-container">
         <TextField
           fullWidth
           label="Nombre"
@@ -114,7 +115,7 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
         <button color="primary" onClick={handleSubmit} className="add-button">
           Agregar
         </button>
-      </Box>
+      </form>
     );
   };
 export default FormAffiliate;
