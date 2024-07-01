@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import React, { useState } from "react";
 import {
   ValidationErrors,
@@ -58,9 +58,6 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
   };
 
   return (
-    
-    
-        
         <form onSubmit={handleSubmit} className="form-container">
         <TextField
           fullWidth
@@ -118,4 +115,5 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
       </form>
     );
   };
+
 export default FormAffiliate;
