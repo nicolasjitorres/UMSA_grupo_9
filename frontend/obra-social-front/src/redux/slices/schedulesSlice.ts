@@ -27,19 +27,17 @@ export const fetchSchedules = createAsyncThunk(
 );
 
 //add Horarios
-export const addSchedule = createAsyncThunk(
+export const addSchedule = createAsyncThunk<
+  Schedule,
+  { scheduleDTO: ScheduleDTO; idSpecialist: number },
+  { rejectValue: string }
+>(
   "schedule/addSchedule",
-  async (
-    {
-      schedulesDTO,
-      idSpecialsit,
-    }: { schedulesDTO: ScheduleDTO; idSpecialsit: number },
-    { rejectWithValue }
-  ) => {
+  async ({ scheduleDTO, idSpecialist }, { rejectWithValue }) => {
     try {
       const response = await axios.post<Schedule>(
-        `http://localhost:8080/horarios/${idSpecialsit}`,
-        schedulesDTO
+        `http://localhost:8080/horarios/${idSpecialist}`,
+        scheduleDTO
       );
       return response.data;
     } catch (error: unknown) {
@@ -48,18 +46,18 @@ export const addSchedule = createAsyncThunk(
     }
   }
 );
-
 //update Horarios
-export const updateSchedule = createAsyncThunk(
+export const updateSchedule = createAsyncThunk<
+  Schedule,
+  { scheduleDTO: ScheduleDTO; idSchedule: number },
+  { rejectValue: string }
+>(
   "schedule/updateSchedule",
-  async (
-    { schedulesDTO, id }: { schedulesDTO: ScheduleDTO; id: number },
-    { rejectWithValue }
-  ) => {
+  async ({ scheduleDTO, idSchedule }, { rejectWithValue }) => {
     try {
       const response = await axios.put<Schedule>(
-        `http://localhost:8080/horarios/${id}`,
-        schedulesDTO
+        `http://localhost:8080/horarios/${idSchedule}`,
+        scheduleDTO
       );
       return response.data;
     } catch (error: unknown) {

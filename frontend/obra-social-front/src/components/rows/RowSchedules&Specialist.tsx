@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   TableRow,
   TableCell,
@@ -11,18 +11,36 @@ import {
   TableBody,
 } from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-import { Specialist, Schedule } from "../../redux/type"; // Ajusta la ruta según la ubicación de tus tipos
+import { Schedule, Specialist } from "../../redux/type"; // Ajusta la ruta según la ubicación de tus tipos
+import { RootState } from "../../redux/store/store";
+import { useSelector } from "react-redux";
+import AddSchedulesButton from "../buttonToAdd/AddSchedulesButton";
+import BasicModal from "../modal/Modal";
 
 interface RowProps {
   specialist: Specialist;
-  schedules: Schedule[];
 }
 
-const RowSchedulesSpecialist: React.FC<RowProps> = ({
-  specialist,
-  schedules,
-}) => {
+const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
   const [open, setOpen] = React.useState(false);
+
+  const schedules = useSelector(
+    (state: RootState) => state.schedules.schedules
+  );
+
+  const [schedulesFromSpecialist, setSchedulesFromSpecialist] = useState<
+    Schedule[]
+  >([]);
+
+  useEffect(() => {
+    if (schedules.length > 0) {
+      setSchedulesFromSpecialist(
+        schedules.filter((schedule) => schedule.specialistId === specialist.id)
+      );
+    } else {
+      setSchedulesFromSpecialist([]);
+    }
+  }, [schedules, specialist.id]); // Agrega las dependencias aquí
 
   return (
     <React.Fragment>
@@ -49,24 +67,55 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Schedule
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  Schedule
+                  <div style={{ marginLeft: "10px" }}>
+                    <AddSchedulesButton specialistID={specialist.id} />
+                  </div>
+                </div>
               </Typography>
               <Table size="small" aria-label="schedule">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Day</TableCell>
-                    <TableCell align="right">Start Time</TableCell>
-                    <TableCell align="right">End Time</TableCell>
+                    <TableCell>Dia</TableCell>
+                    <TableCell align="right">Hora Inico</TableCell>
+                    <TableCell align="right">Hora Fin</TableCell>
+                    <TableCell align="right">Acciones</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {schedules.map((schedule) => (
-                    <TableRow key={schedule.id}>
-                      <TableCell>{schedule.dayOfWeek}</TableCell>
-                      <TableCell align="right">{schedule.startTime}</TableCell>
-                      <TableCell align="right">{schedule.endTime}</TableCell>
+                  {schedulesFromSpecialist.length > 0 ? (
+                    schedulesFromSpecialist.map((schedule) => (
+                      <TableRow key={schedule.id}>
+                        <TableCell>{schedule.dayOfWeek}</TableCell>
+                        <TableCell align="right">
+                          {schedule.startTime}
+                        </TableCell>
+                        <TableCell align="right">{schedule.endTime}</TableCell>
+                        <TableCell align="right">
+                          <BasicModal
+                            name="Editar"
+                            title="Actualizar horario"
+                            schedule={schedule}
+                            proveniencia="schedules"
+                            specialistID={specialist.id}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={4} align="center">
+                        No hay horarios
+                      </TableCell>
                     </TableRow>
-                  ))}
+                  )}
                 </TableBody>
               </Table>
             </Box>

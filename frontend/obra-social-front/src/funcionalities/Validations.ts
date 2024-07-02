@@ -1,3 +1,5 @@
+import { DayOfWeek } from "../redux/type";
+
 // validations.ts
 export interface ValidationErrors {
   firstName?: string;
@@ -5,6 +7,9 @@ export interface ValidationErrors {
   dni?: string;
   healthInsuranceCode?: string;
   email?: string;
+  startTime?: string;
+  endTime?: string;
+  selectedDay?: string;
 }
 
 export const validateForm = (
@@ -46,13 +51,32 @@ export const validateForm = (
   if (!email) {
     newErrors.email = "El campo 'email' no debe estar vacío.";
   }
-  //   } else if (!emailRegex.test(email)) {
-  //     newErrors.email =
-  //       "El campo 'email' debe ser una dirección de correo electrónico válida.";
-  //   }
 
   return newErrors;
 };
+
+export const validationTime = (
+  startTime: string,
+  endTime: string,
+  selectedDay: DayOfWeek | null
+): ValidationErrors => {
+  const newErrors: ValidationErrors = {};
+
+  if (!startTime) {
+    newErrors.startTime = "El campo 'Horr Inicio' no debe estar vacío.";
+  }
+
+  if (!endTime) {
+    newErrors.endTime = "El campo 'Hora Fin' no debe estar vacío.";
+  }
+
+  if (!selectedDay) {
+    newErrors.selectedDay = "El campo Dia no debe estar vacío.";
+  }
+  return newErrors;
+};
+
+
 
 export const validateFormSpecialist = (
   firstName: string,

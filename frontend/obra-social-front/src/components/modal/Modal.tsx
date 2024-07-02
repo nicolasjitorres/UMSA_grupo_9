@@ -1,20 +1,22 @@
 import React from "react";
 
 import { Modal, Typography } from "@mui/material";
-import FormShift from "../form/formShift";
+import FormShift from "../form/FormShift";
 import "./Modal.css";
 import FormSpecialist from "../form/FormSpecialist";
-import { Affiliate, Shift, Specialist } from "../../redux/type";
+import { Affiliate, Schedule, Shift, Specialist } from "../../redux/type";
 import FormAffiliate from "../form/FormAffiliate";
-
+import FormSchedule from "../form/FormSchedule";
 
 interface propModal {
   name: string;
-  title :string;
+  title: string;
   proveniencia: string;
   shift?: Shift;
   affiliate?: Affiliate;
   specialist?: Specialist;
+  schedule?: Schedule;
+  specialistID?: number;
 }
 
 const BasicModal: React.FC<propModal> = ({
@@ -24,6 +26,8 @@ const BasicModal: React.FC<propModal> = ({
   proveniencia,
   affiliate,
   specialist,
+  schedule,
+  specialistID = 0,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -46,9 +50,22 @@ const BasicModal: React.FC<propModal> = ({
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {title}
           </Typography>
-          {proveniencia === 'shift' && <FormShift handleClose={handleClose} shift={shift} />}
-          {proveniencia === 'affiliate' && <FormAffiliate affiliate={affiliate} />}
-          {proveniencia === 'specialist' && <FormSpecialist specialist={specialist}/>}
+          {proveniencia === "shift" && (
+            <FormShift handleClose={handleClose} shift={shift} />
+          )}
+          {proveniencia === "affiliate" && (
+            <FormAffiliate affiliate={affiliate} />
+          )}
+          {proveniencia === "specialist" && (
+            <FormSpecialist specialist={specialist} />
+          )}
+          {proveniencia === "schedules" && (
+            <FormSchedule
+              schedule={schedule}
+              specialistID={specialistID ?? 0}
+              handleClose={handleClose}
+            />
+          )}
         </div>
       </Modal>
     </div>
