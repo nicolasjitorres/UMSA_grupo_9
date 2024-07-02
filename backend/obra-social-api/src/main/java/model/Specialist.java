@@ -14,9 +14,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Table (name="specialist")
 public class Specialist extends User{
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull(message = ": El campo 'especialidad' no debe estar vacío.")
