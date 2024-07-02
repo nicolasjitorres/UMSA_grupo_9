@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-@Data //genera los metodos necesarios
-@Entity //marcar la calse como entidad y asi generar la tabla de la bd
+@Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor()
 public class Prescription{

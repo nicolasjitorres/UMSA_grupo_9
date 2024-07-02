@@ -8,8 +8,8 @@ import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@Data //genera los metodos necesarios
-@Entity //marcar la calse como entidad y asi generar la tabla de la bd
+@Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor()
 public class Shift {
@@ -17,9 +17,9 @@ public class Shift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String description; //descripcion
-    private LocalDate date; //fecha del turno
-    private LocalTime time; // horario
+    private String description;
+    private LocalDate date;
+    private LocalTime time;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "specialist_id")
