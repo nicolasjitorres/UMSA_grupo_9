@@ -11,6 +11,7 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
+  Button,
 } from "@mui/material";
 import {
   dayIndexToDayOfWeek,
@@ -21,9 +22,14 @@ import { AppDispatch, RootState } from "../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import "./Form.css";
 import "../buttonToAdd/Button.css";
-import { addShift, updateShift } from "../../redux/slices/ShiftSlice";
+import {
+  addShift,
+  deleteShift,
+  updateShift,
+} from "../../redux/slices/ShiftSlice";
 import { parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface FormShiftProps {
   handleClose: () => void;
@@ -85,6 +91,13 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         await dispatch(addShift(shiftDTO));
       }
 
+      handleClose();
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    if (shift) {
+      dispatch(deleteShift(id));
       handleClose();
     }
   };
@@ -210,6 +223,17 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
       <button type="submit" color="primary" className="add-button">
         {shift ? "Actualizar" : "Agregar"}
       </button>
+
+      {shift && (
+        <Button
+          variant="contained"
+          color="error"
+          startIcon={<DeleteIcon />}
+          onClick={() => handleDelete(shift.id)}
+        >
+          Borrar
+        </Button>
+      )}
     </form>
   );
 };

@@ -1,11 +1,6 @@
-import { Button, TableCell, TableRow } from "@mui/material";
+import { TableCell, TableRow } from "@mui/material";
 import { Shift } from "../../redux/type";
 import BasicModal from "../modal/Modal";
-import { AppDispatch } from "../../redux/store/store";
-import { useDispatch } from "react-redux";
-import { deleteShift } from "../../redux/slices/ShiftSlice";
-import DeleteIcon from "@mui/icons-material/Delete";
-
 interface RowProps {
   shift: Shift;
 }
@@ -27,11 +22,6 @@ const columns: Column[] = [
 ];
 
 const RowShift: React.FC<RowProps> = ({ shift }) => {
-  const dispatch: AppDispatch = useDispatch();
-
-  const handleDelete = (id: number) => {
-    dispatch(deleteShift(id));
-  };
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={shift.id}>
       {columns.map((column) => {
@@ -44,14 +34,6 @@ const RowShift: React.FC<RowProps> = ({ shift }) => {
                 shift={shift}
                 proveniencia="shift"
               />
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<DeleteIcon />}
-                onClick={() => handleDelete(shift.id)}
-              >
-                Borrar
-              </Button>
             </TableCell>
           );
         }
