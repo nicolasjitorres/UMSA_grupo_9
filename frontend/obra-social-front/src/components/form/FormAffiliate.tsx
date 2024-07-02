@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import {
   ValidationErrors,
@@ -6,17 +6,23 @@ import {
 } from "../../funcionalities/Validations";
 import {
   addAffiliate,
+  deleteAffiliate,
   updateAffiliate,
 } from "../../redux/slices/AfiliatedSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store/store";
 import { Affiliate } from "../../redux/type";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface FormShiftProps {
   affiliate?: Affiliate;
+  handleClose: () => void;
 }
 
-const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
+const FormAffiliate: React.FC<FormShiftProps> = ({
+  handleClose,
+  affiliate,
+}) => {
   const [firstName, setFirstName] = React.useState(affiliate?.firstName || "");
   const [lastName, setLastName] = React.useState(affiliate?.lastName || "");
   const [dni, setDni] = React.useState(affiliate?.dni || "");
@@ -54,6 +60,14 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
       } else {
         await dispatch(addAffiliate(affiliatedDTO));
       }
+      handleClose();
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    if (affiliate) {
+      dispatch(deleteAffiliate(id));
+      handleClose();
     }
   };
 
@@ -109,9 +123,20 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
         helperText={errors.email}
         className="form-field"
       />
-      <button color="primary" onClick={handleSubmit} className="add-button">
-        Agregar
+      <button type="submit" color="primary" className="add-button">
+        {affiliate ? "Actualizar" : "Agregar"}
       </button>
+
+      {affiliate && (
+        <Button
+          variant="contained"
+          color="error"
+          startIcon={<DeleteIcon />}
+          onClick={() => handleDelete(affiliate.id)}
+        >
+          Borrar
+        </Button>
+      )}
     </form>
   );
 };
