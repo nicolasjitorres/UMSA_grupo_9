@@ -4,9 +4,16 @@ import { Modal, Typography } from "@mui/material";
 import FormShift from "../form/FormShift";
 import "./Modal.css";
 import FormSpecialist from "../form/FormSpecialist";
-import { Affiliate, Schedule, Shift, Specialist } from "../../redux/type";
+import {
+  Affiliate,
+  Prescription,
+  Schedule,
+  Shift,
+  Specialist,
+} from "../../redux/type";
 import FormAffiliate from "../form/FormAffiliate";
 import FormSchedule from "../form/FormSchedule";
+import FormPrescription from "../form/FormPrescription";
 
 interface propModal {
   name: string;
@@ -17,6 +24,8 @@ interface propModal {
   specialist?: Specialist;
   schedule?: Schedule;
   specialistID?: number;
+  prescription?: Prescription;
+  shiftID?: number;
 }
 
 const BasicModal: React.FC<propModal> = ({
@@ -27,7 +36,9 @@ const BasicModal: React.FC<propModal> = ({
   affiliate,
   specialist,
   schedule,
+  prescription,
   specialistID = 0,
+  shiftID = 0,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -63,6 +74,13 @@ const BasicModal: React.FC<propModal> = ({
             <FormSchedule
               schedule={schedule}
               specialistID={specialistID ?? 0}
+              handleClose={handleClose}
+            />
+          )}
+          {proveniencia === "receta" && (
+            <FormPrescription
+              prescription={prescription}
+              idShift={shiftID}
               handleClose={handleClose}
             />
           )}

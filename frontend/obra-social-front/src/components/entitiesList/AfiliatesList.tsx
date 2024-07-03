@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../../redux/store/store";
+import React from "react";
 import "./Table.css";
 import {
   Table,
@@ -14,23 +12,13 @@ import {
 } from "@mui/material";
 
 import Row from "../rows/RowAffiliate";
-import { fetchAfiliados } from "../../redux/slices/AfiliatedSlice";
+import { useAppContext } from "../../hooks/AppContext";
 
 const AffiliatesList: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const affiliates = useSelector(
-    (state: RootState) => state.afiliates.afiliados
-  );
-  const status = useSelector((state: RootState) => state.afiliates.status);
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchAfiliados());
-    }
-  }, [status, dispatch]);
+  const { affiliates } = useAppContext();
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -42,10 +30,6 @@ const AffiliatesList: React.FC = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
 
   return (
     <Paper
@@ -84,10 +68,11 @@ const AffiliatesList: React.FC = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5, 10, 25]}
         component="div"
         count={affiliates.length}
         rowsPerPage={rowsPerPage}
+        labelRowsPerPage={"Renglones por pagina"}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
