@@ -72,7 +72,7 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
 
   const handleDelete = (id: number) => {
     if (schedule) {
-      dispatch(deleteSchedules(id));
+      dispatch(deleteSchedules({ scheduleID: id }));
       handleClose();
     }
   };

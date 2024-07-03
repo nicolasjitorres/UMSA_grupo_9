@@ -63,9 +63,9 @@ const FormAffiliate: React.FC<FormShiftProps> = ({
     }
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (affiliateID: number) => {
     if (affiliate) {
-      dispatch(deleteAffiliate(id));
+      dispatch(deleteAffiliate({ affiliateID }));
       handleClose();
     }
   };

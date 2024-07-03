@@ -42,7 +42,7 @@ const FormPrescription: React.FC<FormPrescriptionProp> = ({
 
   const handleDelete = (id: number) => {
     if (prescription) {
-      dispatch(deletePrescription(id));
+      dispatch(deletePrescription({ prescriptionID: id }));
       handleClose();
     }
   };

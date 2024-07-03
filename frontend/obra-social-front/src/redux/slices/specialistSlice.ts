@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Specialist, SpecialistDTO } from "../type"; // Ajusta la ruta según la ubicación de tu archivo de tipos
-import { handleAxiosError } from "./AxiosErrorHandler";
+import { handleAxiosError } from "../../components/Errors/AxiosErrorHandler";
 
 interface SpecialistsState {
   specialists: Specialist[];

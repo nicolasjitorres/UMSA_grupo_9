@@ -1,14 +1,12 @@
+.container {
+  background-color: rgba(64, 64, 64, 0.394);
+  padding: 20px;
+  margin-bottom: 30px;
+  height: -webkit-fill-available;
+}
 
-
-  .container { 
-    background-color: rgba(64, 64, 64, 0.394);
-    padding:20px;
-    margin-bottom: 30px;
-    }
-    
-  .home-sections {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-    
+.home-sections {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

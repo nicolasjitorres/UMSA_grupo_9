@@ -17,9 +17,9 @@ import {
   dayIndexToDayOfWeek,
   getClosestDate,
 } from "../../funcionalities/Funcionalities";
-import { DayOfWeek, Schedule, Shift, Specialist } from "../../redux/type";
-import { AppDispatch, RootState } from "../../redux/store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { DayOfWeek, Shift } from "../../redux/type";
+import { AppDispatch } from "../../redux/store/store";
+import { useDispatch } from "react-redux";
 import "./Form.css";
 import {
   addShift,
@@ -29,6 +29,7 @@ import {
 import { parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useAppContext } from "../../hooks/AppContext";
 
 interface FormShiftProps {
   handleClose: () => void;
@@ -45,13 +46,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
     number | null
   >(shift?.specialistId || null);
 
-  const specialists: Specialist[] = useSelector(
-    (state: RootState) => state.specialists.specialists
-  );
-  const schedules: Schedule[] = useSelector(
-    (state: RootState) => state.schedules.schedules
-  );
-  const shifts: Shift[] = useSelector((state: RootState) => state.shift.shifts);
+  const { shifts, specialists, schedules } = useAppContext();
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -96,7 +91,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
 
   const handleDelete = (id: number) => {
     if (shift) {
-      dispatch(deleteShift(id));
+      dispatch(deleteShift({ shiftId: id }));
       handleClose();
     }
   };
