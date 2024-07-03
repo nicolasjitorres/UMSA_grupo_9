@@ -11,7 +11,6 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
-  Button,
 } from "@mui/material";
 import {
   dayIndexToDayOfWeek,
@@ -28,7 +27,6 @@ import {
 } from "../../redux/slices/ShiftSlice";
 import { parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 interface FormShiftProps {
   handleClose: () => void;
