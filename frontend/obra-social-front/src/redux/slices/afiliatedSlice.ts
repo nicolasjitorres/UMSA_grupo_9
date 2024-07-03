@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Affiliate, AffiliateDTO } from "../type";
-import { handleAxiosError } from "./AxiosErrorHandler";
+import { handleAxiosError } from "../../components/Errors/AxiosErrorHandler";
 
 interface AffiliateState {
   afiliados: Affiliate[];
@@ -67,9 +67,17 @@ export const updateAffiliate = createAsyncThunk(
 );
 export const deleteAffiliate = createAsyncThunk(
   "affiliate/deleteAffiliate",
-  async (affiliateID: number) => {
-    await axios.delete(`http://localhost:8080/afiliados/${affiliateID}`);
-    return affiliateID;
+  async ({ affiliateID }: { affiliateID: number }, { rejectWithValue }) => {
+    try {
+      await axios.delete(`http://localhost:8080/afiliados/${affiliateID}`);
+      return affiliateID;
+    } catch (error: unknown) {
+      const errorMessage = handleAxiosError(
+        error,
+        "Error al eliminar el afiliado"
+      );
+      return rejectWithValue(errorMessage);
+    }
   }
 );
 

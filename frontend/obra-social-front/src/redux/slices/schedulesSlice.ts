@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Schedule, ScheduleDTO } from "../type"; // Ajusta la ruta según la ubicación de tu archivo de tipos
-import { handleAxiosError } from "./AxiosErrorHandler";
+import { handleAxiosError } from "../../components/Errors/AxiosErrorHandler";
 
 interface SchedulesState {
   schedules: Schedule[];
@@ -73,9 +73,17 @@ export const updateSchedule = createAsyncThunk<
 //delete Horarios
 export const deleteSchedules = createAsyncThunk(
   "schedule/deleteSchedules",
-  async (scheduleID: number) => {
-    await axios.delete(`http://localhost:8080/horarios/${scheduleID}`);
-    return scheduleID;
+  async ({ scheduleID }: { scheduleID: number }, { rejectWithValue }) => {
+    try {
+      await axios.delete(`http://localhost:8080/horarios/${scheduleID}`);
+      return scheduleID;
+    } catch (error: unknown) {
+      const errorMessage = handleAxiosError(
+        error,
+        "Error al eliminar el horario"
+      );
+      return rejectWithValue(errorMessage);
+    }
   }
 );
 

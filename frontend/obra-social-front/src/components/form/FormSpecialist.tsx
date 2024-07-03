@@ -1,6 +1,6 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { TextField, Box, Button } from '@mui/material';
-import { Specialist } from '../../redux/type';
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import { TextField } from "@mui/material";
+import { Specialist } from "../../redux/type";
 
 interface FormSpecialistProps {
   specialist?: Specialist;
@@ -8,15 +8,15 @@ interface FormSpecialistProps {
 
 const FormSpecialist: React.FC<FormSpecialistProps> = ({ specialist }) => {
   const [formData, setFormData] = useState({
-    firstName: specialist?.firstName || '',
-    lastName: specialist?.lastName || '',
-    dni: specialist?.dni || '',
-    email: specialist?.email || '',
-    speciality: specialist?.speciality || '',
-    street: specialist?.location.street || '',
-    locality: specialist?.location.locality || '',
-    province: specialist?.location.province || '',
-    country: specialist?.location.country || '',
+    firstName: specialist?.firstName || "",
+    lastName: specialist?.lastName || "",
+    dni: specialist?.dni || "",
+    email: specialist?.email || "",
+    speciality: specialist?.speciality || "",
+    street: specialist?.location.street || "",
+    locality: specialist?.location.locality || "",
+    province: specialist?.location.province || "",
+    country: specialist?.location.country || "",
   });
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -30,19 +30,19 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({ specialist }) => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Aquí puedes manejar el envío de los datos, por ejemplo, enviar al backend o a Redux
-    console.log('Datos a enviar:', formData);
+    console.log("Datos a enviar:", formData);
 
     // Limpia el formulario después de enviar
     setFormData({
-      firstName: '',
-      lastName: '',
-      dni: '',
-      email: '',
-      speciality: '',
-      street: '',
-      locality: '',
-      province: '',
-      country: '',
+      firstName: "",
+      lastName: "",
+      dni: "",
+      email: "",
+      speciality: "",
+      street: "",
+      locality: "",
+      province: "",
+      country: "",
     });
   };
 
@@ -129,10 +129,8 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({ specialist }) => {
         margin="normal"
         className="form-field"
       />
-      <button className="add-button">
-        Agregar
-      </button>
-      </form>
+      <button className="add-button">Agregar</button>
+    </form>
   );
 };
 

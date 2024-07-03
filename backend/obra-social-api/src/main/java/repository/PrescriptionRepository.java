@@ -6,4 +6,7 @@ import model.Prescription;
 
 @ApplicationScoped
 public class PrescriptionRepository implements PanacheRepository<Prescription> {
+    public boolean prescriptionExistsByShiftId(Long shiftId) {
+        return find("shift.id", shiftId).firstResultOptional().isPresent();
+    }
 }

@@ -29,6 +29,8 @@ public class ShiftService implements IShiftService {
 	private ShiftMapper shiftMapper;
 	@Inject
 	private ScheduleService scheduleService;
+	@Inject
+	private PrescriptionService prescriptionService;
 
 	public List<Shift> getAllShifts() {
 		return shiftRepository.listAll();
@@ -72,7 +74,8 @@ public class ShiftService implements IShiftService {
 	public void deleteShift(Long id) throws Exception{
 		Shift existingShift = shiftRepository.findById(id);
 		if (existingShift == null) throw new Exception("No existe un turno con id: "+id+ " en la base de datos, por lo tanto no se puede borrar");
-//		//if (LocalDate.now().isAfter(existingShift.getDate())) {
+		//if (LocalDate.now().isAfter(existingShift.getDate())) {
+		if(prescriptionService.checkIfPrescriptionExists(id)) throw new Exception("No se puede eliminar el turno ya que tiene una receta asociada");
 		//throw new Exception("no se puede cancelar un turno que ya sucedio");
 		shiftRepository.deleteById(id);
 	}

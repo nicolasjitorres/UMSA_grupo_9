@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Prescription, PrescriptionDTO } from "../type";
-import { handleAxiosError } from "./AxiosErrorHandler";
+import { handleAxiosError } from "../../components/Errors/AxiosErrorHandler";
 
 interface PrescriptionState {
   prescriptions: Prescription[];
@@ -76,9 +76,20 @@ export const updatePrescription = createAsyncThunk<
 //delete Recetas
 export const deletePrescription = createAsyncThunk(
   "prescription/deletePrescription",
-  async (prescriptionID: number) => {
-    await axios.delete(`http://localhost:8080/recetas${prescriptionID}`);
-    return prescriptionID;
+  async (
+    { prescriptionID }: { prescriptionID: number },
+    { rejectWithValue }
+  ) => {
+    try {
+      await axios.delete(`http://localhost:8080/recetas/${prescriptionID}`);
+      return prescriptionID;
+    } catch (error: unknown) {
+      const errorMessage = handleAxiosError(
+        error,
+        "Error al eliminar la receta"
+      );
+      return rejectWithValue(errorMessage);
+    }
   }
 );
 
