@@ -217,9 +217,10 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
           </AccordionDetails>
         </Accordion>
       )}
-      <button type="submit" color="primary" className="add-button">
+      <button type="submit"  className={shift ? "edit-button" : "add-button"}>
         {shift ? "Actualizar" : "Agregar"}
       </button>
+      
 
       {shift && (
         <button className="delete-button"                  
