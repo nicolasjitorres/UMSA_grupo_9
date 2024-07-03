@@ -47,6 +47,8 @@ const AffiliatesList: React.FC = () => {
     return <div>Loading...</div>;
   }
 
+  
+
   return (
     <Paper
       sx={{

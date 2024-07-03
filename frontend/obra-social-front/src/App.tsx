@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Router from "./routes/Router";
 import { BrowserRouter } from "react-router-dom";
+import Footer from "./components/footer/Footer";
 import NavBar from "./components/NavBar/NavBar";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./redux/store/store";
@@ -27,6 +28,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <NavBar />
       <Router />
+      <Footer />
     </BrowserRouter>
   );
 };
