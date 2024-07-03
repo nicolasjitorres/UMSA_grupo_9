@@ -47,6 +47,8 @@ const AffiliatesList: React.FC = () => {
     return <div>Loading...</div>;
   }
 
+  
+
   return (
     <Paper
       sx={{
@@ -60,10 +62,10 @@ const AffiliatesList: React.FC = () => {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell align="right">DNI</TableCell>
-              <TableCell align="right">Contacto</TableCell>
-              <TableCell align="right">Acciones</TableCell>
+              <TableCell align="center">Nombre</TableCell>
+              <TableCell align="center">DNI</TableCell>
+              <TableCell align="center">Email - Contacto</TableCell>
+              <TableCell align="center">Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
