@@ -17,9 +17,9 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "description", label: "Description", minWidth: 100 },
-  { id: "date", label: "Date", minWidth: 170, align: "right" },
-  { id: "time", label: "Time", minWidth: 170, align: "right" },
+  { id: "description", label: "Description", minWidth: 100,align: "center" },
+  { id: "date", label: "Date", minWidth: 170, align: "center" },
+  { id: "time", label: "Time", minWidth: 170, align: "center" },
   { id: "actions", label: "Actions", minWidth: 170, align: "center" },
   { id: "receta", label: "Receta", minWidth: 170, align: "center" },
 ];
@@ -46,7 +46,7 @@ const RowShift: React.FC<RowProps> = ({ shift }) => {
           return (
             <TableCell key={column.id} align={column.align}>
               <BasicModal
-                name="Editar"
+                name="Gestionar"
                 title="Actualizar turno"
                 shift={shift}
                 proveniencia="shift"
@@ -59,7 +59,7 @@ const RowShift: React.FC<RowProps> = ({ shift }) => {
             <TableCell key={column.id} align={column.align}>
               {shiftPrescription ? (
                 <BasicModal
-                  name="Ver Receta"
+                  name="Gestionar"
                   title="Ver Receta"
                   prescription={shiftPrescription}
                   proveniencia="receta"

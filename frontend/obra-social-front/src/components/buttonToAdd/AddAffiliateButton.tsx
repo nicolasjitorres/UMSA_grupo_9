@@ -1,5 +1,4 @@
 import React from "react";
-import "./Button.css";
 import BasicModal from "../modal/Modal";
 
 const AddAffiliateButton: React.FC = () => {
