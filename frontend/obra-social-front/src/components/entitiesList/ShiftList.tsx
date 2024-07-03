@@ -14,7 +14,7 @@ import RowShift from "../rows/RowShift";
 import "./Table.css";
 
 interface Column {
-  id: "id" | "description" | "date" | "time" | "actions";
+  id: "descripcion" | "dia" | "hora" | "acciones" | "receta";
   label: string;
   minWidth?: number;
   align?: "right" | "center"; // Añade "center" para la columna de acciones
@@ -22,11 +22,11 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "id", label: "ID", minWidth: 170 },
-  { id: "description", label: "Description", minWidth: 100 },
-  { id: "date", label: "Date", minWidth: 170, align: "right" },
-  { id: "time", label: "Time", minWidth: 170, align: "right" },
-  { id: "actions", label: "Actions", minWidth: 170, align: "center" },
+  { id: "descripcion", label: "Descripcion", minWidth: 100 },
+  { id: "dia", label: "Dia", minWidth: 170, align: "right" },
+  { id: "hora", label: "Hora", minWidth: 170, align: "right" },
+  { id: "acciones", label: "Acciones", minWidth: 170, align: "center" },
+  { id: "receta", label: "Receta", minWidth: 170, align: "center" },
 ];
 
 interface ShiftListProps {
@@ -35,7 +35,7 @@ interface ShiftListProps {
 
 const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -74,7 +74,9 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
           </TableHead>
           <TableBody>
             {shifts.length > 0 ? (
-              shifts.map((shift) => <RowShift shift={shift} />)
+              shifts
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((shift) => <RowShift shift={shift} />)
             ) : (
               <TableRow>
                 <TableCell colSpan={4} align="center">
@@ -86,10 +88,11 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5, 10, 25]}
         component="div"
         count={shifts.length}
         rowsPerPage={rowsPerPage}
+        labelRowsPerPage={"Renglones por pagina"}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
