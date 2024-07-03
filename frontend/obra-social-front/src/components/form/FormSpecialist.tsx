@@ -29,9 +29,6 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({ specialist }) => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Aquí puedes manejar el envío de los datos, por ejemplo, enviar al backend o a Redux
-    console.log("Datos a enviar:", formData);
-
     // Limpia el formulario después de enviar
     setFormData({
       firstName: "",
