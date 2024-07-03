@@ -21,7 +21,6 @@ import { DayOfWeek, Schedule, Shift, Specialist } from "../../redux/type";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import "./Form.css";
-import "../buttonToAdd/Button.css";
 import {
   addShift,
   deleteShift,
@@ -225,14 +224,10 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
       </button>
 
       {shift && (
-        <Button
-          variant="contained"
-          color="error"
-          startIcon={<DeleteIcon />}
-          onClick={() => handleDelete(shift.id)}
-        >
+        <button className="delete-button"                  
+          onClick={() => handleDelete(shift.id)}>
           Borrar
-        </Button>
+        </button>
       )}
     </form>
   );

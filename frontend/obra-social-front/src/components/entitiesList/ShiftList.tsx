@@ -22,9 +22,9 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "descripcion", label: "Descripcion", minWidth: 100 },
-  { id: "dia", label: "Dia", minWidth: 170, align: "right" },
-  { id: "hora", label: "Hora", minWidth: 170, align: "right" },
+  { id: "descripcion", align: "center", label: "Descripcion", minWidth: 100 },
+  { id: "dia", label: "Dia", minWidth: 170, align: "center" },
+  { id: "hora", label: "Hora", minWidth: 170, align: "center" },
   { id: "acciones", label: "Acciones", minWidth: 170, align: "center" },
   { id: "receta", label: "Receta", minWidth: 170, align: "center" },
 ];
@@ -92,7 +92,7 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
         component="div"
         count={shifts.length}
         rowsPerPage={rowsPerPage}
-        labelRowsPerPage={"Renglones por pagina"}
+        labelRowsPerPage={"Filas por pagina"}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
