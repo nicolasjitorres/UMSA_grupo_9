@@ -72,7 +72,7 @@ const AffiliatesList: React.FC = () => {
         component="div"
         count={affiliates.length}
         rowsPerPage={rowsPerPage}
-        labelRowsPerPage={"Renglones por pagina"}
+        labelRowsPerPage={"Filas por pagina"}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}

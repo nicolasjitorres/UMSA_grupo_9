@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Prescription } from "../../redux/type";
-import { TextField, Button } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store/store";
 import {
@@ -8,7 +8,6 @@ import {
   deletePrescription,
 } from "../../redux/slices/PrescriptionSlice";
 import { generatePdf } from "../../funcionalities/Funcionalities";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 interface FormPrescriptionProp {
   prescription?: Prescription;
@@ -60,21 +59,19 @@ const FormPrescription: React.FC<FormPrescriptionProp> = ({
       />
       {prescription ? (
         <div>
+          <button className="edit-button">
+            Actualizar
+          </button>
           <button
-            onClick={() => generatePdf(description)}
-            color="primary"
-            className="add-button"
-          >
+            onClick={() => generatePdf(description)}        
+            className="download-button">
             Descargar Receta
           </button>
-          <Button
-            variant="contained"
-            color="error"
-            startIcon={<DeleteIcon />}
+          <button className="delete-button"                     
             onClick={() => handleDelete(prescription.id)}
           >
             Borrar
-          </Button>
+          </button>
         </div>
       ) : (
         <button type="submit" color="primary" className="add-button">

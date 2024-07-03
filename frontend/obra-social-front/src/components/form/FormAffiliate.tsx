@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import {TextField } from "@mui/material";
 import React, { useState } from "react";
 import {
   ValidationErrors,
@@ -12,7 +12,6 @@ import {
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store/store";
 import { Affiliate } from "../../redux/type";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 interface FormShiftProps {
   affiliate?: Affiliate;
@@ -123,19 +122,14 @@ const FormAffiliate: React.FC<FormShiftProps> = ({
         helperText={errors.email}
         className="form-field"
       />
-      <button type="submit" color="primary" className="add-button">
+     <button type="submit" className={affiliate ? "edit-button" : "add-button"}>
         {affiliate ? "Actualizar" : "Agregar"}
       </button>
 
       {affiliate && (
-        <Button
-          variant="contained"
-          color="error"
-          startIcon={<DeleteIcon />}
-          onClick={() => handleDelete(affiliate.id)}
-        >
+        <button className="delete-button" onClick={() => handleDelete(affiliate.id)}>
           Borrar
-        </Button>
+        </button>
       )}
     </form>
   );

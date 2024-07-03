@@ -1,5 +1,4 @@
 import React from "react";
-import "./Button.css";
 import BasicModal from "../../components/modal/Modal";
 
 const AddShiftButton: React.FC = () => {

@@ -21,7 +21,7 @@ const RowAffiliate: React.FC<RowProps> = ({ affiliate }) => {
       </TableCell>
       <TableCell align="center" style={{ minWidth: 170 }}>  
           <BasicModal
-            name="Ver"
+            name="Gestionar"
             title="Actualizar Afiliado"
             affiliate={affiliate}
             proveniencia="affiliate"
