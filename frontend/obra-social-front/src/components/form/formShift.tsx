@@ -17,14 +17,7 @@ import {
   getClosestDate,
 } from "../../funcionalities/Funcionalities";
 import { DayOfWeek, Shift } from "../../redux/type";
-import { AppDispatch } from "../../redux/store/store";
-import { useDispatch } from "react-redux";
 import "./Form.css";
-import {
-  addShift,
-  deleteShift,
-  updateShift,
-} from "../../redux/slices/ShiftSlice";
 import { parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { useAppContext } from "../../hooks/AppContext";
@@ -44,8 +37,14 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
     number | null
   >(shift?.specialistId || null);
 
-  const { shifts, specialists, schedules } = useAppContext();
-  const dispatch = useDispatch<AppDispatch>();
+  const {
+    shifts,
+    specialists,
+    schedules,
+    add_Shift,
+    update_Shift,
+    delete_Shift,
+  } = useAppContext();
 
   useEffect(() => {
     if (shift) {
@@ -77,11 +76,8 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         specialistId: selectedSpecialist,
         affiliatedId: 1,
       };
-      if (shift) {
-        await dispatch(updateShift({ shiftDTO, id: shift.id }));
-      } else {
-        await dispatch(addShift(shiftDTO));
-      }
+      console.log(shiftDTO);
+      shift ? update_Shift(shiftDTO, shift.id) : add_Shift(shiftDTO);
 
       handleClose();
     }
@@ -89,7 +85,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
 
   const handleDelete = (id: number) => {
     if (shift) {
-      dispatch(deleteShift({ shiftId: id }));
+      delete_Shift(id);
       handleClose();
     }
   };

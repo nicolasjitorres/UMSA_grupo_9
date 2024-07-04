@@ -64,6 +64,7 @@ public class ShiftService implements IShiftService {
 		Shift existingShift = shiftRepository.findById(id);
 		if (existingShift == null) throw new Exception("No existe ningún turno con id: "+id+" por lo tanto no se puede editar");
 		Shift updateShift = shiftMapper.updateShiftDto(shiftDTO);
+		existingShift.setDescription(updateShift.getDescription());
 		existingShift.setDate(updateShift.getDate());
 		existingShift.setTime(updateShift.getTime());
 		shiftRepository.persistAndFlush(existingShift);
