@@ -2,7 +2,7 @@ import React from "react";
 import { TableRow, TableCell, Button } from "@mui/material";
 import { Affiliate } from "../../redux/type";
 import BasicModal from "../modal/Modal";
-import { deleteAffiliate } from "../../redux/slices/afiliatedSlice";
+import { deleteAffiliate } from "../../redux/slices/AfiliatedSlice";
 import { AppDispatch } from "../../redux/store/store";
 import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";

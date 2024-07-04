@@ -2,7 +2,7 @@ import React from "react";
 import { TableRow, TableCell, Button } from "@mui/material";
 import { Specialist } from "../../redux/type";
 import BasicModal from "../modal/Modal";
-import { deleteSpecialist } from "../../redux/slices/specialistSlice";
+import { deleteSpecialist } from "../../redux/slices/SpecialistSlice";
 import { AppDispatch } from "../../redux/store/store";
 import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
