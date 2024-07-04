@@ -148,12 +148,15 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch(deletePrescription({ prescriptionID: id }));
 
   const filterAffiliates = (dni: string, name: string) => {
-    console.log(dni + name);
-    const filtered = affiliates.filter(
-      (affiliate) =>
+    const filtered = affiliates.filter((affiliate) => {
+      const fullName = `${affiliate.firstName} ${affiliate.lastName}`
+        .toLowerCase()
+        .trim();
+      return (
         (dni === "" || affiliate.dni.includes(dni)) &&
-        (name === "" || affiliate.firstName.includes(name))
-    );
+        (name === "" || fullName.includes(name.toLowerCase().trim()))
+      );
+    });
 
     console.log(filtered);
     setFilteredAffiliates(filtered);
