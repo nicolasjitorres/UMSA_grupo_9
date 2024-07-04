@@ -25,7 +25,7 @@ import {
   updateShift,
 } from "../redux/slices/ShiftSlice";
 import {
-  addSpecilist,
+  addSpecialist,
   deleteSpecialist,
   fetchSpecialists,
   updateSpecialist,
@@ -121,7 +121,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const delete_Shift = (id: number) => dispatch(deleteShift({ shiftId: id }));
 
   const add_Specialist = (specialistDTO: SpecialistDTO) =>
-    dispatch(addSpecilist(specialistDTO));
+    dispatch(addSpecialist(specialistDTO));
   const update_Specialist = (specialistDTO: SpecialistDTO, id: number) =>
     dispatch(updateSpecialist({ specialistDTO, id }));
   const delete_Specialist = (id: number) => dispatch(deleteSpecialist(id));

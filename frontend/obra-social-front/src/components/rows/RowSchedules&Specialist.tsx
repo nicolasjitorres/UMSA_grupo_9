@@ -50,13 +50,24 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
             {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell align="center" component="th" scope="row">
           {specialist.firstName} {specialist.lastName}
         </TableCell>
-        <TableCell align="right">{specialist.speciality}</TableCell>
-        <TableCell align="right">
+        <TableCell align="center" component="th" scope="row">
+          {specialist.dni}
+        </TableCell>
+        <TableCell align="center">{specialist.speciality}</TableCell>
+        <TableCell align="center">
           {`${specialist.location.street}, ${specialist.location.locality}, ${specialist.location.province}, ${specialist.location.country}`}
         </TableCell>
+        <TableCell align="center" style={{ minWidth: 170 }}>  
+          <BasicModal
+            name="Gestionar"
+            title="Actualizar Especialista"
+            specialist={specialist}
+            proveniencia="specialist"
+          />
+      </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
