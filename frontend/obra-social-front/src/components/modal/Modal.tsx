@@ -71,7 +71,7 @@ const BasicModal: React.FC<propModal> = ({
             <FormAffiliate affiliate={affiliate} handleClose={handleClose} />
           )}
           {proveniencia === "specialist" && (
-            <FormSpecialist specialist={specialist} />
+            <FormSpecialist specialist={specialist} handleClose={handleClose}/>
           )}
           {proveniencia === "schedules" && (
             <FormSchedule
