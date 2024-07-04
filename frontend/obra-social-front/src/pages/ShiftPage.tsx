@@ -1,15 +1,13 @@
-
 import React from "react";
 import FilterForm from "../components/FilterForm/FilterFormShift";
 import AddShiftButton from "../components/buttonToAdd/AddShiftButton";
 //import BasicModal from "../components/modal/Modal";
 import ShiftList from "../components/entitiesList/ShiftList";
 import "./Users.css";
-import { RootState } from "../redux/store/store";
-import { useSelector } from "react-redux";
+import { useAppContext } from "../hooks/AppContext";
 
 const ShiftPage: React.FC = () => {
-  const shiftList = useSelector((state: RootState) => state.shift.shifts);
+  const { shifts } = useAppContext();
 
   return (
     <div className="container">
@@ -20,7 +18,7 @@ const ShiftPage: React.FC = () => {
           <FilterForm />
         </div>
         <div className="left-section">
-             <ShiftList shifts={shiftList}/>
+          <ShiftList shifts={shifts} />
         </div>
       </div>
     </div>

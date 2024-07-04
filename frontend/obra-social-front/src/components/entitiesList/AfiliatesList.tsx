@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../../redux/store/store";
+import React from "react";
 import "./Table.css";
 import {
   Table,
@@ -14,23 +12,13 @@ import {
 } from "@mui/material";
 
 import Row from "../rows/RowAffiliate";
-import { fetchAfiliados } from "../../redux/slices/AfiliatedSlice";
+import { useAppContext } from "../../hooks/AppContext";
 
 const AffiliatesList: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const affiliates = useSelector(
-    (state: RootState) => state.afiliates.afiliados
-  );
-  const status = useSelector((state: RootState) => state.afiliates.status);
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchAfiliados());
-    }
-  }, [status, dispatch]);
+  const { affiliates, filteredAffiliates } = useAppContext();
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -43,9 +31,8 @@ const AffiliatesList: React.FC = () => {
     setPage(0);
   };
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
+  const dataToShow =
+    filteredAffiliates.length > 0 ? filteredAffiliates : affiliates;
 
   return (
     <Paper
@@ -60,15 +47,15 @@ const AffiliatesList: React.FC = () => {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell align="right">DNI</TableCell>
-              <TableCell align="right">Contacto</TableCell>
-              <TableCell align="right">Acciones</TableCell>
+              <TableCell align="center">Nombre</TableCell>
+              <TableCell align="center">DNI</TableCell>
+              <TableCell align="center">Email - Contacto</TableCell>
+              <TableCell align="center">Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {affiliates.length > 0 ? (
-              affiliates
+            {dataToShow.length > 0 ? (
+              dataToShow
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((affiliate) => (
                   <Row key={affiliate.id} affiliate={affiliate} />
@@ -84,10 +71,11 @@ const AffiliatesList: React.FC = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={affiliates.length}
+        count={dataToShow.length}
         rowsPerPage={rowsPerPage}
+        labelRowsPerPage={"Filas por pagina"}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}

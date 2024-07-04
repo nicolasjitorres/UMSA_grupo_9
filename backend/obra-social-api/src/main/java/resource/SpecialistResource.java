@@ -104,7 +104,7 @@ public class SpecialistResource {
 			specialistService.deleteSpecialist(id);
 			return Response.status(204).build();
 		} catch (Exception e) {
-			return Response.status(Status.NOT_FOUND).entity((e.getMessage())).build();
+			return Response.status(Status.BAD_REQUEST).entity((e.getMessage())).build();
 		}
 	}
 

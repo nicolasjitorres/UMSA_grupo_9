@@ -12,10 +12,9 @@ import {
 } from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { Schedule, Specialist } from "../../redux/type"; // Ajusta la ruta según la ubicación de tus tipos
-import { RootState } from "../../redux/store/store";
-import { useSelector } from "react-redux";
 import AddSchedulesButton from "../buttonToAdd/AddSchedulesButton";
 import BasicModal from "../modal/Modal";
+import { useAppContext } from "../../hooks/AppContext";
 
 interface RowProps {
   specialist: Specialist;
@@ -23,10 +22,7 @@ interface RowProps {
 
 const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
   const [open, setOpen] = React.useState(false);
-
-  const schedules = useSelector(
-    (state: RootState) => state.schedules.schedules
-  );
+  const { schedules } = useAppContext();
 
   const [schedulesFromSpecialist, setSchedulesFromSpecialist] = useState<
     Schedule[]
@@ -40,7 +36,7 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
     } else {
       setSchedulesFromSpecialist([]);
     }
-  }, [schedules, specialist.id]); // Agrega las dependencias aquí
+  }, [schedules, specialist.id]);
 
   return (
     <React.Fragment>

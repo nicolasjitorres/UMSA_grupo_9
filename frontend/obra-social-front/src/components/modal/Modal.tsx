@@ -4,9 +4,16 @@ import { Modal, Typography } from "@mui/material";
 import FormShift from "../form/FormShift";
 import "./Modal.css";
 import FormSpecialist from "../form/FormSpecialist";
-import { Affiliate, Schedule, Shift, Specialist } from "../../redux/type";
+import {
+  Affiliate,
+  Prescription,
+  Schedule,
+  Shift,
+  Specialist,
+} from "../../redux/type";
 import FormAffiliate from "../form/FormAffiliate";
 import FormSchedule from "../form/FormSchedule";
+import FormPrescription from "../form/FormPrescription";
 
 interface propModal {
   name: string;
@@ -17,6 +24,8 @@ interface propModal {
   specialist?: Specialist;
   schedule?: Schedule;
   specialistID?: number;
+  prescription?: Prescription;
+  shiftID?: number;
 }
 
 const BasicModal: React.FC<propModal> = ({
@@ -27,7 +36,9 @@ const BasicModal: React.FC<propModal> = ({
   affiliate,
   specialist,
   schedule,
+  prescription,
   specialistID = 0,
+  shiftID = 0,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -36,7 +47,10 @@ const BasicModal: React.FC<propModal> = ({
 
   return (
     <div>
-      <button onClick={handleOpen} className="add-button">
+      <button
+        onClick={handleOpen}
+        className={name === "Gestionar" ? "edit-button" : "add-button"}
+      >
         {name}
       </button>
 
@@ -54,7 +68,7 @@ const BasicModal: React.FC<propModal> = ({
             <FormShift handleClose={handleClose} shift={shift} />
           )}
           {proveniencia === "affiliate" && (
-            <FormAffiliate affiliate={affiliate} />
+            <FormAffiliate affiliate={affiliate} handleClose={handleClose} />
           )}
           {proveniencia === "specialist" && (
             <FormSpecialist specialist={specialist} />
@@ -63,6 +77,13 @@ const BasicModal: React.FC<propModal> = ({
             <FormSchedule
               schedule={schedule}
               specialistID={specialistID ?? 0}
+              handleClose={handleClose}
+            />
+          )}
+          {proveniencia === "receta" && (
+            <FormPrescription
+              prescription={prescription}
+              idShift={shiftID}
               handleClose={handleClose}
             />
           )}

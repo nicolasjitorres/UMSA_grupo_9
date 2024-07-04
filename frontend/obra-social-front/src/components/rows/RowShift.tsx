@@ -1,17 +1,15 @@
-import { Button, TableCell, TableRow } from "@mui/material";
-import { Shift } from "../../redux/type";
+import { TableCell, TableRow } from "@mui/material";
+import { Prescription, Shift } from "../../redux/type";
 import BasicModal from "../modal/Modal";
-import { AppDispatch } from "../../redux/store/store";
-import { useDispatch } from "react-redux";
-import { deleteShift } from "../../redux/slices/ShiftSlice";
-import DeleteIcon from "@mui/icons-material/Delete";
-
+import AddPrescriptionButton from "../buttonToAdd/AddPrescriptionButton";
+import { useAppContext } from "../../hooks/AppContext";
+import { useEffect, useState } from "react";
 interface RowProps {
   shift: Shift;
 }
 
 interface Column {
-  id: "id" | "description" | "date" | "time" | "actions";
+  id: "description" | "date" | "time" | "actions" | "receta";
   label: string;
   minWidth?: number;
   align?: "right" | "center"; // Añade "center" para la columna de acciones
@@ -19,19 +17,28 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "id", label: "ID", minWidth: 170 },
-  { id: "description", label: "Description", minWidth: 100 },
-  { id: "date", label: "Date", minWidth: 170, align: "right" },
-  { id: "time", label: "Time", minWidth: 170, align: "right" },
+  { id: "description", label: "Description", minWidth: 100,align: "center" },
+  { id: "date", label: "Date", minWidth: 170, align: "center" },
+  { id: "time", label: "Time", minWidth: 170, align: "center" },
   { id: "actions", label: "Actions", minWidth: 170, align: "center" },
+  { id: "receta", label: "Receta", minWidth: 170, align: "center" },
 ];
 
 const RowShift: React.FC<RowProps> = ({ shift }) => {
-  const dispatch: AppDispatch = useDispatch();
+  const { prescription } = useAppContext();
 
-  const handleDelete = (id: number) => {
-    dispatch(deleteShift(id));
-  };
+  const [shiftPrescription, setShiftPrescription] =
+    useState<Prescription | null>(null);
+
+  useEffect(() => {
+    if (prescription && shift && shift.id) {
+      const prescriptionOfShift = prescription.find(
+        (prescription) => prescription.shift.id === shift.id
+      );
+      setShiftPrescription(prescriptionOfShift || null);
+    }
+  }, [prescription, shift.id]);
+
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={shift.id}>
       {columns.map((column) => {
@@ -39,19 +46,28 @@ const RowShift: React.FC<RowProps> = ({ shift }) => {
           return (
             <TableCell key={column.id} align={column.align}>
               <BasicModal
-                name="Editar"
+                name="Gestionar"
                 title="Actualizar turno"
                 shift={shift}
                 proveniencia="shift"
               />
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<DeleteIcon />}
-                onClick={() => handleDelete(shift.id)}
-              >
-                Borrar
-              </Button>
+            </TableCell>
+          );
+        }
+        if (column.id === "receta") {
+          return (
+            <TableCell key={column.id} align={column.align}>
+              {shiftPrescription ? (
+                <BasicModal
+                  name="Gestionar"
+                  title="Ver Receta"
+                  prescription={shiftPrescription}
+                  proveniencia="receta"
+                  shiftID={shift.id}
+                />
+              ) : (
+                <AddPrescriptionButton shiftID={shift.id} />
+              )}
             </TableCell>
           );
         }

@@ -3,6 +3,7 @@ import Header from "../components/home/Header";
 import AboutSection from "../components/home/AboutSection";
 import ServicesSection from "../components/home/ServicesSection";
 import ContactSection from "../components/home/ContactSection";
+import FaqData from "../components/home/FaqData";
 import "./style.css";
 
 const Home: React.FC = () => {
@@ -14,6 +15,7 @@ const Home: React.FC = () => {
         <ServicesSection />
         <ContactSection />
       </div>
+      <FaqData />
     </div>
   );
 };

@@ -1,8 +1,5 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../../redux/store/store";
-import { fetchSchedules } from "../../redux/slices/SchedulesSlice";
-import { fetchSpecialists } from "../../redux/slices/SpecialistSlice";
+import React from "react";
+
 import "./Table.css";
 import {
   Table,
@@ -15,31 +12,13 @@ import {
   TablePagination,
 } from "@mui/material";
 import RowSchedulesSpecialist from "../rows/RowSchedules&Specialist";
+import { useAppContext } from "../../hooks/AppContext";
 
 const SpecialistList: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-
-  const specialists = useSelector(
-    (state: RootState) => state.specialists.specialists
-  );
-  const specialistStatus = useSelector(
-    (state: RootState) => state.specialists.status
-  );
-  const scheduleStatus = useSelector(
-    (state: RootState) => state.schedules.status
-  );
-
-  useEffect(() => {
-    if (specialistStatus === "idle") {
-      dispatch(fetchSpecialists());
-    }
-    if (scheduleStatus === "idle") {
-      dispatch(fetchSchedules());
-    }
-  }, [specialistStatus, scheduleStatus, dispatch]);
+  const { specialists } = useAppContext();
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -92,10 +71,11 @@ const SpecialistList: React.FC = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5, 10, 25]}
         component="div"
         count={specialists.length}
         rowsPerPage={rowsPerPage}
+        labelRowsPerPage={"Filas por pagina"}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}

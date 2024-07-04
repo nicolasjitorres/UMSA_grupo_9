@@ -4,19 +4,20 @@ import {
   ValidationErrors,
   validateForm,
 } from "../../funcionalities/Validations";
-import {
-  addAffiliate,
-  updateAffiliate,
-} from "../../redux/slices/AfiliatedSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../redux/store/store";
 import { Affiliate } from "../../redux/type";
+import { useAppContext } from "../../hooks/AppContext";
 
 interface FormShiftProps {
   affiliate?: Affiliate;
+  handleClose: () => void;
 }
 
-const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
+const FormAffiliate: React.FC<FormShiftProps> = ({
+  handleClose,
+  affiliate,
+}) => {
+  const { add_Affiliates, update_Affiliates, delete_Affiliates } =
+    useAppContext();
   const [firstName, setFirstName] = React.useState(affiliate?.firstName || "");
   const [lastName, setLastName] = React.useState(affiliate?.lastName || "");
   const [dni, setDni] = React.useState(affiliate?.dni || "");
@@ -25,7 +26,6 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
   );
   const [email, setEmail] = React.useState(affiliate?.email || "");
   const [errors, setErrors] = useState<ValidationErrors>({});
-  const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = async (event: React.FormEvent) => {
     const validationErrors = validateForm(
@@ -47,13 +47,17 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
         email,
         healthInsuranceCode,
       };
-      if (affiliate) {
-        await dispatch(
-          updateAffiliate({ affiliateDTO: affiliatedDTO, id: affiliate.id })
-        );
-      } else {
-        await dispatch(addAffiliate(affiliatedDTO));
-      }
+      affiliate
+        ? update_Affiliates(affiliatedDTO, affiliate.id)
+        : add_Affiliates(affiliatedDTO);
+      handleClose();
+    }
+  };
+
+  const handleDelete = (affiliateID: number) => {
+    if (affiliate) {
+      delete_Affiliates(affiliateID);
+      handleClose();
     }
   };
 
@@ -109,9 +113,21 @@ const FormAffiliate: React.FC<FormShiftProps> = ({ affiliate }) => {
         helperText={errors.email}
         className="form-field"
       />
-      <button color="primary" onClick={handleSubmit} className="add-button">
-        Agregar
+      <button
+        type="submit"
+        className={affiliate ? "edit-button" : "add-button"}
+      >
+        {affiliate ? "Actualizar" : "Agregar"}
       </button>
+
+      {affiliate && (
+        <button
+          className="delete-button"
+          onClick={() => handleDelete(affiliate.id)}
+        >
+          Borrar
+        </button>
+      )}
     </form>
   );
 };

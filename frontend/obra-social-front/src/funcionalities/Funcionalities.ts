@@ -1,4 +1,5 @@
 import { DayOfWeek } from "../redux/type";
+import jsPDF from "jspdf";
 
 const dayOfWeekToIndex: { [key in DayOfWeek]: number } = {
   [DayOfWeek.MONDAY]: 1,
@@ -36,4 +37,10 @@ export const getClosestDate = (day: DayOfWeek): string => {
   nextDate.setDate(today.getDate() + daysToAdd);
 
   return nextDate.toISOString().split("T")[0]; // Formato YYYY-MM-DD
+};
+
+export const generatePdf = (description: string) => {
+  const doc = new jsPDF();
+  doc.text(description, 10, 10);
+  doc.save("prescription.pdf");
 };

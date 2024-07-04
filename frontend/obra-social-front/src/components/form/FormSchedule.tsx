@@ -7,18 +7,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
-import {
-  addSchedule,
-  deleteSchedules,
-  updateSchedule,
-} from "../../redux/slices/SchedulesSlice";
-import { AppDispatch } from "../../redux/store/store";
 import {
   ValidationErrors,
   validationTime,
 } from "../../funcionalities/Validations";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useAppContext } from "../../hooks/AppContext";
 
 interface FormScheduleProp {
   schedule?: Schedule;
@@ -38,7 +32,7 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
   );
   const [errors, setErrors] = useState<ValidationErrors>({});
 
-  const dispatch = useDispatch<AppDispatch>();
+  const { add_Schedules, update_Schedules, delete_Schedules } = useAppContext();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -56,15 +50,9 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
         dayOfWeek: selectedDay,
       };
 
-      if (!schedule) {
-        await dispatch(
-          addSchedule({ scheduleDTO, idSpecialist: specialistID })
-        );
-      } else {
-        await dispatch(
-          updateSchedule({ scheduleDTO, idSchedule: schedule.id })
-        );
-      }
+      schedule
+        ? update_Schedules(scheduleDTO, schedule.id)
+        : add_Schedules(scheduleDTO, specialistID);
 
       handleClose();
     }
@@ -72,7 +60,7 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
 
   const handleDelete = (id: number) => {
     if (schedule) {
-      dispatch(deleteSchedules(id));
+      delete_Schedules(id);
       handleClose();
     }
   };

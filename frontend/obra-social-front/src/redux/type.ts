@@ -51,6 +51,7 @@ export interface Affiliate {
 export interface Prescription {
   id: number;
   description: string;
+  shift: Shift;
 }
 
 export interface Location {
@@ -86,7 +87,7 @@ export interface SpecialistDTO {
   lastName: string;
   dni: string;
   speciality: string;
-  location: Location; // Usa la ubicación con `id`
+  location: Location;
   role: string;
   email: string;
   password: string;
@@ -96,4 +97,9 @@ export interface ScheduleDTO {
   startTime: string;
   endTime: string;
   dayOfWeek: DayOfWeek;
+}
+
+export interface PrescriptionDTO {
+  description: string;
+  idShift: number;
 }
