@@ -46,9 +46,11 @@ const SpecialistList: React.FC = () => {
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Speciality</TableCell>
-              <TableCell align="right">Location</TableCell>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">DNI</TableCell>
+              <TableCell align="center">Speciality</TableCell>
+              <TableCell align="center">Location</TableCell>
+              <TableCell align="center">Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

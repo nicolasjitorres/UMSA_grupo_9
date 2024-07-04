@@ -55,7 +55,7 @@ export interface Prescription {
 }
 
 export interface Location {
-  id: number;
+  id?: number;
   street: string;
   locality: string;
   province: string;
