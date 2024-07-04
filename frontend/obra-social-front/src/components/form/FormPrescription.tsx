@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { Prescription } from "../../redux/type";
 import { TextField } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../redux/store/store";
-import {
-  addPrescription,
-  deletePrescription,
-} from "../../redux/slices/PrescriptionSlice";
 import { generatePdf } from "../../funcionalities/Funcionalities";
+import { useAppContext } from "../../hooks/AppContext";
 
 interface FormPrescriptionProp {
   prescription?: Prescription;
@@ -20,11 +15,11 @@ const FormPrescription: React.FC<FormPrescriptionProp> = ({
   prescription,
   handleClose,
 }) => {
+  const { add_Prescription, update_Prescription, delete_Prescription } =
+    useAppContext();
   const [description, setDescription] = useState(
     prescription?.description || ""
   );
-
-  const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -33,16 +28,16 @@ const FormPrescription: React.FC<FormPrescriptionProp> = ({
       idShift,
     };
 
-    if (!prescription) {
-      await dispatch(addPrescription({ prescriptionDTO }));
-    }
+    prescription
+      ? update_Prescription(prescriptionDTO, prescription.id)
+      : add_Prescription(prescriptionDTO);
 
     handleClose();
   };
 
   const handleDelete = (id: number) => {
     if (prescription) {
-      dispatch(deletePrescription({ prescriptionID: id }));
+      delete_Prescription(id);
       handleClose();
     }
   };
@@ -59,15 +54,15 @@ const FormPrescription: React.FC<FormPrescriptionProp> = ({
       />
       {prescription ? (
         <div>
-          <button className="edit-button">
-            Actualizar
-          </button>
+          <button className="edit-button">Actualizar</button>
           <button
-            onClick={() => generatePdf(description)}        
-            className="download-button">
+            onClick={() => generatePdf(description)}
+            className="download-button"
+          >
             Descargar Receta
           </button>
-          <button className="delete-button"                     
+          <button
+            className="delete-button"
             onClick={() => handleDelete(prescription.id)}
           >
             Borrar

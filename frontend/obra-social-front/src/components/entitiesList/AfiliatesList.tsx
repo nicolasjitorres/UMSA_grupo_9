@@ -15,7 +15,7 @@ import Row from "../rows/RowAffiliate";
 import { useAppContext } from "../../hooks/AppContext";
 
 const AffiliatesList: React.FC = () => {
-  const { affiliates } = useAppContext();
+  const { affiliates, filteredAffiliates } = useAppContext();
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -30,6 +30,9 @@ const AffiliatesList: React.FC = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const dataToShow =
+    filteredAffiliates.length > 0 ? filteredAffiliates : affiliates;
 
   return (
     <Paper
@@ -51,8 +54,8 @@ const AffiliatesList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {affiliates.length > 0 ? (
-              affiliates
+            {dataToShow.length > 0 ? (
+              dataToShow
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((affiliate) => (
                   <Row key={affiliate.id} affiliate={affiliate} />
@@ -70,7 +73,7 @@ const AffiliatesList: React.FC = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={affiliates.length}
+        count={dataToShow.length}
         rowsPerPage={rowsPerPage}
         labelRowsPerPage={"Filas por pagina"}
         page={page}
