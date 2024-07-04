@@ -59,14 +59,14 @@ export const updatePrescription = createAsyncThunk<
   async ({ prescriptionDTO, idPrescription }, { rejectWithValue }) => {
     try {
       const response = await axios.put<Prescription>(
-        `http://localhost:8080/recetas${idPrescription}`,
+        `http://localhost:8080/recetas/${idPrescription}`,
         prescriptionDTO
       );
       return response.data;
     } catch (error: unknown) {
       const errorMessage = handleAxiosError(
         error,
-        "Error al actualizar el turno"
+        "Error al actualizar la receta"
       );
       return rejectWithValue(errorMessage);
     }

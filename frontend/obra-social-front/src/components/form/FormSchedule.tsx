@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { DayOfWeek, Schedule } from "../../redux/type";
 import {
-  Button,
   FormControl,
   NativeSelect,
   TextField,
@@ -11,7 +10,6 @@ import {
   ValidationErrors,
   validationTime,
 } from "../../funcionalities/Validations";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useAppContext } from "../../hooks/AppContext";
 
 interface FormScheduleProp {
@@ -139,14 +137,12 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
       </button>
 
       {schedule && (
-        <Button
-          variant="contained"
-          color="error"
-          startIcon={<DeleteIcon />}
+        <button
+          className="delete-button"
           onClick={() => handleDelete(schedule.id)}
         >
           Borrar
-        </Button>
+        </button>
       )}
     </form>
   );

@@ -42,6 +42,11 @@ const FormPrescription: React.FC<FormPrescriptionProp> = ({
     }
   };
 
+  const handleGeneretePDF = (descripcion: string) => {
+    generatePdf(descripcion);
+    handleClose();
+  };
+
   return (
     <form onSubmit={handleSubmit} className="form-container">
       <TextField
@@ -54,9 +59,11 @@ const FormPrescription: React.FC<FormPrescriptionProp> = ({
       />
       {prescription ? (
         <div>
-          <button className="edit-button">Actualizar</button>
+          <button type="submit" className="edit-button">
+            Actualizar
+          </button>
           <button
-            onClick={() => generatePdf(description)}
+            onClick={() => handleGeneretePDF(description)}
             className="download-button"
           >
             Descargar Receta

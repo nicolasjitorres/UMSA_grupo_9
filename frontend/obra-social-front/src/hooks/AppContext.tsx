@@ -158,7 +158,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       );
     });
 
-    console.log(filtered);
     setFilteredAffiliates(filtered);
   };
 
