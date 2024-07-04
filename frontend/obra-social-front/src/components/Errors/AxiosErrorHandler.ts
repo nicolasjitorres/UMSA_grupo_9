@@ -5,6 +5,7 @@ export const handleAxiosError = (error: unknown, defaultMessage: string) => {
   if (axios.isAxiosError(error) && error.response) {
     const data = error.response.data;
     let errorMessage = defaultMessage;
+
     // Verifica si hay un mensaje específico en la respuesta del servidor
     if (data && typeof data === "string") {
       errorMessage = data;
