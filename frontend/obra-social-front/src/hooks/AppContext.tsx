@@ -56,29 +56,32 @@ type AppContextType = {
   schedules: Schedule[];
   affiliates: Affiliate[];
   prescription: Prescription[];
-  //funciones de turno
+  // funciones de turno
   add_Shift: (shiftDTO: ShiftDTO) => void;
   update_Shift: (shiftDTO: ShiftDTO, id: number) => void;
   delete_Shift: (id: number) => void;
-  //funciones de specialist
+  // funciones de specialist
   add_Specialist: (specialistDTO: SpecialistDTO) => void;
   update_Specialist: (specialistDTO: SpecialistDTO, id: number) => void;
   delete_Specialist: (id: number) => void;
-  //funciones de horario
+  // funciones de horario
   add_Schedules: (scheduleDTO: ScheduleDTO, id: number) => void;
   update_Schedules: (scheduleDTO: ScheduleDTO, id: number) => void;
   delete_Schedules: (id: number) => void;
-  //funciones de afiliado
+  // funciones de afiliado
   add_Affiliates: (affiliateDTO: AffiliateDTO) => void;
   update_Affiliates: (affiliateDTO: AffiliateDTO, id: number) => void;
   delete_Affiliates: (id: number) => void;
-  //funciones de receta
+  // funciones de receta
   add_Prescription: (prescriptionDTO: PrescriptionDTO) => void;
   update_Prescription: (prescriptionDTO: PrescriptionDTO, id: number) => void;
   delete_Prescription: (id: number) => void;
-  //funcioens de filtrado
+  // funciones de filtrado afiliados
   filterAffiliates: (dni: string, name: string) => void;
   filteredAffiliates: Affiliate[];
+  // funciones de filtrado especialistas
+  filterSpecialists: (dni: string, name: string, speciality: string) => void;
+  filteredSpecialists: Specialist[];
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -106,6 +109,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const [filteredAffiliates, setFilteredAffiliates] =
     useState<Affiliate[]>(affiliates);
+
+  const [filteredSpecialists, setFilteredSpecialists] =
+    useState<Specialist[]>(specialists);
 
   useEffect(() => {
     dispatch(fetchShift());
@@ -148,7 +154,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch(deletePrescription({ prescriptionID: id }));
 
   const filterAffiliates = (dni: string, name: string) => {
-    const filtered = affiliates.filter((affiliate) => {
+    const filteredAff = affiliates.filter((affiliate) => {
       const fullName = `${affiliate.firstName} ${affiliate.lastName}`
         .toLowerCase()
         .trim();
@@ -158,10 +164,27 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       );
     });
 
-    console.log(filtered);
-    setFilteredAffiliates(filtered);
+    setFilteredAffiliates(filteredAff);
   };
 
+  const filterSpecialists = (dni: string, name: string, speciality: string) => {
+    const filteredSpec = specialists.filter((specialist) => {
+      const fullName = `${specialist.firstName} ${specialist.lastName}`
+        .toLowerCase()
+        .trim();
+      return (
+        (dni === "" || specialist.dni.includes(dni)) &&
+        (name === "" || fullName.includes(name.toLowerCase().trim())) &&
+        (speciality === "" || specialist.speciality === speciality)
+      );
+    });
+
+    console.log(filteredSpec);
+    
+  
+    setFilteredSpecialists(filteredSpec);
+  };
+  
   return (
     <AppContext.Provider
       value={{
@@ -187,6 +210,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         delete_Prescription,
         filterAffiliates,
         filteredAffiliates,
+        filterSpecialists,
+        filteredSpecialists,
       }}
     >
       {children}
