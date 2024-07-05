@@ -1,7 +1,7 @@
 import React from "react";
-import BasicModal from "../../components/modal/Modal";
+import BasicModal from "../../modal/Modal"
 
-const AddShiftButton: React.FC = () => {
+const AddShift: React.FC = () => {
   return (
     <>
       <h2>Nuevo Turno</h2>
@@ -10,4 +10,4 @@ const AddShiftButton: React.FC = () => {
   );
 };
 
-export default AddShiftButton;
+export default AddShift;

@@ -1,8 +1,8 @@
 import { TableCell, TableRow } from "@mui/material";
-import { Prescription, Shift } from "../../redux/type";
-import BasicModal from "../modal/Modal";
-import AddPrescriptionButton from "../buttonToAdd/AddPrescriptionButton";
-import { useAppContext } from "../../hooks/AppContext";
+import { Prescription, Shift } from "../../../redux/type";
+import BasicModal from "../../modal/Modal";
+import AddPrescriptionButton from "../../form/add/AddPrescription";
+import { useAppContext } from "../../../hooks/AppContext";
 import { useEffect, useState } from "react";
 interface RowProps {
   shift: Shift;

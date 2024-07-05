@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "./FilterForm.css";
-import { useAppContext } from "../../hooks/AppContext";
+import { useAppContext } from "../../../hooks/AppContext";
 
 const FilterForm: React.FC = () => {
   const { filterAffiliates } = useAppContext();

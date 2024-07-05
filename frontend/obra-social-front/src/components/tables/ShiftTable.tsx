@@ -1,22 +1,39 @@
 import React from "react";
-import "./Table.css";
 import {
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
-  Paper,
   TablePagination,
+  TableRow,
 } from "@mui/material";
+import { Shift } from "../../redux/type"; // Ajusta esta importación según tu estructura de carpetas
+import RowShift from "./rows/RowShift";
+import "./Table.css";
 
-import Row from "../rows/RowAffiliate";
-import { useAppContext } from "../../hooks/AppContext";
+interface Column {
+  id: "descripcion" | "dia" | "hora" | "acciones" | "receta";
+  label: string;
+  minWidth?: number;
+  align?: "right" | "center"; // Añade "center" para la columna de acciones
+  format?: (value: number) => string;
+}
 
-const AffiliatesList: React.FC = () => {
-  const { affiliates, filteredAffiliates } = useAppContext();
+const columns: Column[] = [
+  { id: "descripcion", align: "center", label: "Descripcion", minWidth: 100 },
+  { id: "dia", label: "Dia", minWidth: 170, align: "center" },
+  { id: "hora", label: "Hora", minWidth: 170, align: "center" },
+  { id: "acciones", label: "Acciones", minWidth: 170, align: "center" },
+  { id: "receta", label: "Receta", minWidth: 170, align: "center" },
+];
 
+interface ShiftListProps {
+  shifts: Shift[];
+}
+
+const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -31,9 +48,6 @@ const AffiliatesList: React.FC = () => {
     setPage(0);
   };
 
-  const dataToShow =
-    filteredAffiliates.length > 0 ? filteredAffiliates : affiliates;
-
   return (
     <Paper
       sx={{
@@ -47,23 +61,26 @@ const AffiliatesList: React.FC = () => {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">Nombre</TableCell>
-              <TableCell align="center">DNI</TableCell>
-              <TableCell align="center">Email - Contacto</TableCell>
-              <TableCell align="center">Acciones</TableCell>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataToShow.length > 0 ? (
-              dataToShow
+            {shifts.length > 0 ? (
+              shifts
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((affiliate) => (
-                  <Row key={affiliate.id} affiliate={affiliate} />
-                ))
+                .map((shift) => <RowShift shift={shift} />)
             ) : (
               <TableRow>
                 <TableCell colSpan={4} align="center">
-                  No hay afiliados
+                  No hay Turnos
                 </TableCell>
               </TableRow>
             )}
@@ -73,7 +90,7 @@ const AffiliatesList: React.FC = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={dataToShow.length}
+        count={shifts.length}
         rowsPerPage={rowsPerPage}
         labelRowsPerPage={"Filas por pagina"}
         page={page}
@@ -84,4 +101,4 @@ const AffiliatesList: React.FC = () => {
   );
 };
 
-export default AffiliatesList;
+export default ShiftList;

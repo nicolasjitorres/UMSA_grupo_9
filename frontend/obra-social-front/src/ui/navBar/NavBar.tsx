@@ -4,8 +4,18 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link as RouterLink } from "react-router-dom";
 import "./NavBar.css";
+import { useLocation } from "react-router-dom";
 
+  
 function NavBar() {
+
+  const location = useLocation();
+  const hideNavBarPaths = ["/"];
+
+  if (hideNavBarPaths.includes(location.pathname)) {
+    return null;}
+  
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -22,10 +32,10 @@ function NavBar() {
           Turnos
         </Button>
         <Button color="inherit" component={RouterLink} to="/home">
-          Contacto
-        </Button>
-        <Button color="inherit" component={RouterLink} to="/home">
           Home
+        </Button>
+        <Button color="inherit" component={RouterLink} to="/">
+          Salir
         </Button>
       </Toolbar>
     </AppBar>

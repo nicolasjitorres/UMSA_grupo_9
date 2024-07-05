@@ -1,11 +1,11 @@
 import React from "react";
-import BasicModal from "../modal/Modal";
+import BasicModal from "../../modal/Modal";
 
-interface AddPrescriptionButtonProps {
+interface AddPrescriptionProps {
   shiftID: number;
 }
 
-const AddPrescriptionButton: React.FC<AddPrescriptionButtonProps> = ({
+const AddPrescription: React.FC<AddPrescriptionProps> = ({
   shiftID,
 }) => {
   return (
@@ -20,4 +20,4 @@ const AddPrescriptionButton: React.FC<AddPrescriptionButtonProps> = ({
   );
 };
 
-export default AddPrescriptionButton;
+export default AddPrescription;

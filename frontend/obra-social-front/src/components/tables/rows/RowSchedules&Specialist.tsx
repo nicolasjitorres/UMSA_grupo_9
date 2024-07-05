@@ -11,10 +11,10 @@ import {
   TableBody,
 } from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-import { Schedule, Specialist } from "../../redux/type"; // Ajusta la ruta según la ubicación de tus tipos
-import AddSchedulesButton from "../buttonToAdd/AddSchedulesButton";
-import BasicModal from "../modal/Modal";
-import { useAppContext } from "../../hooks/AppContext";
+import { Schedule, Specialist } from "../../../redux/type"; // Ajusta la ruta según la ubicación de tus tipos
+import AddSchedulesButton from "../../form/add/AddSchedules";
+import BasicModal from "../../modal/Modal";
+import { useAppContext } from "../../../hooks/AppContext";
 
 interface RowProps {
   specialist: Specialist;

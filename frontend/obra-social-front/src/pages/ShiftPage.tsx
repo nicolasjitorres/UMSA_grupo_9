@@ -1,9 +1,9 @@
 import React from "react";
-import FilterForm from "../components/FilterForm/FilterFormShift";
-import AddShiftButton from "../components/buttonToAdd/AddShiftButton";
+import FilterForm from "../components/form/filter/FilterFormShift";
+import AddShiftButton from "../components/form/add/AddShift";
 //import BasicModal from "../components/modal/Modal";
-import ShiftList from "../components/entitiesList/ShiftList";
-import "./Users.css";
+import ShiftList from "../components/tables/ShiftTable";
+import "./Style.css";
 import { useAppContext } from "../hooks/AppContext";
 
 const ShiftPage: React.FC = () => {
