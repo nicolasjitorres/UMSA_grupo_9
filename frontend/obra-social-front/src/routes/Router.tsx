@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Specialist from "../pages/SpecialistPage";
 import Affiliate from "../pages/AffiliatePage";
-import SignIn from "../pages/SignIn";
+import SignIn from "../pages/SignInPage";
 import Turnos from "../pages/ShiftPage";
-import Home from "../pages/Home";
+import Home from "../pages/HomePage";
 
 const Router = () => {
   return (

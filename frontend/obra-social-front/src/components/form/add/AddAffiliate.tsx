@@ -1,7 +1,7 @@
 import React from "react";
-import BasicModal from "../modal/Modal";
+import BasicModal from "../../modal/Modal";
 
-const AddAffiliateButton: React.FC = () => {
+const AddAffiliate: React.FC = () => {
   return (
     <>
       <h2>Nuevo Afiliado</h2>
@@ -10,4 +10,4 @@ const AddAffiliateButton: React.FC = () => {
   );
 };
 
-export default AddAffiliateButton;
+export default AddAffiliate;
