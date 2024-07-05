@@ -16,7 +16,7 @@ import RowSchedulesSpecialist from "./rows/RowSchedules&Specialist";
 import { useAppContext } from "../../hooks/AppContext";
 
 const SpecialistList: React.FC = () => {
-  const { specialists } = useAppContext();
+  const { specialists, filteredSpecialists } = useAppContext();
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -31,6 +31,8 @@ const SpecialistList: React.FC = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const dataToShow = filteredSpecialists.length > 0 ? filteredSpecialists : specialists;
 
   return (
     <Paper
@@ -54,8 +56,8 @@ const SpecialistList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {specialists.length > 0 ? (
-              specialists
+            {dataToShow.length > 0 ? (
+              dataToShow
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((specialist) => (
                   <RowSchedulesSpecialist
@@ -76,7 +78,7 @@ const SpecialistList: React.FC = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={specialists.length}
+        count={dataToShow.length}
         rowsPerPage={rowsPerPage}
         labelRowsPerPage={"Filas por pagina"}
         page={page}

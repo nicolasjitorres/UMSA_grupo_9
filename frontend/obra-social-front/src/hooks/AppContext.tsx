@@ -51,6 +51,7 @@ import {
   updatePrescription,
 } from "../redux/slices/PrescriptionSlice";
 import { sendEmail } from "../redux/slices/EmailSlice";
+import { fetchSpecialities } from "../redux/slices/SpecialitySlice";
 
 type AppContextType = {
   shifts: Shift[];
@@ -58,34 +59,40 @@ type AppContextType = {
   schedules: Schedule[];
   affiliates: Affiliate[];
   prescription: Prescription[];
-  //funciones de turno
+  specialities: string[];
+  // funciones de turno
   add_Shift: (shiftDTO: ShiftDTO) => void;
   update_Shift: (shiftDTO: ShiftDTO, id: number) => void;
   delete_Shift: (id: number) => void;
-  //funciones de specialist
+  // funciones de specialist
   add_Specialist: (specialistDTO: SpecialistDTO) => void;
   update_Specialist: (specialistDTO: SpecialistDTO, id: number) => void;
   delete_Specialist: (id: number) => void;
-  //funciones de horario
+  // funciones de horario
   add_Schedules: (scheduleDTO: ScheduleDTO, id: number) => void;
   update_Schedules: (scheduleDTO: ScheduleDTO, id: number) => void;
   delete_Schedules: (id: number) => void;
-  //funciones de afiliado
+  // funciones de afiliado
   add_Affiliates: (affiliateDTO: AffiliateDTO) => void;
   update_Affiliates: (affiliateDTO: AffiliateDTO, id: number) => void;
   delete_Affiliates: (id: number) => void;
-  //funciones de receta
+  // funciones de receta
   add_Prescription: (prescriptionDTO: PrescriptionDTO) => void;
   update_Prescription: (prescriptionDTO: PrescriptionDTO, id: number) => void;
   delete_Prescription: (id: number) => void;
-  //funciones de filtrado afiliado
+  // funciones de filtrado afiliados
   filterAffiliates: (dni: string, name: string) => void;
   filteredAffiliates: Affiliate[];
+  // funciones de filtrado especialistas
+  filterSpecialists: (dni: string, name: string, speciality: string) => void;
+  filteredSpecialists: Specialist[];
   //funciones de filtrado turno
   filterShifts: (name: string, hora: string, day: string) => void;
   filteredShift: Shift[];
   //funcion de envio de email
   emailSender: (email: EmailDTO) => void;
+  //funcion que devuelve las especialidades del enum
+  fetchSpecialities: () => void;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -111,9 +118,15 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     (state: RootState) => state.prescription.prescriptions
   );
 
+  const specialities = useSelector(
+    (state: RootState) => state.specialities.specialities
+  );
+
   const [filteredAffiliates, setFilteredAffiliates] =
     useState<Affiliate[]>(affiliates);
 
+  const [filteredSpecialists, setFilteredSpecialists] =
+    useState<Specialist[]>(specialists);
   const [filteredShift, setFilteredShift] = useState<Shift[]>(shifts);
 
   useEffect(() => {
@@ -122,6 +135,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch(fetchSchedules());
     dispatch(fetchAfiliados());
     dispatch(fetchPrescription());
+    dispatch(fetchSpecialities());
   }, [dispatch]);
 
   const add_Shift = (shiftDTO: ShiftDTO) => dispatch(addShift(shiftDTO));
@@ -157,7 +171,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch(deletePrescription({ prescriptionID: id }));
 
   const filterAffiliates = (dni: string, name: string) => {
-    const filtered = affiliates.filter((affiliate) => {
+    const filteredAff = affiliates.filter((affiliate) => {
       const fullName = `${affiliate.firstName} ${affiliate.lastName}`
         .toLowerCase()
         .trim();
@@ -167,11 +181,25 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       );
     });
 
-    setFilteredAffiliates(filtered);
+    setFilteredAffiliates(filteredAff);
+  };
+
+  const filterSpecialists = (dni: string, name: string, speciality: string) => {
+    const filteredSpec = specialists.filter((specialist) => {
+      const fullName = `${specialist.firstName} ${specialist.lastName}`
+        .toLowerCase()
+        .trim();
+      return (
+        (dni === "" || specialist.dni.includes(dni)) &&
+        (name === "" || fullName.includes(name.toLowerCase().trim())) &&
+        (speciality === "" || specialist.speciality === speciality)
+      );
+    });
+
+    setFilteredSpecialists(filteredSpec);
   };
 
   const filterShifts = (name: string, hora: string, day: string) => {
-    // Si los tres valores son cadenas vacías, devolver la lista original de turnos
     if (name === "" && hora === "" && day === "") {
       setFilteredShift(shifts);
       return;
@@ -185,7 +213,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
     const filtered = shifts.filter((shift) => {
       return (
-        (!specialist || shift.specialistId === specialist.id) &&
+        (!specialist || shift.specialistId === specialist?.id) &&
         (hora === "" || shift.time.includes(hora)) &&
         (day === "" || shift.date.includes(day))
       );
@@ -204,6 +232,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         schedules,
         affiliates,
         prescription,
+        specialities,
         add_Shift,
         update_Shift,
         delete_Shift,
@@ -221,9 +250,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         delete_Prescription,
         filterAffiliates,
         filteredAffiliates,
+        filterSpecialists,
+        filteredSpecialists,
         filterShifts,
         filteredShift,
         emailSender,
+        fetchSpecialities,
       }}
     >
       {children}
