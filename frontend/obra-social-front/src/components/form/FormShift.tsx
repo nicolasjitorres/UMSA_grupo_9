@@ -20,7 +20,9 @@ import { DayOfWeek, Shift } from "../../redux/type";
 import "./Form.css";
 import { parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
+
 import { useAppContext } from "../../hooks/AppContext";
+
 
 interface FormShiftProps {
   handleClose: () => void;
@@ -76,7 +78,6 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         specialistId: selectedSpecialist,
         affiliatedId: 1,
       };
-      console.log(shiftDTO);
       shift ? update_Shift(shiftDTO, shift.id) : add_Shift(shiftDTO);
 
       handleClose();
@@ -111,7 +112,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
       .filter(
         (shift) =>
           shift.specialistId === selectedSpecialist &&
-          dayIndexToDayOfWeek[new Date(shift.date).getDay()] === selectedDay
+          dayIndexToDayOfWeek[new Date(shift.date).getDay() + 1] === selectedDay
       )
       .map((shift) => shift.time.slice(0, 5));
 
@@ -119,7 +120,6 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
       const timeString = `${Math.floor(i).toString().padStart(2, "0")}:${
         i % 1 === 0 ? "00" : "30"
       }`;
-
       // Excluir horarios ya asignados
       if (!assignedTimes.includes(timeString)) {
         timeOptions.push(
@@ -208,9 +208,11 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
           </AccordionDetails>
         </Accordion>
       )}
-      <button type="submit" className={shift ? "edit-button" : "add-button"}>
+      <button type="submit"  className={shift ? "edit-button" : "add-button"}>
+
         {shift ? "Actualizar" : "Agregar"}
       </button>
+      
 
       {shift && (
         <button

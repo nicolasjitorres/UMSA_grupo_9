@@ -1,7 +1,7 @@
 import React from "react";
 import { TableRow, TableCell } from "@mui/material";
-import { Affiliate } from "../../redux/type"; // Ajusta la ruta según la ubicación de tus tipos
-import BasicModal from "../modal/Modal";
+import { Affiliate } from "../../../redux/type"; // Ajusta la ruta según la ubicación de tus tipos
+import BasicModal from "../../modal/Modal";
 
 interface RowProps {
   affiliate: Affiliate;

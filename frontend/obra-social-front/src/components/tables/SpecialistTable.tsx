@@ -12,7 +12,7 @@ import {
   TablePagination,
 } from "@mui/material";
 
-import RowSchedulesSpecialist from "../rows/RowSchedules&Specialist";
+import RowSchedulesSpecialist from "./rows/RowSchedules&Specialist";
 import { useAppContext } from "../../hooks/AppContext";
 
 const SpecialistList: React.FC = () => {

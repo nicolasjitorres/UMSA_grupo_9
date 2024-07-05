@@ -82,6 +82,9 @@ type AppContextType = {
   // funciones de filtrado especialistas
   filterSpecialists: (dni: string, name: string, speciality: string) => void;
   filteredSpecialists: Specialist[];
+  //funciones de filtrado turno
+  filterShifts: (name: string, hora: string, day: string) => void;
+  filteredShift: Shift[];
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -112,6 +115,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const [filteredSpecialists, setFilteredSpecialists] =
     useState<Specialist[]>(specialists);
+  const [filteredShift, setFilteredShift] = useState<Shift[]>(shifts);
 
   useEffect(() => {
     dispatch(fetchShift());
@@ -184,7 +188,31 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   
     setFilteredSpecialists(filteredSpec);
   };
-  
+
+  const filterShifts = (name: string, hora: string, day: string) => {
+    // Si los tres valores son cadenas vacías, devolver la lista original de turnos
+    if (name === "" && hora === "" && day === "") {
+      setFilteredShift(shifts);
+      return;
+    }
+    const specialist = specialists.find((specialist) => {
+      const fullName = `${specialist.firstName} ${specialist.lastName}`
+        .toLowerCase()
+        .trim();
+      return name === "" || fullName.includes(name.toLowerCase().trim());
+    });
+
+    const filtered = shifts.filter((shift) => {
+      return (
+        (!specialist || shift.specialistId === specialist.id) &&
+        (hora === "" || shift.time.includes(hora)) &&
+        (day === "" || shift.date.includes(day))
+      );
+    });
+
+    setFilteredShift(filtered);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -212,6 +240,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         filteredAffiliates,
         filterSpecialists,
         filteredSpecialists,
+        filterShifts,
+        filteredShift,
       }}
     >
       {children}

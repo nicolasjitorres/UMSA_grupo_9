@@ -1,7 +1,7 @@
 import React from 'react';
-import BasicModal from "../modal/Modal";
+import BasicModal from "../../modal/Modal";
 
-const AddSpecialistButton: React.FC = () => {
+const AddSpecialist: React.FC = () => {
   return (
     <>
       <h2>Nuevo Especialista</h2>
@@ -11,4 +11,4 @@ const AddSpecialistButton: React.FC = () => {
   );
 };
 
-export default AddSpecialistButton;
+export default AddSpecialist;
