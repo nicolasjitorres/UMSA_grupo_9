@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './FilterForm.css';
-import { useAppContext } from '../../hooks/AppContext';
+import { useAppContext } from '../../../hooks/AppContext';
+import { RootState } from '../../../redux/store/store';
+import { useSelector } from 'react-redux';
+import { fetchSpecialities } from '../../../redux/slices/SpecialitySlice';
 
 const FilterForm: React.FC = () => {
   const { filterSpecialists } = useAppContext();
+  const specialities = useSelector((state: RootState) => state.specialities.specialities);
   const [dni, setDni] = useState("");
   const [name, setName] = useState("");
   const [speciality, setSpeciality] = useState("");
-  // const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    fetchSpecialities();
+    console.log(specialities);
+  }, []);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     filterSpecialists(dni, name, speciality);
   };
-  
+
+  const handleSpecialityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSpeciality(event.target.value);
+  };
 
   return (
     <div className="filter-form">
@@ -42,24 +53,15 @@ const FilterForm: React.FC = () => {
           <select
             id="filter-speciality"
             value={speciality}
-            onChange={(e) => setSpeciality(e.target.value)}
+            onChange={handleSpecialityChange}
           >
             <option value="">Seleccione una especialidad</option>
-            <option value="DERMATOLOGY">Dermatología</option>
-            <option value="CARDIOLOGY">Cardiología</option>
-            <option value="PEDIATRICS">Pediatría</option>
-            <option value="ORTHOPEDICS">Ortopedia</option>
+            {Array.isArray(specialities) && specialities.map((speciality, index) => (
+              <option key={index} value={speciality}>{speciality.replace("_", " ")}</option>
+            ))}
           </select>
+
         </div>
-        {/* <div>
-          <label htmlFor="filter-location">Localidad:</label>
-          <input
-            type="text"
-            id="filter-location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </div> */}
         <button type="submit" className="filter-button">Filtrar</button>
       </form>
     </div>
