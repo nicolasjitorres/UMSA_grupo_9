@@ -3,7 +3,7 @@ import FilterForm from "../components/form/filter/FilterFormShift";
 import AddShiftButton from "../components/form/add/AddShift";
 //import BasicModal from "../components/modal/Modal";
 import ShiftList from "../components/tables/ShiftTable";
-import "./style.css";
+import "./Style.css";
 import { useAppContext } from "../hooks/AppContext";
 
 const ShiftPage: React.FC = () => {
