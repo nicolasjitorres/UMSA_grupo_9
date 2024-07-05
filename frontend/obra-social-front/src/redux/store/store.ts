@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import specialistsReducer from "../slices/SpecialistSlices";
-import afiliatedReducer from "../slices/AfiliatedSlices";
-import shiftReduce from "../slices/ShiftSlices";
-import prescriptionReducer from "../slices/PrescriptionSlices";
-import schedulesReducer from "../slices/SchedulesSlices";
+import specialistsReducer from "../slices/SpecialistSlice";
+import afiliatedReducer from "../slices/AfiliatedSlice";
+import shiftReduce from "../slices/ShiftSlice";
+import prescriptionReducer from "../slices/PrescriptionSlice";
+import schedulesReducer from "../slices/SchedulesSlice";
 
 export const store = configureStore({
   reducer: {

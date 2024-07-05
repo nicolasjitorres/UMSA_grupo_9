@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Modal, Typography } from "@mui/material";
-import FormShift from "../form/FormShift";
+import FormShift from "../form/FFormShift";
 import "./Modal.css";
 import FormSpecialist from "../form/FormSpecialist";
 import {
