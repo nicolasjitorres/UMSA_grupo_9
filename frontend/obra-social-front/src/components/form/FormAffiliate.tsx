@@ -1,17 +1,11 @@
-import {TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import React, { useState } from "react";
 import {
   ValidationErrors,
   validateForm,
 } from "../../funcionalities/Validations";
-import {
-  addAffiliate,
-  deleteAffiliate,
-  updateAffiliate,
-} from "../../redux/slices/AfiliatedSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../redux/store/store";
 import { Affiliate } from "../../redux/type";
+import { useAppContext } from "../../hooks/AppContext";
 
 interface FormShiftProps {
   affiliate?: Affiliate;
@@ -22,6 +16,8 @@ const FormAffiliate: React.FC<FormShiftProps> = ({
   handleClose,
   affiliate,
 }) => {
+  const { add_Affiliates, update_Affiliates, delete_Affiliates } =
+    useAppContext();
   const [firstName, setFirstName] = React.useState(affiliate?.firstName || "");
   const [lastName, setLastName] = React.useState(affiliate?.lastName || "");
   const [dni, setDni] = React.useState(affiliate?.dni || "");
@@ -30,7 +26,6 @@ const FormAffiliate: React.FC<FormShiftProps> = ({
   );
   const [email, setEmail] = React.useState(affiliate?.email || "");
   const [errors, setErrors] = useState<ValidationErrors>({});
-  const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = async (event: React.FormEvent) => {
     const validationErrors = validateForm(
@@ -52,20 +47,16 @@ const FormAffiliate: React.FC<FormShiftProps> = ({
         email,
         healthInsuranceCode,
       };
-      if (affiliate) {
-        await dispatch(
-          updateAffiliate({ affiliateDTO: affiliatedDTO, id: affiliate.id })
-        );
-      } else {
-        await dispatch(addAffiliate(affiliatedDTO));
-      }
+      affiliate
+        ? update_Affiliates(affiliatedDTO, affiliate.id)
+        : add_Affiliates(affiliatedDTO);
       handleClose();
     }
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (affiliateID: number) => {
     if (affiliate) {
-      dispatch(deleteAffiliate(id));
+      delete_Affiliates(affiliateID);
       handleClose();
     }
   };
@@ -122,12 +113,18 @@ const FormAffiliate: React.FC<FormShiftProps> = ({
         helperText={errors.email}
         className="form-field"
       />
-     <button type="submit" className={affiliate ? "edit-button" : "add-button"}>
+      <button
+        type="submit"
+        className={affiliate ? "edit-button" : "add-button"}
+      >
         {affiliate ? "Actualizar" : "Agregar"}
       </button>
 
       {affiliate && (
-        <button className="delete-button" onClick={() => handleDelete(affiliate.id)}>
+        <button
+          className="delete-button"
+          onClick={() => handleDelete(affiliate.id)}
+        >
           Borrar
         </button>
       )}

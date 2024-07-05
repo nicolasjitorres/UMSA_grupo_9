@@ -47,12 +47,12 @@ const BasicModal: React.FC<propModal> = ({
 
   return (
     <div>
-    
-  
-<button onClick={handleOpen} className={name === "Gestionar" ? "edit-button" : "add-button"}>
-  {name}
-</button>
-
+      <button
+        onClick={handleOpen}
+        className={name === "Gestionar" ? "edit-button" : "add-button"}
+      >
+        {name}
+      </button>
 
       <Modal
         open={open}
@@ -71,7 +71,7 @@ const BasicModal: React.FC<propModal> = ({
             <FormAffiliate affiliate={affiliate} handleClose={handleClose} />
           )}
           {proveniencia === "specialist" && (
-            <FormSpecialist specialist={specialist} />
+            <FormSpecialist specialist={specialist} handleClose={handleClose}/>
           )}
           {proveniencia === "schedules" && (
             <FormSchedule

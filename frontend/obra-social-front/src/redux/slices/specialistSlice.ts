@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Specialist, SpecialistDTO } from "../type"; // Ajusta la ruta según la ubicación de tu archivo de tipos
-import { handleAxiosError } from "./AxiosErrorHandler";
+import { handleAxiosError } from "../../components/Errors/AxiosErrorHandler";
 
 interface SpecialistsState {
   specialists: Specialist[];
@@ -27,7 +27,7 @@ export const fetchSpecialists = createAsyncThunk(
 );
 
 //add especialistas
-export const addSpecilist = createAsyncThunk(
+export const addSpecialist = createAsyncThunk(
   "specialist/addSpecilist",
   async (specialistDTO: SpecialistDTO, { rejectWithValue }) => {
     try {
@@ -100,11 +100,11 @@ const specialistsSlice = createSlice({
         state.error = action.error.message || "Something went wrong";
       })
       //casos para el agregar
-      .addCase(addSpecilist.pending, (state) => {
+      .addCase(addSpecialist.pending, (state) => {
         state.status = "loading";
       })
       .addCase(
-        addSpecilist.fulfilled,
+        addSpecialist.fulfilled,
         (state, action: PayloadAction<Specialist>) => {
           state.status = "succeeded";
           if (!Array.isArray(state.specialists)) {
@@ -114,7 +114,7 @@ const specialistsSlice = createSlice({
           state.specialists.push(action.payload);
         }
       )
-      .addCase(addSpecilist.rejected, (state, action) => {
+      .addCase(addSpecialist.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload as string;
       })

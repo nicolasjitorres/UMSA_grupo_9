@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Shift, ShiftDTO } from "../type";
-import { handleAxiosError } from "./AxiosErrorHandler";
+import { handleAxiosError } from "../../components/Errors/AxiosErrorHandler";
 
 //estructura del shift state
 interface ShiftState {
@@ -26,9 +26,17 @@ export const fetchShift = createAsyncThunk("shift/fetchShift", async () => {
 //delete turnos
 export const deleteShift = createAsyncThunk(
   "shift/deleteShift",
-  async (shiftId: number) => {
-    await axios.delete(`http://localhost:8080/turnos/${shiftId}`);
-    return shiftId;
+  async ({ shiftId }: { shiftId: number }, { rejectWithValue }) => {
+    try {
+      await axios.delete(`http://localhost:8080/turnos/${shiftId}`);
+      return shiftId;
+    } catch (error: unknown) {
+      const errorMessage = handleAxiosError(
+        error,
+        "Error al eliminar el turno"
+      );
+      return rejectWithValue(errorMessage);
+    }
   }
 );
 

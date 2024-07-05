@@ -16,17 +16,14 @@ import {
   dayIndexToDayOfWeek,
   getClosestDate,
 } from "../../funcionalities/Funcionalities";
-import { DayOfWeek, Schedule, Shift, Specialist } from "../../redux/type";
-import { AppDispatch, RootState } from "../../redux/store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { DayOfWeek, Shift } from "../../redux/type";
 import "./Form.css";
-import {
-  addShift,
-  deleteShift,
-  updateShift,
-} from "../../redux/slices/ShiftSlice";
 import { parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
+<<<<<<< HEAD
+=======
+import { useAppContext } from "../../hooks/AppContext";
+>>>>>>> develop
 
 interface FormShiftProps {
   handleClose: () => void;
@@ -43,14 +40,14 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
     number | null
   >(shift?.specialistId || null);
 
-  const specialists: Specialist[] = useSelector(
-    (state: RootState) => state.specialists.specialists
-  );
-  const schedules: Schedule[] = useSelector(
-    (state: RootState) => state.schedules.schedules
-  );
-  const shifts: Shift[] = useSelector((state: RootState) => state.shift.shifts);
-  const dispatch = useDispatch<AppDispatch>();
+  const {
+    shifts,
+    specialists,
+    schedules,
+    add_Shift,
+    update_Shift,
+    delete_Shift,
+  } = useAppContext();
 
   useEffect(() => {
     if (shift) {
@@ -82,11 +79,8 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         specialistId: selectedSpecialist,
         affiliatedId: 1,
       };
-      if (shift) {
-        await dispatch(updateShift({ shiftDTO, id: shift.id }));
-      } else {
-        await dispatch(addShift(shiftDTO));
-      }
+      console.log(shiftDTO);
+      shift ? update_Shift(shiftDTO, shift.id) : add_Shift(shiftDTO);
 
       handleClose();
     }
@@ -94,7 +88,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
 
   const handleDelete = (id: number) => {
     if (shift) {
-      dispatch(deleteShift(id));
+      delete_Shift(id);
       handleClose();
     }
   };
@@ -217,14 +211,20 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
           </AccordionDetails>
         </Accordion>
       )}
+<<<<<<< HEAD
       <button type="submit"  className={shift ? "edit-button" : "add-button"}>
+=======
+      <button type="submit" className={shift ? "edit-button" : "add-button"}>
+>>>>>>> develop
         {shift ? "Actualizar" : "Agregar"}
       </button>
       
 
       {shift && (
-        <button className="delete-button"                  
-          onClick={() => handleDelete(shift.id)}>
+        <button
+          className="delete-button"
+          onClick={() => handleDelete(shift.id)}
+        >
           Borrar
         </button>
       )}

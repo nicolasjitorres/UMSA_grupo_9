@@ -47,6 +47,7 @@ public class ShiftMapper {
 			return null;
 		}
 		Shift shift = new Shift();
+		shift.setDescription(shiftDTO.getDescription());
 		shift.setId(shiftDTO.getId());
 		shift.setDate(shiftDTO.getDate());
 		shift.setTime(shiftDTO.getTime());
