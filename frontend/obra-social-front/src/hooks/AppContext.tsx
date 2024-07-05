@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   Affiliate,
   AffiliateDTO,
+  EmailDTO,
   Prescription,
   PrescriptionDTO,
   Schedule,
@@ -49,6 +50,7 @@ import {
   fetchPrescription,
   updatePrescription,
 } from "../redux/slices/PrescriptionSlice";
+import { sendEmail } from "../redux/slices/EmailSlice";
 
 type AppContextType = {
   shifts: Shift[];
@@ -82,6 +84,8 @@ type AppContextType = {
   //funciones de filtrado turno
   filterShifts: (name: string, hora: string, day: string) => void;
   filteredShift: Shift[];
+  //funcion de envio de email
+  emailSender: (email: EmailDTO) => void;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -190,6 +194,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setFilteredShift(filtered);
   };
 
+  const emailSender = (email: EmailDTO) => dispatch(sendEmail(email));
+
   return (
     <AppContext.Provider
       value={{
@@ -217,6 +223,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         filteredAffiliates,
         filterShifts,
         filteredShift,
+        emailSender,
       }}
     >
       {children}

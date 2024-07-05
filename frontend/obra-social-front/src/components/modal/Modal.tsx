@@ -14,6 +14,7 @@ import {
 import FormAffiliate from "../form/FormAffiliate";
 import FormSchedule from "../form/FormSchedule";
 import FormPrescription from "../form/FormPrescription";
+import FormEmailSender from "../form/FormEmailSender";
 
 interface propModal {
   name: string;
@@ -71,7 +72,7 @@ const BasicModal: React.FC<propModal> = ({
             <FormAffiliate affiliate={affiliate} handleClose={handleClose} />
           )}
           {proveniencia === "specialist" && (
-            <FormSpecialist specialist={specialist} handleClose={handleClose}/>
+            <FormSpecialist specialist={specialist} handleClose={handleClose} />
           )}
           {proveniencia === "schedules" && (
             <FormSchedule
@@ -87,6 +88,7 @@ const BasicModal: React.FC<propModal> = ({
               handleClose={handleClose}
             />
           )}
+          {proveniencia === "contacto" && <FormEmailSender />}
         </div>
       </Modal>
     </div>
