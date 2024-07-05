@@ -16,13 +16,12 @@ import {
   dayIndexToDayOfWeek,
   getClosestDate,
 } from "../../funcionalities/Funcionalities";
-import { DayOfWeek, Shift } from "../../redux/type";
+import { DayOfWeek, Shift, Speciality } from "../../redux/type";
 import "./Form.css";
 import { parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 
 import { useAppContext } from "../../hooks/AppContext";
-
 
 interface FormShiftProps {
   handleClose: () => void;
@@ -38,6 +37,8 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
   const [selectedSpecialist, setSelectedSpecialist] = React.useState<
     number | null
   >(shift?.specialistId || null);
+  const [selectedSpeciality, setSelectedSpeciality] =
+    React.useState<Speciality | null>(null);
 
   const {
     shifts,
@@ -61,7 +62,12 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
     }
   }, [shift]);
 
-  const handleChange = (event: SelectChangeEvent<string>) => {
+  const handleSpecialityChange = (event: SelectChangeEvent<string>) => {
+    setSelectedSpeciality(event.target.value as Speciality);
+    setSelectedSpecialist(null); // Reset the selected specialist
+  };
+
+  const handleSpecialistChange = (event: SelectChangeEvent<string>) => {
     setSelectedSpecialist(parseInt(event.target.value));
   };
 
@@ -160,6 +166,20 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
     });
   };
 
+  const renderSpecialistOptions = () => {
+    if (selectedSpeciality === null) return null;
+
+    const filteredSpecialists = specialists.filter(
+      (specialist) => specialist.speciality === selectedSpeciality
+    );
+
+    return filteredSpecialists.map((specialist) => (
+      <MenuItem key={specialist.id} value={specialist.id.toString()}>
+        {specialist.firstName} {specialist.lastName}
+      </MenuItem>
+    ));
+  };
+
   return (
     <form onSubmit={handleSubmit} className="form-container">
       <TextField
@@ -171,23 +191,38 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         className="form-field"
       />
       <FormControl fullWidth className="form-field">
-        <InputLabel id="demo-simple-select-label" className="select-label">
+        <InputLabel id="speciality-select-label" className="select-label">
+          Seleccionar Especialidad
+        </InputLabel>
+        <Select
+          labelId="speciality-select-label"
+          id="speciality-select"
+          value={selectedSpeciality || ""}
+          label="Especialidad"
+          onChange={handleSpecialityChange}
+        >
+          {Object.keys(Speciality).map((speciality) => (
+            <MenuItem key={speciality} value={speciality}>
+              {speciality}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl fullWidth className="form-field">
+        <InputLabel id="specialist-select-label" className="select-label">
           Seleccionar Especialista
         </InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="specialist-select-label"
+          id="specialist-select"
           value={
             selectedSpecialist !== null ? selectedSpecialist.toString() : ""
           }
           label="Especialista"
-          onChange={handleChange}
+          onChange={handleSpecialistChange}
+          disabled={selectedSpeciality === null}
         >
-          {specialists.map((specialist) => (
-            <MenuItem key={specialist.id} value={specialist.id.toString()}>
-              {specialist.firstName} {specialist.lastName}
-            </MenuItem>
-          ))}
+          {renderSpecialistOptions()}
         </Select>
       </FormControl>
       {selectedSpecialist !== null && (
@@ -208,11 +243,9 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
           </AccordionDetails>
         </Accordion>
       )}
-      <button type="submit"  className={shift ? "edit-button" : "add-button"}>
-
+      <button type="submit" className={shift ? "edit-button" : "add-button"}>
         {shift ? "Actualizar" : "Agregar"}
       </button>
-      
 
       {shift && (
         <button
