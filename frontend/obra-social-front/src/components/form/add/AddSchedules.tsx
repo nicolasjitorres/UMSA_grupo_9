@@ -1,11 +1,11 @@
 import React from "react";
-import BasicModal from "../../components/modal/Modal";
+import BasicModal from "../../modal/Modal"
 
-interface AddSchedulesButtonProp {
+interface AddSchedulesProp {
   specialistID?: number;
 }
 
-const AddSchedulesButton: React.FC<AddSchedulesButtonProp> = ({
+const AddSchedules: React.FC<AddSchedulesProp> = ({
   specialistID,
 }) => {
   return (
@@ -18,4 +18,4 @@ const AddSchedulesButton: React.FC<AddSchedulesButtonProp> = ({
   );
 };
 
-export default AddSchedulesButton;
+export default AddSchedules;
