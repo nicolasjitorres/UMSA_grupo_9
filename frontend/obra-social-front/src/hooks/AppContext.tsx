@@ -23,32 +23,32 @@ import {
   deleteShift,
   fetchShift,
   updateShift,
-} from "../redux/slices/ShiftSlice";
+} from "../redux/slices/ShiftSlices";
 import {
   addSpecialist,
   deleteSpecialist,
   fetchSpecialists,
   updateSpecialist,
-} from "../redux/slices/SpecialistSlice";
+} from "../redux/slices/SpecialistSlices";
 import {
   addSchedule,
   deleteSchedules,
   fetchSchedules,
   updateSchedule,
-} from "../redux/slices/SchedulesSlice";
+} from "../redux/slices/SchedulesSlices";
 import {
   addAffiliate,
   deleteAffiliate,
   fetchAfiliados,
   updateAffiliate,
-} from "../redux/slices/AfiliatedSlice";
+} from "../redux/slices/AfiliatedSlices";
 import { AppDispatch, RootState } from "../redux/store/store";
 import {
   addPrescription,
   deletePrescription,
   fetchPrescription,
   updatePrescription,
-} from "../redux/slices/PrescriptionSlice";
+} from "../redux/slices/PrescriptionSlices";
 
 type AppContextType = {
   shifts: Shift[];

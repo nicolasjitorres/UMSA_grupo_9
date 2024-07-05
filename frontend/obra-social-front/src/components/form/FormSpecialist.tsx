@@ -3,8 +3,8 @@ import { TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store/store';
 import { validateFormSpecialist, ValidationErrors } from '../../funcionalities/Validations';
-import { addSpecialist, updateSpecialist, deleteSpecialist } from '../../redux/slices/SpecialistSlice';
-import { fetchLocations } from '../../redux/slices/LocationSlice';
+import { addSpecialist, updateSpecialist, deleteSpecialist } from '../../redux/slices/SpecialistSlices';
+import { fetchLocations } from '../../redux/slices/LocationSlices';
 import { Specialist } from '../../redux/type';
 
 
