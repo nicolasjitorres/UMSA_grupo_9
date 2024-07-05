@@ -115,3 +115,8 @@ export interface PrescriptionDTO {
   description: string;
   idShift: number;
 }
+
+export interface EmailDTO {
+  email: string;
+  message: string;
+}

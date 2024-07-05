@@ -29,16 +29,16 @@ VALUES
 
 INSERT INTO specialist (id, first_name, last_name, dni, speciality, role, email, location_id)
 VALUES
-(1, 'Joaquín', 'Pérez', '12345678', 'DERMATOLOGY', 'USER', 'joaquin.perez@example.com', 1),
-(2, 'Marcos', 'Sanchez', '41872372', 'GENERALMEDICINE', 'USER', 'Marcos.sanchez@example.com', 2),
-(3, 'Lucas', 'Rodriguez', '21826722', 'CARDIOLOGY', 'USER', 'lucas.rodriguez@example.com', 3),
-(4, 'Javier', 'Dominguez', '31898622', 'DERMATOLOGY', 'USER', 'javier.dominguez@example.com', 4),
-(5, 'Lucia', 'Mansilla', '23752242', 'NEUROLOGY', 'USER', 'lucia.mansilla@example.com', 5),
-(6, 'Sofia', 'Esquivel', '31452729', 'GENERALMEDICINE', 'USER', 'sofia.esquivel@example.com', 6),
-(7, 'Ana', 'Fernandez', '31928621', 'DERMATOLOGY', 'USER', 'ana.fernandez@example.com', 7),
-(8, 'Paula', 'Romero', '23422422', 'ENDOCRINOLOGY', 'USER', 'paula.romero@example.com', 8),
-(9, 'Diego', 'Gomez', '27822723', 'UROLOGY', 'USER', 'diego.gomez@example.com', 9),
-(10, 'Martin', 'Diaz', '32822521', 'DERMATOLOGY', 'USER', 'martin.diaz@example.com', 10);
+(1, 'Joaquín', 'Pérez', '12345678', 'DERMATOLOGÍA', 'USER', 'joaquin.perez@example.com', 1),
+(2, 'Marcos', 'Sanchez', '41872372', 'MEDICINA_GENERAL', 'USER', 'Marcos.sanchez@example.com', 2),
+(3, 'Lucas', 'Rodriguez', '21826722', 'CARDIOLOGÍA', 'USER', 'lucas.rodriguez@example.com', 3),
+(4, 'Javier', 'Dominguez', '31898622', 'DERMATOLOGÍA', 'USER', 'javier.dominguez@example.com', 4),
+(5, 'Lucia', 'Mansilla', '23752242', 'NEUROLOGÍA', 'USER', 'lucia.mansilla@example.com', 5),
+(6, 'Sofia', 'Esquivel', '31452729', 'MEDICINA_GENERAL', 'USER', 'sofia.esquivel@example.com', 6),
+(7, 'Ana', 'Fernandez', '31928621', 'DERMATOLOGÍA', 'USER', 'ana.fernandez@example.com', 7),
+(8, 'Paula', 'Romero', '23422422', 'ENDOCRINOLOGÍA', 'USER', 'paula.romero@example.com', 8),
+(9, 'Diego', 'Gomez', '27822723', 'UROLOGÍA', 'USER', 'diego.gomez@example.com', 9),
+(10, 'Martin', 'Diaz', '32822521', 'DERMATOLOGÍA', 'USER', 'martin.diaz@example.com', 10);
 
 INSERT INTO schedules (id, start_time, end_time, day_of_week, specialist_id)
 VALUES

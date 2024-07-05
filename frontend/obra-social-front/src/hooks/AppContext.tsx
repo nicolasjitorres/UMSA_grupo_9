@@ -1,8 +1,15 @@
-import React, { createContext, useEffect, ReactNode, useContext, useState } from "react";
+import React, {
+  createContext,
+  useEffect,
+  ReactNode,
+  useContext,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Affiliate,
   AffiliateDTO,
+  EmailDTO,
   Prescription,
   PrescriptionDTO,
   Schedule,
@@ -43,6 +50,7 @@ import {
   fetchPrescription,
   updatePrescription,
 } from "../redux/slices/PrescriptionSlice";
+import { sendEmail } from "../redux/slices/EmailSlice";
 import { fetchSpecialities } from "../redux/slices/SpecialitySlice";
 
 type AppContextType = {
@@ -81,6 +89,8 @@ type AppContextType = {
   //funciones de filtrado turno
   filterShifts: (name: string, hora: string, day: string) => void;
   filteredShift: Shift[];
+  //funcion de envio de email
+  emailSender: (email: EmailDTO) => void;
   //funcion que devuelve las especialidades del enum
   fetchSpecialities: () => void;
 };
@@ -109,11 +119,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   );
 
   const specialities = useSelector(
-    (state: RootState) => state.specialities.specialities);
+    (state: RootState) => state.specialities.specialities
+  );
 
-  const [filteredAffiliates, setFilteredAffiliates] = useState<Affiliate[]>(affiliates);
+  const [filteredAffiliates, setFilteredAffiliates] =
+    useState<Affiliate[]>(affiliates);
 
-  const [filteredSpecialists, setFilteredSpecialists] = useState<Specialist[]>(specialists);
+  const [filteredSpecialists, setFilteredSpecialists] =
+    useState<Specialist[]>(specialists);
   const [filteredShift, setFilteredShift] = useState<Shift[]>(shifts);
 
   useEffect(() => {
@@ -126,28 +139,42 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   }, [dispatch]);
 
   const add_Shift = (shiftDTO: ShiftDTO) => dispatch(addShift(shiftDTO));
-  const update_Shift = (shiftDTO: ShiftDTO, id: number) => dispatch(updateShift({ shiftDTO, id }));
+  const update_Shift = (shiftDTO: ShiftDTO, id: number) =>
+    dispatch(updateShift({ shiftDTO, id }));
   const delete_Shift = (id: number) => dispatch(deleteShift({ shiftId: id }));
 
-  const add_Specialist = (specialistDTO: SpecialistDTO) => dispatch(addSpecialist(specialistDTO));
-  const update_Specialist = (specialistDTO: SpecialistDTO, id: number) => dispatch(updateSpecialist({ specialistDTO, id }));
+  const add_Specialist = (specialistDTO: SpecialistDTO) =>
+    dispatch(addSpecialist(specialistDTO));
+  const update_Specialist = (specialistDTO: SpecialistDTO, id: number) =>
+    dispatch(updateSpecialist({ specialistDTO, id }));
   const delete_Specialist = (id: number) => dispatch(deleteSpecialist(id));
 
-  const add_Schedules = (scheduleDTO: ScheduleDTO, id: number) => dispatch(addSchedule({ scheduleDTO, idSpecialist: id }));
-  const update_Schedules = (scheduleDTO: ScheduleDTO, id: number) => dispatch(updateSchedule({ scheduleDTO, idSchedule: id }));
-  const delete_Schedules = (id: number) => dispatch(deleteSchedules({ scheduleID: id }));
+  const add_Schedules = (scheduleDTO: ScheduleDTO, id: number) =>
+    dispatch(addSchedule({ scheduleDTO, idSpecialist: id }));
+  const update_Schedules = (scheduleDTO: ScheduleDTO, id: number) =>
+    dispatch(updateSchedule({ scheduleDTO, idSchedule: id }));
+  const delete_Schedules = (id: number) =>
+    dispatch(deleteSchedules({ scheduleID: id }));
 
-  const add_Affiliates = (affiliateDTO: AffiliateDTO) => dispatch(addAffiliate(affiliateDTO));
-  const update_Affiliates = (affiliateDTO: AffiliateDTO, id: number) => dispatch(updateAffiliate({ affiliateDTO, id }));
-  const delete_Affiliates = (id: number) => dispatch(deleteAffiliate({ affiliateID: id }));
+  const add_Affiliates = (affiliateDTO: AffiliateDTO) =>
+    dispatch(addAffiliate(affiliateDTO));
+  const update_Affiliates = (affiliateDTO: AffiliateDTO, id: number) =>
+    dispatch(updateAffiliate({ affiliateDTO, id }));
+  const delete_Affiliates = (id: number) =>
+    dispatch(deleteAffiliate({ affiliateID: id }));
 
-  const add_Prescription = (prescriptionDTO: PrescriptionDTO) => dispatch(addPrescription({ prescriptionDTO }));
-  const update_Prescription = (prescriptionDTO: PrescriptionDTO, id: number) => dispatch(updatePrescription({ prescriptionDTO, idPrescription: id }));
-  const delete_Prescription = (id: number) => dispatch(deletePrescription({ prescriptionID: id }));
+  const add_Prescription = (prescriptionDTO: PrescriptionDTO) =>
+    dispatch(addPrescription({ prescriptionDTO }));
+  const update_Prescription = (prescriptionDTO: PrescriptionDTO, id: number) =>
+    dispatch(updatePrescription({ prescriptionDTO, idPrescription: id }));
+  const delete_Prescription = (id: number) =>
+    dispatch(deletePrescription({ prescriptionID: id }));
 
   const filterAffiliates = (dni: string, name: string) => {
     const filteredAff = affiliates.filter((affiliate) => {
-      const fullName = `${affiliate.firstName} ${affiliate.lastName}`.toLowerCase().trim();
+      const fullName = `${affiliate.firstName} ${affiliate.lastName}`
+        .toLowerCase()
+        .trim();
       return (
         (dni === "" || affiliate.dni.includes(dni)) &&
         (name === "" || fullName.includes(name.toLowerCase().trim()))
@@ -159,7 +186,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const filterSpecialists = (dni: string, name: string, speciality: string) => {
     const filteredSpec = specialists.filter((specialist) => {
-      const fullName = `${specialist.firstName} ${specialist.lastName}`.toLowerCase().trim();
+      const fullName = `${specialist.firstName} ${specialist.lastName}`
+        .toLowerCase()
+        .trim();
       return (
         (dni === "" || specialist.dni.includes(dni)) &&
         (name === "" || fullName.includes(name.toLowerCase().trim())) &&
@@ -176,7 +205,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       return;
     }
     const specialist = specialists.find((specialist) => {
-      const fullName = `${specialist.firstName} ${specialist.lastName}`.toLowerCase().trim();
+      const fullName = `${specialist.firstName} ${specialist.lastName}`
+        .toLowerCase()
+        .trim();
       return name === "" || fullName.includes(name.toLowerCase().trim());
     });
 
@@ -190,6 +221,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
     setFilteredShift(filtered);
   };
+
+  const emailSender = (email: EmailDTO) => dispatch(sendEmail(email));
 
   return (
     <AppContext.Provider
@@ -221,6 +254,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         filteredSpecialists,
         filterShifts,
         filteredShift,
+        emailSender,
         fetchSpecialities,
       }}
     >
