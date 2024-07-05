@@ -12,9 +12,10 @@ import {
 import { Shift } from "../../redux/type"; // Ajusta esta importación según tu estructura de carpetas
 import RowShift from "../rows/RowShift";
 import "./Table.css";
+import { useAppContext } from "../../hooks/AppContext";
 
 interface Column {
-  id: "descripcion" | "dia" | "hora" | "acciones" | "receta";
+  id: "descripcion" | "dia" | "hora" | "espcialista" | "acciones" | "receta";
   label: string;
   minWidth?: number;
   align?: "right" | "center"; // Añade "center" para la columna de acciones
@@ -23,10 +24,11 @@ interface Column {
 
 const columns: Column[] = [
   { id: "descripcion", align: "center", label: "Descripcion", minWidth: 100 },
-  { id: "dia", label: "Dia", minWidth: 170, align: "center" },
-  { id: "hora", label: "Hora", minWidth: 170, align: "center" },
-  { id: "acciones", label: "Acciones", minWidth: 170, align: "center" },
-  { id: "receta", label: "Receta", minWidth: 170, align: "center" },
+  { id: "dia", label: "Dia", minWidth: 100, align: "center" },
+  { id: "hora", label: "Hora", minWidth: 100, align: "center" },
+  { id: "espcialista", label: "espcialista", minWidth: 100, align: "center" },
+  { id: "acciones", label: "Acciones", minWidth: 100, align: "center" },
+  { id: "receta", label: "Receta", minWidth: 100, align: "center" },
 ];
 
 interface ShiftListProps {
@@ -34,6 +36,8 @@ interface ShiftListProps {
 }
 
 const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
+  const { filteredShift } = useAppContext();
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -47,6 +51,8 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const dataToShow = filteredShift.length > 0 ? filteredShift : shifts;
 
   return (
     <Paper
@@ -73,8 +79,8 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {shifts.length > 0 ? (
-              shifts
+            {dataToShow.length > 0 ? (
+              dataToShow
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((shift) => <RowShift shift={shift} />)
             ) : (
@@ -90,7 +96,7 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={shifts.length}
+        count={dataToShow.length}
         rowsPerPage={rowsPerPage}
         labelRowsPerPage={"Filas por pagina"}
         page={page}

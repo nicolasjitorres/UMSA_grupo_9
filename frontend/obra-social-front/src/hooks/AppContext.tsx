@@ -76,9 +76,12 @@ type AppContextType = {
   add_Prescription: (prescriptionDTO: PrescriptionDTO) => void;
   update_Prescription: (prescriptionDTO: PrescriptionDTO, id: number) => void;
   delete_Prescription: (id: number) => void;
-  //funcioens de filtrado
+  //funciones de filtrado afiliado
   filterAffiliates: (dni: string, name: string) => void;
   filteredAffiliates: Affiliate[];
+  //funciones de filtrado turno
+  filterShifts: (name: string, hora: string, day: string) => void;
+  filteredShift: Shift[];
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -106,6 +109,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const [filteredAffiliates, setFilteredAffiliates] =
     useState<Affiliate[]>(affiliates);
+
+  const [filteredShift, setFilteredShift] = useState<Shift[]>(shifts);
 
   useEffect(() => {
     dispatch(fetchShift());
@@ -161,6 +166,30 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setFilteredAffiliates(filtered);
   };
 
+  const filterShifts = (name: string, hora: string, day: string) => {
+    // Si los tres valores son cadenas vacías, devolver la lista original de turnos
+    if (name === "" && hora === "" && day === "") {
+      setFilteredShift(shifts);
+      return;
+    }
+    const specialist = specialists.find((specialist) => {
+      const fullName = `${specialist.firstName} ${specialist.lastName}`
+        .toLowerCase()
+        .trim();
+      return name === "" || fullName.includes(name.toLowerCase().trim());
+    });
+
+    const filtered = shifts.filter((shift) => {
+      return (
+        (!specialist || shift.specialistId === specialist.id) &&
+        (hora === "" || shift.time.includes(hora)) &&
+        (day === "" || shift.date.includes(day))
+      );
+    });
+
+    setFilteredShift(filtered);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -186,6 +215,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         delete_Prescription,
         filterAffiliates,
         filteredAffiliates,
+        filterShifts,
+        filteredShift,
       }}
     >
       {children}
