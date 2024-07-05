@@ -20,6 +20,19 @@ export interface Specialist {
   email: string;
 }
 
+export enum Speciality {
+  CARDIOLOGY = "Cardiology",
+  DERMATOLOGY = "Dermatology",
+  ENDOCRINOLOGY = "Endocrinology",
+  ONCOLOGY = "Oncology",
+  ORTHOPEDICS = "Orthopedics",
+  UROLOGY = "Urology",
+  ODONTOLOGY = "Odontology",
+  NEUROLOGY = "Neurology",
+  HEMATOLOGY = "Hematology",
+  GENERALMEDICINE = "General Medicine",
+}
+
 export enum DayOfWeek {
   SUNDAY = "SUNDAY",
   MONDAY = "MONDAY",
