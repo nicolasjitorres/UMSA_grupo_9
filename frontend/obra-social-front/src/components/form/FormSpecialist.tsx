@@ -1,29 +1,39 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { TextField } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store/store';
-import { validateFormSpecialist, ValidationErrors } from '../../funcionalities/Validations';
-import { addSpecialist, updateSpecialist, deleteSpecialist } from '../../redux/slices/SpecialistSlice';
-import { fetchLocations } from '../../redux/slices/LocationSlice';
-import { Specialist } from '../../redux/type';
-
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import { TextField } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store/store";
+import {
+  validateFormSpecialist,
+  ValidationErrors,
+} from "../../funcionalities/Validations";
+import {
+  addSpecialist,
+  updateSpecialist,
+} from "../../redux/slices/SpecialistSlice";
+import { fetchLocations } from "../../redux/slices/LocationSlice";
+import { Specialist } from "../../redux/type";
+import { useAppContext } from "../../hooks/AppContext";
 
 interface FormSpecialistProps {
   specialist?: Specialist;
   handleClose: () => void;
 }
 
-const FormSpecialist: React.FC<FormSpecialistProps> = ({ handleClose, specialist }) => {
+const FormSpecialist: React.FC<FormSpecialistProps> = ({
+  handleClose,
+  specialist,
+}) => {
+  const { delete_Specialist } = useAppContext();
   const [formData, setFormData] = useState({
-    firstName: specialist?.firstName || '',
-    lastName: specialist?.lastName || '',
-    dni: specialist?.dni || '',
-    email: specialist?.email || '',
-    speciality: specialist?.speciality || '',
-    street: specialist?.location?.street || '',
-    locality: specialist?.location?.locality || '',
-    province: specialist?.location?.province || '',
-    country: specialist?.location?.country || '',
+    firstName: specialist?.firstName || "",
+    lastName: specialist?.lastName || "",
+    dni: specialist?.dni || "",
+    email: specialist?.email || "",
+    speciality: specialist?.speciality || "",
+    street: specialist?.location?.street || "",
+    locality: specialist?.location?.locality || "",
+    province: specialist?.location?.province || "",
+    country: specialist?.location?.country || "",
   });
 
   const [errors, setErrors] = useState<ValidationErrors>({});
@@ -48,10 +58,9 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({ handleClose, specialist
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-
       const specialistData = {
         ...formData,
-        role: 'USER',
+        role: "USER",
         location: {
           street: formData.street,
           locality: formData.locality,
@@ -61,21 +70,23 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({ handleClose, specialist
       };
 
       if (specialist) {
-        await dispatch(updateSpecialist({ specialistDTO: specialistData, id: specialist.id }));
+        await dispatch(
+          updateSpecialist({ specialistDTO: specialistData, id: specialist.id })
+        );
       } else {
         await dispatch(addSpecialist(specialistData));
       }
 
       setFormData({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        email: '',
-        speciality: '',
-        street: '',
-        locality: '',
-        province: '',
-        country: '',
+        firstName: "",
+        lastName: "",
+        dni: "",
+        email: "",
+        speciality: "",
+        street: "",
+        locality: "",
+        province: "",
+        country: "",
       });
 
       handleClose();
@@ -84,7 +95,7 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({ handleClose, specialist
 
   const handleDelete = async (specialistID: number) => {
     if (specialist) {
-      await dispatch(deleteSpecialist(specialistID));
+      delete_Specialist(specialistID);
       handleClose();
     }
   };
@@ -92,7 +103,6 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({ handleClose, specialist
   React.useEffect(() => {
     dispatch(fetchLocations());
   }, [dispatch]);
-
 
   return (
     <form onSubmit={handleSubmit} className="form-container">

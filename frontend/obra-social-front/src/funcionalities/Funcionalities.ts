@@ -1,7 +1,7 @@
 import { DayOfWeek } from "../redux/type";
 import jsPDF from "jspdf";
 
-const dayOfWeekToIndex: { [key in DayOfWeek]: number } = {
+export const dayOfWeekToIndex: { [key in DayOfWeek]: number } = {
   [DayOfWeek.MONDAY]: 1,
   [DayOfWeek.TUESDAY]: 2,
   [DayOfWeek.WEDNESDAY]: 3,
