@@ -20,10 +20,9 @@ import { DayOfWeek, Shift } from "../../redux/type";
 import "./Form.css";
 import { parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
-<<<<<<< HEAD
-=======
+
 import { useAppContext } from "../../hooks/AppContext";
->>>>>>> develop
+
 
 interface FormShiftProps {
   handleClose: () => void;
@@ -211,11 +210,8 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
           </AccordionDetails>
         </Accordion>
       )}
-<<<<<<< HEAD
       <button type="submit"  className={shift ? "edit-button" : "add-button"}>
-=======
-      <button type="submit" className={shift ? "edit-button" : "add-button"}>
->>>>>>> develop
+
         {shift ? "Actualizar" : "Agregar"}
       </button>
       
