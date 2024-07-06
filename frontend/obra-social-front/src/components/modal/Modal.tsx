@@ -50,7 +50,13 @@ const BasicModal: React.FC<propModal> = ({
     <div>
       <button
         onClick={handleOpen}
-        className={name === "Gestionar" ? "edit-button" : "add-button"}
+        className={
+          name === "Gestionar"
+            ? "edit-button"
+            : name === "Contactate con Nosotros"
+            ? "send-button"
+            : "add-button"
+        }
       >
         {name}
       </button>

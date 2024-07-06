@@ -27,17 +27,15 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-image: url('./src/assets/fondoHospital2.jpg');
+  background-image: url("./src/assets/fondoHospital2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-#root
-{
-  min-height: 100vh;  
+#root {
+  min-height: 100vh;
 }
-
 
 h1 {
   font-size: 3.2em;
@@ -77,6 +75,7 @@ button:focus-visible {
 }
 
 .add-button {
+  padding-right: 40px;
   margin-top: 10px;
   width: 100%;
   border: none;
@@ -85,7 +84,7 @@ button:focus-visible {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
-  background-image: url('assets/icon-add.png');
+  background-image: url("assets/icon-add.png");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 25px 25px;
@@ -103,7 +102,7 @@ button:focus-visible {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
-  background-image: url('assets/icon-edit.png');
+  background-image: url("assets/icon-edit.png");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 25px 25px;
@@ -112,9 +111,7 @@ button:focus-visible {
   background-color: #bccdde;
 }
 
-
 .delete-button {
-
   margin-top: 10px;
   width: 100%;
   border: none;
@@ -123,14 +120,11 @@ button:focus-visible {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
-  background-color: #ff0000;  
-  background-image: url('assets/icon-delete.png');
+  background-color: #ff0000;
+  background-image: url("assets/icon-delete.png");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 25px 25px;
-  
-  
-  
 }
 
 .delete-button:hover {
@@ -146,11 +140,27 @@ button:focus-visible {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
-  background-image: url('assets/icon-download.png');
+  background-image: url("assets/icon-download.png");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 25px 25px;
 }
 .download-button:hover {
+  background-color: #bccdde;
+}
+
+.send-button {
+  margin-top: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 25px 25px;
+}
+.send-button:hover {
   background-color: #bccdde;
 }
