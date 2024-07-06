@@ -75,6 +75,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
     event.preventDefault();
     if (selectedSpecialist !== null && selectedDay !== null) {
       const time = selectedTime + ":00";
+
       const date = getClosestDate(selectedDay);
       const shiftDTO = {
         description,
@@ -84,6 +85,7 @@ const FormShift: React.FC<FormShiftProps> = ({ handleClose, shift }) => {
         specialistId: selectedSpecialist,
         affiliatedId: 1,
       };
+
       shift ? update_Shift(shiftDTO, shift.id) : add_Shift(shiftDTO);
 
       handleClose();

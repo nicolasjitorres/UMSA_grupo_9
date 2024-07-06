@@ -8,7 +8,7 @@ export const dayOfWeekToIndex: { [key in DayOfWeek]: number } = {
   [DayOfWeek.THURSDAY]: 4,
   [DayOfWeek.FRIDAY]: 5,
   [DayOfWeek.SATURDAY]: 6,
-  [DayOfWeek.SUNDAY]: 0, // Asegúrate de que domingo sea 0 para coincidir con getDay()
+  [DayOfWeek.SUNDAY]: 0,
 };
 
 export const dayIndexToDayOfWeek: { [key: number]: DayOfWeek } = {
@@ -28,13 +28,15 @@ export const getClosestDate = (day: DayOfWeek): string => {
   const todayIndex = today.getDay(); // El índice de hoy sin ajustes
 
   // Calcular los días hasta el próximo día de la semana deseado
-  const daysUntilNext = (dayIndex - todayIndex + 7) % 7;
+  let daysUntilNext = (dayIndex - todayIndex + 7) % 7;
 
   // Si daysUntilNext es 0, eso significa que hoy es el día deseado, así que debemos sumar 7 días para obtener el mismo día la próxima semana
-  const daysToAdd = daysUntilNext === 0 ? 7 : daysUntilNext;
+  if (daysUntilNext === 0 && dayIndex !== todayIndex) {
+    daysUntilNext = 7;
+  }
 
   const nextDate = new Date(today);
-  nextDate.setDate(today.getDate() + daysToAdd);
+  nextDate.setDate(today.getDate() + daysUntilNext - 1);
 
   return nextDate.toISOString().split("T")[0]; // Formato YYYY-MM-DD
 };

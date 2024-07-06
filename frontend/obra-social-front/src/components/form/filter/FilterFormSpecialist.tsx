@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import './FilterForm.css';
-import { useAppContext } from '../../../hooks/AppContext';
-import { RootState } from '../../../redux/store/store';
-import { useSelector } from 'react-redux';
-import { fetchSpecialities } from '../../../redux/slices/SpecialitySlice';
+import React, { useEffect, useState } from "react";
+import "./FilterForm.css";
+import { useAppContext } from "../../../hooks/AppContext";
+import { RootState } from "../../../redux/store/store";
+import { useSelector } from "react-redux";
+import { fetchSpecialities } from "../../../redux/slices/SpecialitySlice";
 
 const FilterForm: React.FC = () => {
   const { filterSpecialists } = useAppContext();
-  const specialities = useSelector((state: RootState) => state.specialities.specialities);
+  const specialities = useSelector(
+    (state: RootState) => state.specialities.specialities
+  );
   const [dni, setDni] = useState("");
   const [name, setName] = useState("");
   const [speciality, setSpeciality] = useState("");
 
   useEffect(() => {
     fetchSpecialities();
-    console.log(specialities);
   }, []);
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -22,7 +23,9 @@ const FilterForm: React.FC = () => {
     filterSpecialists(dni, name, speciality);
   };
 
-  const handleSpecialityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSpecialityChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setSpeciality(event.target.value);
   };
 
@@ -56,13 +59,17 @@ const FilterForm: React.FC = () => {
             onChange={handleSpecialityChange}
           >
             <option value="">Seleccione una especialidad</option>
-            {Array.isArray(specialities) && specialities.map((speciality, index) => (
-              <option key={index} value={speciality}>{speciality.replace("_", " ")}</option>
-            ))}
+            {Array.isArray(specialities) &&
+              specialities.map((speciality, index) => (
+                <option key={index} value={speciality}>
+                  {speciality.replace("_", " ")}
+                </option>
+              ))}
           </select>
-
         </div>
-        <button type="submit" className="filter-button">Filtrar</button>
+        <button type="submit" className="filter-button">
+          Filtrar
+        </button>
       </form>
     </div>
   );

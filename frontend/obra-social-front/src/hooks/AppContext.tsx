@@ -199,23 +199,27 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setFilteredSpecialists(filteredSpec);
   };
 
-  const filterShifts = (name: string, hora: string, day: string) => {
-    if (name === "" && hora === "" && day === "") {
-      setFilteredShift(shifts);
+  const filterShifts = (name: string, hora: string, date: string) => {
+    if (name === "" && hora === "" && date === "") {
+      setFilteredShift([]);
       return;
     }
-    const specialist = specialists.find((specialist) => {
-      const fullName = `${specialist.firstName} ${specialist.lastName}`
-        .toLowerCase()
-        .trim();
-      return name === "" || fullName.includes(name.toLowerCase().trim());
-    });
+
+    let specialist: Specialist | undefined;
+    if (name !== "") {
+      specialist = specialists.find((specialist) => {
+        const fullName = `${specialist.firstName} ${specialist.lastName}`
+          .toLowerCase()
+          .trim();
+        return fullName.includes(name.toLowerCase().trim());
+      });
+    }
 
     const filtered = shifts.filter((shift) => {
       return (
         (!specialist || shift.specialistId === specialist?.id) &&
         (hora === "" || shift.time.includes(hora)) &&
-        (day === "" || shift.date.includes(day))
+        (date === "" || shift.date.includes(date))
       );
     });
 

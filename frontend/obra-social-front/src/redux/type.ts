@@ -21,16 +21,16 @@ export interface Specialist {
 }
 
 export enum Speciality {
-  CARDIOLOGY = "Cardiology",
-  DERMATOLOGY = "Dermatology",
-  ENDOCRINOLOGY = "Endocrinology",
-  ONCOLOGY = "Oncology",
-  ORTHOPEDICS = "Orthopedics",
-  UROLOGY = "Urology",
-  ODONTOLOGY = "Odontology",
-  NEUROLOGY = "Neurology",
-  HEMATOLOGY = "Hematology",
-  GENERALMEDICINE = "General Medicine",
+  CARDIOLOGÍA = "Cardiología",
+  DERMATOLOGÍA = "Dermatología",
+  ENDOCRINOLOGÍA = "Endocrinología",
+  ONCOLOGÍA = "Oncología",
+  ORTOPEDÍA = "Ortopedia",
+  UROLOGÍA = "Urología",
+  ODONTOLOGÍA = "Odontología",
+  NEUROLOGÍA = "Neurología",
+  HEMATOLOGÍA = "Hematología",
+  MEDICINAGENERAL = "Medicina General",
 }
 
 export enum DayOfWeek {
