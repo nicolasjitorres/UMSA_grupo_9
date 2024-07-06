@@ -22,7 +22,7 @@
 //        return Session.getInstance(props, new javax.mail.Authenticator() {
 //            @Override
 //            protected PasswordAuthentication getPasswordAuthentication() {
-//                return new PasswordAuthentication("kuznikjavier@gmail.com", "izzo ubdk qyap xsjh");
+//                return new PasswordAuthentication("@gmail.com", "izzo ubdk qyap xsjh");
 //            }
 //        });
 //    }

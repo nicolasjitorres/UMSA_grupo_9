@@ -53,9 +53,11 @@ const BasicModal: React.FC<propModal> = ({
         className={
           name === "Gestionar"
             ? "edit-button"
-            : name === "Contactate con Nosotros"
-            ? "send-button"
-            : "add-button"
+            : name === "Agregar"
+            ? "add-button"
+            : name === "Contacto"
+            ? "contact-button"
+            : ""
         }
       >
         {name}

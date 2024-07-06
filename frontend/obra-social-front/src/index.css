@@ -43,124 +43,60 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+  border-radius: 4px;
+  border: none;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #007bff;
   cursor: pointer;
   transition: border-color 0.25s;
+  transition: background-color 0.3s;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 25px 25px;
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+  background-color: #bccdde;
+  color: #747bff;
 }
 
 .add-button {
-  padding-right: 40px;
-  margin-top: 10px;
   width: 100%;
-  border: none;
-  border-radius: 4px;
   background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
   background-image: url("assets/icon-add.png");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 25px 25px;
-}
-.add-button:hover {
-  background-color: #bccdde;
 }
 
 .edit-button {
-  margin-top: 10px;
   width: 100%;
-  border: none;
-  border-radius: 4px;
   background-color: #014996;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
   background-image: url("assets/icon-edit.png");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 25px 25px;
 }
-.edit-button:hover {
-  background-color: #bccdde;
+.filter-button {
+  width: 100%;
+  margin-top: 20px;
+  background-image: url("assets/icon-filter.png");
+}
+.contact-button {
+  width: 100%;
+  margin-top: 20px;
+  background-image: url("assets/icon-contact.png");
+}
+.download-button {
+  width: 100%;
+  background-color: #019396;
+  background-image: url("assets/icon-download.png");
 }
 
 .delete-button {
-  margin-top: 10px;
   width: 100%;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
   background-color: #ff0000;
   background-image: url("assets/icon-delete.png");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 25px 25px;
 }
-
 .delete-button:hover {
-  background-color: #fe7979;
-}
-
-.download-button {
-  margin-top: 10px;
-  width: 100%;
-  border: none;
-  border-radius: 4px;
-  background-color: #019396;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  background-image: url("assets/icon-download.png");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 25px 25px;
-}
-.download-button:hover {
-  background-color: #bccdde;
-}
-
-.send-button {
-  margin-top: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 25px 25px;
-}
-.send-button:hover {
-  background-color: #bccdde;
+  background-color: #ffb8b8;
 }
