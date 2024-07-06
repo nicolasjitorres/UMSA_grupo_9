@@ -15,10 +15,11 @@ import FormAffiliate from "../form/FormAffiliate";
 import FormSchedule from "../form/FormSchedule";
 import FormPrescription from "../form/FormPrescription";
 import FormEmailSender from "../form/FormEmailSender";
+import FormServices from "../form/FormServices";
 
 interface propModal {
   name: string;
-  title: string;
+  title?: string;
   proveniencia: string;
   shift?: Shift;
   affiliate?: Affiliate;
@@ -55,8 +56,6 @@ const BasicModal: React.FC<propModal> = ({
             ? "edit-button"
             : name === "Agregar"
             ? "add-button"
-            : name === "Contacto"
-            ? "contact-button"
             : ""
         }
       >
@@ -97,6 +96,8 @@ const BasicModal: React.FC<propModal> = ({
             />
           )}
           {proveniencia === "contacto" && <FormEmailSender />}
+
+          {proveniencia === "servicios" && <FormServices />}
         </div>
       </Modal>
     </div>
