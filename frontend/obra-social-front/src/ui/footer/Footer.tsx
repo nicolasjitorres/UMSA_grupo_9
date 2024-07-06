@@ -1,7 +1,13 @@
 import React from "react";
 import "./Footer.css";
-
+import { useLocation } from "react-router-dom";
 const Footer: React.FC = () => {
+  const location = useLocation();
+  const hideFooterPaths = ["/"];
+
+  if (hideFooterPaths.includes(location.pathname)) {
+    return null;}
+
   return (
     <footer className="footer">
       <div className="footer-content">
