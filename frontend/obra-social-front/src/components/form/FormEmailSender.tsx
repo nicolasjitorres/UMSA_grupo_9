@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, Container } from "@mui/material";
+import { TextField, Container } from "@mui/material";
 import { useAppContext } from "../../hooks/AppContext";
 
 const FormEmailSender: React.FC = () => {
@@ -12,7 +12,6 @@ const FormEmailSender: React.FC = () => {
       email,
       message,
     };
-    console.log(emailDTO);
     emailSender(emailDTO);
   };
 
@@ -20,6 +19,7 @@ const FormEmailSender: React.FC = () => {
     <Container>
       <form onSubmit={handleSubmit}>
         <TextField
+          className="form-field"
           fullWidth
           label="Email"
           value={email}
@@ -29,6 +29,7 @@ const FormEmailSender: React.FC = () => {
         />
         <TextField
           fullWidth
+          className="form-field"
           label="Mensaje"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
@@ -37,9 +38,9 @@ const FormEmailSender: React.FC = () => {
           rows={4}
           required
         />
-        <Button type="submit" variant="contained" color="primary">
+        <button className="contact-button" type="submit">
           Enviar
-        </Button>
+        </button>
       </form>
     </Container>
   );

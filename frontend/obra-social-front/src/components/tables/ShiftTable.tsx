@@ -23,10 +23,10 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "descripcion", align: "center", label: "Descripcion", minWidth: 100 },
-  { id: "dia", label: "Dia", minWidth: 100, align: "center" },
-  { id: "hora", label: "Hora", minWidth: 100, align: "center" },
-  { id: "espcialista", label: "espcialista", minWidth: 100, align: "center" },
+  { id: "descripcion", align: "center", label: "Descripción", minWidth: 100 },
+  { id: "dia", label: "Día", minWidth: 100, align: "center" },
+  { id: "hora", label: "Horario", minWidth: 100, align: "center" },
+  { id: "espcialista", label: "Espcialista", minWidth: 100, align: "center" },
   { id: "acciones", label: "Acciones", minWidth: 100, align: "center" },
   { id: "receta", label: "Receta", minWidth: 100, align: "center" },
 ];
