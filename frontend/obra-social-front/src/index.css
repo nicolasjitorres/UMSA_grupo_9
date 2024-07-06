@@ -27,17 +27,15 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-image: url('./src/assets/fondoHospital2.jpg');
+  background-image: url("./src/assets/fondoHospital2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-#root
-{
-  min-height: 100vh;  
+#root {
+  min-height: 100vh;
 }
-
 
 h1 {
   font-size: 3.2em;
@@ -61,7 +59,6 @@ button {
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 25px 25px;
-  
 }
 button:hover {
   background-color: #bccdde;
@@ -71,37 +68,35 @@ button:hover {
 .add-button {
   width: 100%;
   background-color: #007bff;
-  background-image: url('assets/icon-add.png');
-
+  background-image: url("assets/icon-add.png");
 }
 
 .edit-button {
   width: 100%;
   background-color: #014996;
-  background-image: url('assets/icon-edit.png');
+  background-image: url("assets/icon-edit.png");
 }
 .filter-button {
   width: 100%;
   margin-top: 20px;
-  background-image: url('assets/icon-filter.png');
+  background-image: url("assets/icon-filter.png");
 }
 .contact-button {
   width: 100%;
   margin-top: 20px;
-  background-image: url('assets/icon-contact.png');
+  background-image: url("assets/icon-contact.png");
 }
 .download-button {
   width: 100%;
   background-color: #019396;
-  background-image: url('assets/icon-download.png');
+  background-image: url("assets/icon-download.png");
 }
 
 .delete-button {
   width: 100%;
-  background-color: #ff0000;  
-  background-image: url('assets/icon-delete.png');
+  background-color: #ff0000;
+  background-image: url("assets/icon-delete.png");
 }
 .delete-button:hover {
   background-color: #ffb8b8;
 }
-

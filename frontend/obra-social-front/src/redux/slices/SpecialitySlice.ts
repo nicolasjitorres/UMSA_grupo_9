@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { handleAxiosError } from "../../components/Errors/AxiosErrorHandler";
 
 interface SpecialitiesState {
   specialities: string[];
@@ -17,14 +16,10 @@ const initialState: SpecialitiesState = {
 export const fetchSpecialities = createAsyncThunk(
   "specialities/fetchSpecialities",
   async () => {
-    try {
-      const response = await axios.get<string[]>(
-        "http://localhost:8080/enums/especialidades"
-      );
-      return response.data;
-    } catch (error: unknown) {
-      throw new Error(handleAxiosError(error, "Error al obtener las especialidades"));
-    }
+    const response = await axios.get<string[]>(
+      "http://localhost:8080/enums/especialidades"
+    );
+    return response.data;
   }
 );
 
@@ -37,13 +32,17 @@ const specialitiesSlice = createSlice({
       .addCase(fetchSpecialities.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchSpecialities.fulfilled, (state, action: PayloadAction<string[]>) => {
-        state.status = "succeeded";
-        state.specialities = action.payload;
-      })
+      .addCase(
+        fetchSpecialities.fulfilled,
+        (state, action: PayloadAction<string[]>) => {
+          state.status = "succeeded";
+          state.specialities = action.payload;
+        }
+      )
       .addCase(fetchSpecialities.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message || "Algo salió mal al cargar las especialidades";
+        state.error =
+          action.error.message || "Algo salió mal al cargar las especialidades";
       });
   },
 });

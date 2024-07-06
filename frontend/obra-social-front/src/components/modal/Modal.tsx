@@ -47,17 +47,18 @@ const BasicModal: React.FC<propModal> = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
-
   return (
     <div>
-    <button onClick={handleOpen} className={
+      <button
+        onClick={handleOpen}
+        className={
           name === "Gestionar"
             ? "edit-button"
             : name === "Agregar"
             ? "add-button"
-            :""
-        }>
+            : ""
+        }
+      >
         {name}
       </button>
 
@@ -94,11 +95,9 @@ const BasicModal: React.FC<propModal> = ({
               handleClose={handleClose}
             />
           )}
-          {proveniencia === "contacto" && (<FormEmailSender />)}
+          {proveniencia === "contacto" && <FormEmailSender />}
 
           {proveniencia === "servicios" && <FormServices />}
-
-          
         </div>
       </Modal>
     </div>

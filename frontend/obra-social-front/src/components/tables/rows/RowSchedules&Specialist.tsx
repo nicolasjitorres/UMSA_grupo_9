@@ -60,14 +60,14 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
         <TableCell align="center">
           {`${specialist.location.street}, ${specialist.location.locality}, ${specialist.location.province}, ${specialist.location.country}`}
         </TableCell>
-        <TableCell align="center" style={{ minWidth: 170 }}>  
+        <TableCell align="center" style={{ minWidth: 170 }}>
           <BasicModal
             name="Gestionar"
             title="Actualizar Especialista"
             specialist={specialist}
             proveniencia="specialist"
           />
-      </TableCell>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -82,7 +82,13 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
                   }}
                 >
                   Schedule
-                  <div style={{ marginLeft: "10px" }}>
+                  <div
+                    style={{
+                      marginLeft: "10px",
+                      paddingRight: "40px",
+                      width: "150px",
+                    }}
+                  >
                     <AddSchedulesButton specialistID={specialist.id} />
                   </div>
                 </div>
@@ -107,7 +113,7 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
                         <TableCell align="right">{schedule.endTime}</TableCell>
                         <TableCell align="right">
                           <BasicModal
-                            name="Editar"
+                            name="Gestionar"
                             title="Actualizar horario"
                             schedule={schedule}
                             proveniencia="schedules"

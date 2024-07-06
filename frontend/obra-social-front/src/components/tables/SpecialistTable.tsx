@@ -32,7 +32,8 @@ const SpecialistList: React.FC = () => {
     setPage(0);
   };
 
-  const dataToShow = filteredSpecialists.length > 0 ? filteredSpecialists : specialists;
+  const dataToShow =
+    filteredSpecialists.length > 0 ? filteredSpecialists : specialists;
 
   return (
     <Paper
@@ -48,10 +49,10 @@ const SpecialistList: React.FC = () => {
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Nombre</TableCell>
               <TableCell align="center">DNI</TableCell>
-              <TableCell align="center">Speciality</TableCell>
-              <TableCell align="center">Location</TableCell>
+              <TableCell align="center">Especilidad</TableCell>
+              <TableCell align="center">Ubicacion</TableCell>
               <TableCell align="center">Acciones</TableCell>
             </TableRow>
           </TableHead>

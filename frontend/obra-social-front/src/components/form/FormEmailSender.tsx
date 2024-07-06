@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Container } from "@mui/material";
 import { useAppContext } from "../../hooks/AppContext";
-
+import "./Form.css";
 const FormEmailSender: React.FC = () => {
   const { emailSender } = useAppContext();
   const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ const FormEmailSender: React.FC = () => {
 
   return (
     <Container>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-container">
         <TextField
           className="form-field"
           fullWidth
