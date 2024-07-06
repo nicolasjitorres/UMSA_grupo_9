@@ -13,7 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import fondoImagen from '../../assets/fondoHospital.jpg';
+import fondoImagen from '../../assets/fondo.jpg';
+import iconoImagen from '../../assets/icon.png'; // Ruta a tu imagen grande
+
 
 function Copyright() {
   return (
@@ -43,19 +45,44 @@ const SignInSide: React.FC = () => {
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: `url(${fondoImagen})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
+      item
+      xs={false}
+      sm={4}
+      md={7}
+      sx={{
+        backgroundImage: `url(${fondoImagen})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: (t) =>
+          t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        height: '100vh', // Ajusta la altura según necesites
+        position: 'relative', // Asegura que los elementos internos se posicionen correctamente
+      }}
+    >
+      <Typography variant="h1" color="white"  marginBottom='50%'sx={{ fontWeight: 'bold', textShadow: '2px 2px 4px rgba(0,0,0,0.4)' }}>
+        Obra Social AlMedin
+      </Typography>
+      <img
+        src={iconoImagen}
+        alt="Icono grande"
+        style={{
+          maxWidth: '15%',
+          position: 'absolute',
+          bottom: '10px',
+          right: '10px',
+          marginBottom:'20px',
+          marginRight:'20px',
+        }}
+      />
+    </Grid>
+
+
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
