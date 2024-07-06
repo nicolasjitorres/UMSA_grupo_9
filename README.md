@@ -159,17 +159,27 @@ Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
 
 ### Funcionalidades
 
-- **Inicio de sesión**: Permite a los usuarios autenticarse en el sistema, momentaneamente el login solo está hecho visualmente sin logica pero la idea es dejarlo preparado para incorporar usuarios y permisos (JWT de fondo).
-- **Gestión de Afiliados**: Listado, creación, edición y eliminación de afiliados.
-- **Gestión de Especialistas**: Listado, creación, edición y eliminación de especialistas.
-- **Gestión de Turnos**: Agendar, modificar y cancelar turnos.
-- **Gestión de Recetas Médicas**: Creación, modificación, eliminición y visualización de recetas médicas.
-- **Consulta de Horarios**: Visualización de los horarios disponibles para los especialistas.
-
-### Capturas de Pantalla
-
+ **Inicio de sesión**: Permite a los usuarios autenticarse en el sistema, momentaneamente el login solo está hecho visualmente sin logica pero la idea es dejarlo preparado para incorporar usuarios y permisos (JWT de fondo).
 ![Login](docs/login.png)
+
 *Pantalla de Inicio de Sesión*
+
+Luego de iniciar sesión se redirige al Home donde tenemos información básica de la web.
+
+![home](docs/home.png)
+*Home*
+
+Tiene 2 modales que muestra la siguiente información.
+
+![servicios](docs/servicios.png)
+*Servicios ofrecidos por la Obra Social*
+
+
+![contacto](docs/contacto.png)
+*Contacto de la obra social*
+
+
+ **Gestión de Afiliados**: Listado, creación, edición y eliminación de afiliados.
 
 ![Afiliados](docs/afiliados.png)
 *Gestión de afiliados*
@@ -183,8 +193,18 @@ Los campos tienen las validaciones correspondientes, en este caso se muestra el 
 *Actualizar de afiliados*
 
 
+- **Gestión de Especialistas**: Listado, creación, edición y eliminación de especialistas.
+
 ![Especialistas](docs/Especialistas.png)
 *Gestión de Especialistas*
+
+
+- **Consulta de Horarios**: Cada especialista tiene un horario de atención, el mismo se podrá gestionar en este apartado indicando el dia y el horario de trabajo.
+
+![Horarios](docs/horarios.png)
+*Gestión de horarios de un especialista*
+
+- **Gestión de Turnos**: Agendar, modificar y cancelar turnos.
 
 ![turnos](docs/turnos.png)
 *Gestión de Turnos*
@@ -192,18 +212,19 @@ Los campos tienen las validaciones correspondientes, en este caso se muestra el 
 ![turnos](docs/actualizarTurno.png)
 *Actualizar Turnos*
 
+
+- **Gestión de Recetas Médicas**: Creación, modificación, eliminición y visualización de recetas médicas.
+
+
 ![receta](docs/receta.png)
 *Gestión de Recetas*
 
-![home](docs/home.png)
-*Home*
-
-![servicios](docs/servicios.png)
-*Servicios ofrecidos por la Obra Social*
 
 
-![contacto](docs/contacto.png)
-*Contacto de la obra social*
+
+
+
+
 
 
 ## ¡Terminamos!

@@ -81,7 +81,7 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
                     justifyContent: "flex-start",
                   }}
                 >
-                  Schedule
+                 Horarios
                   <div
                     style={{
                       marginLeft: "10px",
