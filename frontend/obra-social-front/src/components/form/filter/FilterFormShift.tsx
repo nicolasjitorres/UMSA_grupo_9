@@ -19,7 +19,7 @@ const FilterForm: React.FC = () => {
       <h2>Buscar por</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="filter-id-specialist">Especialista:</label>
+          <label htmlFor="filter-id-specialist">Nombre del especialista:</label>
           <input
             type="text"
             id="filter-dni"
@@ -28,7 +28,7 @@ const FilterForm: React.FC = () => {
           />
         </div>
         <div>
-          <label htmlFor="filter-id-affiliate">hora</label>
+          <label htmlFor="filter-id-affiliate">Horario</label>
           <input
             type="text"
             id="filter-dni"
@@ -37,7 +37,7 @@ const FilterForm: React.FC = () => {
           />
         </div>
         <div>
-          <label htmlFor="filter-id-affiliate">dia</label>
+          <label htmlFor="filter-id-affiliate">Día</label>
           <input
             type="text"
             id="filter-dni"

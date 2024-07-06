@@ -11,7 +11,7 @@ const AddPrescription: React.FC<AddPrescriptionProps> = ({
   return (
     <>
       <BasicModal
-        name="Agregar Receta"
+        name="Agregar"
         proveniencia="receta"
         title="Agregar Receta"
         shiftID={shiftID}
