@@ -82,7 +82,13 @@ const RowSchedulesSpecialist: React.FC<RowProps> = ({ specialist }) => {
                   }}
                 >
                   Schedule
-                  <div style={{ marginLeft: "10px", paddingRight: "40px" }}>
+                  <div
+                    style={{
+                      marginLeft: "10px",
+                      paddingRight: "40px",
+                      width: "150px",
+                    }}
+                  >
                     <AddSchedulesButton specialistID={specialist.id} />
                   </div>
                 </div>

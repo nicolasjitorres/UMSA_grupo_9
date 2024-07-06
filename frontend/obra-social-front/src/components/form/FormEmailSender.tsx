@@ -26,7 +26,6 @@ const FormEmailSender: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
           margin="normal"
           required
-          className="form-field"
         />
         <TextField
           fullWidth
@@ -38,7 +37,6 @@ const FormEmailSender: React.FC = () => {
           multiline
           rows={4}
           required
-          className="form-field"
         />
         <button className="contact-button" type="submit">
           Enviar

@@ -34,13 +34,13 @@ export enum Speciality {
 }
 
 export enum DayOfWeek {
-  SUNDAY = "SUNDAY",
-  MONDAY = "MONDAY",
-  TUESDAY = "TUESDAY",
-  WEDNESDAY = "WEDNESDAY",
-  THURSDAY = "THURSDAY",
-  FRIDAY = "FRIDAY",
-  SATURDAY = "SATURDAY",
+  DOMINGO = "DOMINGO",
+  LUNES = "LUNES",
+  MARTES = "MARTES",
+  MIERCOLES = "MIERCOLES",
+  JUEVES = "JUEVES",
+  VIERNES = "VIERNES",
+  SABADO = "SABADO",
 }
 
 export interface Schedule {
