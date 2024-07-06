@@ -100,11 +100,117 @@ Cada método devuelve un código de estado HTTP diferente según sea necesario. 
 - **400**: Error debido a alguna validación.
 - **404**: Se ha proporcionado una ID de alguna entidad que no existe en el sistema.
 
+## Frontend
+
+El frontend de este proyecto ha sido desarrollado utilizando React y TypeScript, proporcionando una interfaz de usuario moderna y fácil de usar para interactuar con la API de la obra social.
+
+### Tecnologías
+
+- **React**: Biblioteca de JavaScript para construir interfaces de usuario.
+- **TypeScript**: Lenguaje de programación que se basa en JavaScript y añade tipos estáticos.
+- **Material-UI**: Biblioteca de componentes de interfaz de usuario para React.
+- **Redux**: Biblioteca para el manejo del estado global de la aplicación.
+- **Vite**: Herramienta de construcción rápida para proyectos de frontend.
+- **Axios**: Para hacer peticiones HTTP a la API.
+
+
+### Dependencias Utilizadas
+
+- **redux-toolkit**: Herramientas y utilidades para simplificar el uso de Redux.
+- **date-fns**: Librería moderna para manejo de fechas en JavaScript. Ofrece funciones para el parseo, manipulación y formateo de fechas, así como para trabajar con zonas horarias.
+- **jspdf**: Biblioteca JavaScript para generar documentos PDF de manera dinámica en el navegador. Permite la creación de documentos PDF con texto, imágenes y gráficos generados desde datos en formato JSON.
+- **sweetalert2**: Biblioteca para mostrar ventanas modales de alerta, confirmación y entrada de forma elegante y personalizable en aplicaciones web. Ofrece una experiencia de usuario mejorada en comparación con los diálogos estándar del navegador.
+- **yup**: Para validación de formularios.
+- **material-ui/icons**: Iconos para la interfaz de usuario.
+
+### Estructura del Proyecto
+
+El proyecto sigue una estructura organizada por componentes y características, facilitando su mantenimiento y escalabilidad:
+
+- **components**: Componentes reutilizables en la aplicación.
+- **pages**: Páginas principales de la aplicación.
+- **redux**: Configuración y slices de Redux.
+- **routes**: Definición de rutas de la aplicación.
+- **services**: Servicios para interactuar con la API.
+- **hooks**: Custom hooks para lógica reutilizable.
+
+### Instalación y Ejecución del Proyecto
+
+Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
+
+
+1. **Navegar al directorio del frontend:**
+
+    ```bash
+    cd frontend
+    ```
+
+2. **Instalar las dependencias:**
+
+    ```bash
+    npm install
+    ```
+
+3. **Iniciar la aplicación:**
+
+    ```bash
+    npm run dev
+    ```
+
+### Funcionalidades
+
+- **Inicio de sesión**: Permite a los usuarios autenticarse en el sistema, momentaneamente el login solo está hecho visualmente sin logica pero la idea es dejarlo preparado para incorporar usuarios y permisos (JWT de fondo).
+- **Gestión de Afiliados**: Listado, creación, edición y eliminación de afiliados.
+- **Gestión de Especialistas**: Listado, creación, edición y eliminación de especialistas.
+- **Gestión de Turnos**: Agendar, modificar y cancelar turnos.
+- **Gestión de Recetas Médicas**: Creación, modificación, eliminición y visualización de recetas médicas.
+- **Consulta de Horarios**: Visualización de los horarios disponibles para los especialistas.
+
+### Capturas de Pantalla
+
+![Login](docs/login.png)
+*Pantalla de Inicio de Sesión*
+
+![Afiliados](docs/afiliados.png)
+*Gestión de afiliados*
+
+
+Los campos tienen las validaciones correspondientes, en este caso se muestra el caso de no poder ingresar campos vacíos.
+![Afiliados-agregar](docs/agregar-afiliado.png)
+*Agregar de afiliados*
+
+![Afiliados-Actualizar](docs/Actualizar-afiliado.png)
+*Actualizar de afiliados*
+
+
+![Especialistas](docs/Especialistas.png)
+*Gestión de Especialistas*
+
+![turnos](docs/turnos.png)
+*Gestión de Turnos*
+
+![turnos](docs/actualizarTurno.png)
+*Actualizar Turnos*
+
+![receta](docs/receta.png)
+*Gestión de Recetas*
+
+![home](docs/home.png)
+*Home*
+
+![servicios](docs/servicios.png)
+*Servicios ofrecidos por la Obra Social*
+
+
+![contacto](docs/contacto.png)
+*Contacto de la obra social*
+
+
 ## ¡Terminamos!
 
 Cualquier duda o recomendación que quieran a hacer pueden hacerla y responderemos a la brevedad.
 
-¡Gracias por visitar nuestra API de Obra Social, proximamente llega el frontend!
+¡Gracias por visitar nuestro proyecto FullStack de la Obra Social Almedin!
 
 
 ![LogoSofttekUmsa](docs/logoUMSA.png)
