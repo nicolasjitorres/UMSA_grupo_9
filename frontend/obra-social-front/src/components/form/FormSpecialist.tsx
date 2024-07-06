@@ -1,7 +1,7 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import { TextField } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../redux/store/store";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { TextField, Select, MenuItem, FormControl, InputLabel, SelectChangeEvent } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store/store";
 import {
   validateFormSpecialist,
   ValidationErrors,
@@ -11,6 +11,7 @@ import {
   updateSpecialist,
 } from "../../redux/slices/SpecialistSlice";
 import { fetchLocations } from "../../redux/slices/LocationSlice";
+import { fetchSpecialities } from "../../redux/slices/SpecialitySlice"; // Importar la acción para obtener especialidades
 import { Specialist } from "../../redux/type";
 import { useAppContext } from "../../hooks/AppContext";
 
@@ -39,7 +40,23 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({
   const [errors, setErrors] = useState<ValidationErrors>({});
   const dispatch = useDispatch<AppDispatch>();
 
+  // Obtener el estado de las especialidades desde Redux
+  const specialities = useSelector((state: RootState) => state.specialities.specialities);
+
+  useEffect(() => {
+    dispatch(fetchLocations());
+    dispatch(fetchSpecialities()); // Despachar la acción para obtener especialidades
+  }, [dispatch]);
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
@@ -100,10 +117,6 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({
     }
   };
 
-  React.useEffect(() => {
-    dispatch(fetchLocations());
-  }, [dispatch]);
-
   return (
     <form onSubmit={handleSubmit} className="form-container">
       <TextField
@@ -150,15 +163,25 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({
         helperText={errors.email}
         className="form-field"
       />
-      <TextField
-        fullWidth
-        label="Especialidad"
-        name="speciality"
-        value={formData.speciality}
-        onChange={handleInputChange}
-        margin="normal"
-        className="form-field"
-      />
+      <FormControl fullWidth margin="normal" className="form-field">
+        <InputLabel id="speciality-label">Especialidad</InputLabel>
+        <Select
+          labelId="speciality-label"
+          id="speciality"
+          name="speciality"
+          value={formData.speciality}
+          onChange={handleSelectChange}
+        >
+          <MenuItem value="">
+            <em>Seleccione una especialidad</em>
+          </MenuItem>
+          {specialities.map((speciality) => (
+            <MenuItem key={speciality} value={speciality}>
+              {speciality.replace("_", " ")}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <TextField
         fullWidth
         label="Calle"
