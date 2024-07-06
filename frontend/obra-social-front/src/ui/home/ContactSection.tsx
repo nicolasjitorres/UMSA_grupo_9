@@ -11,7 +11,7 @@ const ContactSection: React.FC = () => {
       <BasicModal
         title="Contacto"
         proveniencia="contacto"
-        name="Contacte con Nosotros"
+        name="Contactate con Nosotros"
       />
     </section>
   );
