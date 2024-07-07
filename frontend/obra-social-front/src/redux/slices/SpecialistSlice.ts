@@ -72,9 +72,17 @@ export const updateSpecialist = createAsyncThunk(
 //delete especialista
 export const deleteSpecialist = createAsyncThunk(
   "specialist/deleteSpecialist",
-  async (specialistId: number) => {
-    await axios.delete(`http://localhost:8080/especialistas/${specialistId}`);
-    return specialistId;
+  async ({ specialistId }: { specialistId: number }, { rejectWithValue }) => {
+    try {
+      await axios.delete(`http://localhost:8080/especialistas/${specialistId}`);
+      return specialistId;
+    } catch (error: unknown) {
+      const errorMessage = handleAxiosError(
+        error,
+        "Error al eliminar el especialista"
+      );
+      return rejectWithValue(errorMessage);
+    }
   }
 );
 
