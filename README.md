@@ -1,16 +1,37 @@
 # Proyecto de Obra Social - Academia Java + React + Quarkus
 
 
+## Índice
 
+1. [Introducción](#introducción)
+2. [Integrantes del Proyecto](#integrantes-del-proyecto)
+3. [Entidades creadas](#entidades-creadas)
+4. [Backend](#backend)
+    - [Tecnologias](#tecnologías)
+    - [Dependencias utilizadas](#dependencias-utilizadas)
+    - [Estructura del Proyecto](#estructura-del-proyecto)
+    - [Implementación de los servicios](#implementación-de-los-servicios)
+    - [Requisitos](#requisitos)
+    - [Instrucciones para Ejecutar el Proyecto](#instrucciones-para-ejecutar-el-proyecto)
+    - [Implementación del Swagger](#implementación-del-swagger)
+
+5. [Frontend](#frontend)
+    - [Tecnologías](#tecnologías-1)
+    - [Dependencias Utilizadas](#dependencias-utilizadas-1)
+    - [Estructura del Proyecto](#estructura-del-proyecto-1)
+    - [Instalación y Ejecución del Proyecto](#instalación-y-ejecución-del-proyecto)
+    - [Funcionalidades](#funcionalidades)
+6. [Terminamos](#terminamos)
+
+## Introducción
 Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java + React 2024 de UMSA con Softtek y hemos creado este proyecto modelando una obra social. Esta obra social tiene afiliados, especialistas, turnos y recetas medicas, permitiendo que un afiliado pueda sacar un turno relacionado a un especialista específico. Se ha creado una API la cual está documentada utilizando Swagger y se proporciona una colección de Postman para facilitar las pruebas. También se proporciona el correspondiente frontend para la utilización de la misma.
+
 
 ## Integrantes del Proyecto
 
 - **Javier Kuznik**
 - **Nicolas Torres**
 - **Joaquin Muñoz**
-
-# Backend
 
 ## Entidades creadas
 
@@ -22,6 +43,8 @@ Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java +
 - **Horarios**
 
 ![Entidades](docs/Diagrama.png)
+
+# Backend
 
 ## Tecnologías
 
@@ -162,6 +185,21 @@ Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
 
 ### Funcionalidades
 
+- **Gestión de Afiliados**: Permite la visualización, creación, edición y eliminación de afiliados. En el listado de afiliados se muestra información relevante como nombre, apellido, DNI y correo electrónico.
+
+- **Gestión de Especialistas**: Permite la visualización, creación, edición y eliminación de especialistas.
+
+
+- **Gestión de Horarios**: Cada especialista tiene un horario de atención, el cual se puede gestionar en este apartado, indicando el día y el horario de trabajo.
+
+
+- **Gestión de Turnos**: Permite la creación, modificación, eliminación y visualización de turnos, junto a la posibilidad de gestionar la respectiva receta del mismo. En caso de que el turno no tenga receta, se podrá agregar una nueva. Si ya tiene una receta, se puede gestionar o descargar.
+
+  Al seleccionar el botón para editar el turno, se podrá cambiar al especialista, el dia y el horario según la disponibilidad.
+
+
+- **Gestión de Recetas Médicas**: Permite la creación, modificación, eliminación y visualización de recetas médicas junto a su posible descarga.
+
 - **Inicio de sesión**: Permite a los usuarios autenticarse en el sistema. Momentáneamente, el login solo está hecho visualmente sin lógica, para el uso de un administrador pero la idea es dejarlo preparado para incorporar usuarios y permisos (JWT de fondo).
 
   ![Login](docs/login.png)
@@ -201,22 +239,6 @@ Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
 Todas las tablas tienen filtros para una busqueda más efectiva de los datos
 
 
-- **Gestión de Afiliados**: Permite la visualización, creación, edición y eliminación de afiliados. En el listado de afiliados se muestra información relevante como nombre, apellido, DNI y correo electrónico.
-
-- **Gestión de Especialistas**: Permite la visualización, creación, edición y eliminación de especialistas.
-
-
-- **Gestión de Horarios**: Cada especialista tiene un horario de atención, el cual se puede gestionar en este apartado, indicando el día y el horario de trabajo.
-
-
-- **Gestión de Turnos**: Permite la creación, modificación, eliminación y visualización de turnos, junto a la posibilidad de gestionar la respectiva receta del mismo. En caso de que el turno no tenga receta, se podrá agregar una nueva. Si ya tiene una receta, se puede gestionar o descargar.
-
-  Al seleccionar el botón para editar el turno, se podrá cambiar al especialista, el dia y el horario según la disponibilidad.
-
-
-- **Gestión de Recetas Médicas**: Permite la creación, modificación, eliminación y visualización de recetas médicas junto a su posible descarga.
-
-
 **Validaciones y mensajes de error**
 
   Los campos tienen las validaciones correspondientes, y en caso de errores, como intentar ingresar campos vacíos, se muestra una notificación adecuada.
@@ -238,7 +260,7 @@ Para la receta de un turno se da la posibilidad de cambiar sus datos, borrar y d
 
 
 
-## ¡Terminamos!
+## Terminamos
 
 Cualquier duda o recomendación que quieran a hacer pueden hacerla y responderemos a la brevedad.
 
