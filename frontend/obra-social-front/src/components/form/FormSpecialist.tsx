@@ -10,8 +10,8 @@ import {
   addSpecialist,
   updateSpecialist,
 } from "../../redux/slices/SpecialistSlice";
-import { fetchLocations } from "../../redux/slices/LocationSlice";
-import { fetchSpecialities } from "../../redux/slices/SpecialitySlice"; // Importar la acción para obtener especialidades
+import { fetchLocations } from "../../redux/slices/locationSlice";
+import { fetchSpecialities } from "../../redux/slices/SpecialitySlice";
 import { Specialist } from "../../redux/type";
 import { useAppContext } from "../../hooks/AppContext";
 
