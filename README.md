@@ -1,6 +1,8 @@
-# Proyecto de Obra Social - API con Java + Quarkus
+# Proyecto de Obra Social - Academia Java + React + Quarkus
 
-Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java + React 2024 de UMSA con Softtek y hemos creado este proyecto modelando una obra social. Esta obra social tiene pacientes, especialistas y turnos y recetas medicas, permitiendo que un paciente pueda sacar un turno relacionado a un especialista específico. La API está documentada utilizando Swagger y se proporciona una colección de Postman para facilitar las pruebas. Esta es la documentación correspondiente al backend; pronto incorporaremos el frontend con su apartado correspondiente.
+
+
+Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java + React 2024 de UMSA con Softtek y hemos creado este proyecto modelando una obra social. Esta obra social tiene afiliados, especialistas, turnos y recetas medicas, permitiendo que un afiliado pueda sacar un turno relacionado a un especialista específico. Se ha creado una API la cual está documentada utilizando Swagger y se proporciona una colección de Postman para facilitar las pruebas. También se proporciona el correspondiente frontend para la utilización de la misma.
 
 ## Integrantes del Proyecto
 
@@ -8,10 +10,11 @@ Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java +
 - **Nicolas Torres**
 - **Joaquin Muñoz**
 
+# Backend
 
 ## Entidades creadas
 
-- **Pacientes**
+- **Afiliados**
 - **Especialistas**
 - **Turnos**
 - **Receta medica**
@@ -100,7 +103,7 @@ Cada método devuelve un código de estado HTTP diferente según sea necesario. 
 - **400**: Error debido a alguna validación.
 - **404**: Se ha proporcionado una ID de alguna entidad que no existe en el sistema.
 
-## Frontend
+# Frontend
 
 El frontend de este proyecto ha sido desarrollado utilizando React y TypeScript, proporcionando una interfaz de usuario moderna y fácil de usar para interactuar con la API de la obra social.
 
@@ -225,15 +228,11 @@ Todas las tablas tienen filtros para una busqueda más efectiva de los datos
 
   ![mensaje-error](docs/alertaBorrar.png)
 
-  
-
-
 **Receta**
 
 Para la receta de un turno se da la posibilidad de cambiar sus datos, borrar y descargar la misma en formato PDF.
 
-
-  ![receta](docs/receta.png)
+![receta](docs/receta.png)
 
 
 
