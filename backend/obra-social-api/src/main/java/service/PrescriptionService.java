@@ -62,4 +62,8 @@ public class PrescriptionService implements IPrescriptionService {
 		prescriptionRepository.deleteById(id);
 		return existingPrescription;
 	}
+
+	public boolean checkIfPrescriptionExists(Long shiftId) {
+		return prescriptionRepository.prescriptionExistsByShiftId(shiftId);
+	}
 }

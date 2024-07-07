@@ -64,7 +64,6 @@ public class ScheduleService implements IScheduleService {
 			throw new IllegalArgumentException(scheduleErrors.toString());
 
 		existingSchedule.setDayOfWeek(schedule.getDayOfWeek());
-		existingSchedule.setSpecialist(schedule.getSpecialist());
 		existingSchedule.setStartTime(schedule.getStartTime());
 		existingSchedule.setEndTime(schedule.getEndTime());
 

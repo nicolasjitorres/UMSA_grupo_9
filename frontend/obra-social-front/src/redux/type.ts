@@ -20,14 +20,27 @@ export interface Specialist {
   email: string;
 }
 
+export enum Speciality {
+  CARDIOLOGÍA = "Cardiología",
+  DERMATOLOGÍA = "Dermatología",
+  ENDOCRINOLOGÍA = "Endocrinología",
+  ONCOLOGÍA = "Oncología",
+  ORTOPEDÍA = "Ortopedia",
+  UROLOGÍA = "Urología",
+  ODONTOLOGÍA = "Odontología",
+  NEUROLOGÍA = "Neurología",
+  HEMATOLOGÍA = "Hematología",
+  MEDICINAGENERAL = "Medicina General",
+}
+
 export enum DayOfWeek {
-  SUNDAY = "SUNDAY",
-  MONDAY = "MONDAY",
-  TUESDAY = "TUESDAY",
-  WEDNESDAY = "WEDNESDAY",
-  THURSDAY = "THURSDAY",
-  FRIDAY = "FRIDAY",
-  SATURDAY = "SATURDAY",
+  DOMINGO = "DOMINGO",
+  LUNES = "LUNES",
+  MARTES = "MARTES",
+  MIERCOLES = "MIERCOLES",
+  JUEVES = "JUEVES",
+  VIERNES = "VIERNES",
+  SABADO = "SABADO",
 }
 
 export interface Schedule {
@@ -51,10 +64,11 @@ export interface Affiliate {
 export interface Prescription {
   id: number;
   description: string;
+  shift: Shift;
 }
 
 export interface Location {
-  id: number;
+  id?: number;
   street: string;
   locality: string;
   province: string;
@@ -82,12 +96,11 @@ export interface AffiliateDTO {
 }
 
 export interface SpecialistDTO {
-  id: number;
   firstName: string;
   lastName: string;
   dni: string;
   speciality: string;
-  location: Location; // Usa la ubicación con `id`
+  location: Location;
   role: string;
   email: string;
 }
@@ -96,4 +109,14 @@ export interface ScheduleDTO {
   startTime: string;
   endTime: string;
   dayOfWeek: DayOfWeek;
+}
+
+export interface PrescriptionDTO {
+  description: string;
+  idShift: number;
+}
+
+export interface EmailDTO {
+  email: string;
+  message: string;
 }

@@ -3,9 +3,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 40%;
+    width: 30%;
     max-width: 90%;
-    background-color: rgba(1, 15, 95, 0.71);
+    background-color: rgb(1, 15, 95);
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     padding: 35px;

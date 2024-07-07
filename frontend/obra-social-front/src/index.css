@@ -24,9 +24,16 @@ a:hover {
 
 body {
   margin: 0;
-
   place-items: center;
   min-width: 320px;
+  min-height: 100vh;
+  background-image: url("./src/assets/fondoHospital2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#root {
   min-height: 100vh;
 }
 
@@ -36,33 +43,60 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+  border-radius: 4px;
+  border: none;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #007bff;
   cursor: pointer;
   transition: border-color 0.25s;
+  transition: background-color 0.3s;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 25px 25px;
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: #bccdde;
+  color: #747bff;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.add-button {
+  width: 100%;
+  background-color: #007bff;
+  background-image: url("assets/icon-add.png");
+}
+
+.edit-button {
+  width: 100%;
+  background-color: #014996;
+  background-image: url("assets/icon-edit.png");
+}
+.filter-button {
+  width: 100%;
+  margin-top: 20px;
+  background-image: url("assets/icon-filter.png");
+}
+.contact-button {
+  width: 100%;
+  margin-top: 20px;
+  background-image: url("assets/icon-contact.png");
+}
+.download-button {
+  width: 100%;
+  background-color: #019396;
+  background-image: url("assets/icon-download.png");
+}
+
+.delete-button {
+  width: 100%;
+  background-color: #ff0000;
+  background-image: url("assets/icon-delete.png");
+}
+.delete-button:hover {
+  background-color: #ffb8b8;
 }

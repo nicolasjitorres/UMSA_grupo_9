@@ -1,35 +1,46 @@
 import React from "react";
 
-import { Modal, Box, Typography } from "@mui/material";
-import FormShift from "../form/FormShift"; // Asegúrate de importar tu componente FormShift
-import "./Modal.css"; // Importa tu archivo CSS aquí
-import { Affiliate, Shift } from "../../redux/type";
+import { Modal, Typography } from "@mui/material";
+import FormShift from "../form/FormShift";
+import "./Modal.css";
+import FormSpecialist from "../form/FormSpecialist";
+import {
+  Affiliate,
+  Prescription,
+  Schedule,
+  Shift,
+  Specialist,
+} from "../../redux/type";
 import FormAffiliate from "../form/FormAffiliate";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import FormSchedule from "../form/FormSchedule";
+import FormPrescription from "../form/FormPrescription";
+import FormEmailSender from "../form/FormEmailSender";
+import FormServices from "../form/FormServices";
 
 interface propModal {
   name: string;
+  title?: string;
   proveniencia: string;
   shift?: Shift;
   affiliate?: Affiliate;
+  specialist?: Specialist;
+  schedule?: Schedule;
+  specialistID?: number;
+  prescription?: Prescription;
+  shiftID?: number;
 }
 
 const BasicModal: React.FC<propModal> = ({
   name,
+  title,
   shift,
   proveniencia,
   affiliate,
+  specialist,
+  schedule,
+  prescription,
+  specialistID = 0,
+  shiftID = 0,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -38,7 +49,16 @@ const BasicModal: React.FC<propModal> = ({
 
   return (
     <div>
-      <button onClick={handleOpen} className="add-button">
+      <button
+        onClick={handleOpen}
+        className={
+          name === "Gestionar"
+            ? "edit-button"
+            : name === "Agregar"
+            ? "add-button"
+            : ""
+        }
+      >
         {name}
       </button>
 
@@ -50,13 +70,34 @@ const BasicModal: React.FC<propModal> = ({
       >
         <div className="modal-content">
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {name}
+            {title}
           </Typography>
-          {proveniencia === "shift" ? (
+          {proveniencia === "shift" && (
             <FormShift handleClose={handleClose} shift={shift} />
-          ) : proveniencia === "affiliate" ? (
-            <FormAffiliate affiliate={affiliate} />
-          ) : null}
+          )}
+          {proveniencia === "affiliate" && (
+            <FormAffiliate affiliate={affiliate} handleClose={handleClose} />
+          )}
+          {proveniencia === "specialist" && (
+            <FormSpecialist specialist={specialist} handleClose={handleClose} />
+          )}
+          {proveniencia === "schedules" && (
+            <FormSchedule
+              schedule={schedule}
+              specialistID={specialistID ?? 0}
+              handleClose={handleClose}
+            />
+          )}
+          {proveniencia === "receta" && (
+            <FormPrescription
+              prescription={prescription}
+              idShift={shiftID}
+              handleClose={handleClose}
+            />
+          )}
+          {proveniencia === "contacto" && <FormEmailSender />}
+
+          {proveniencia === "servicios" && <FormServices />}
         </div>
       </Modal>
     </div>

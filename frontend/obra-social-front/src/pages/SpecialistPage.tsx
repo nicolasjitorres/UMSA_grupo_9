@@ -1,8 +1,8 @@
-import React from 'react';
-import SpecialistList from '../components/entitiesList/SpecialistList';
-import FilterForm from '../components/FilterForm/FilterFormSpecialist';
-import AddSpecialistButton from '../components/buttonToAdd/AddSpecialistButton';
-import './Users.css';
+import React from "react";
+import SpecialistList from "../components/tables/SpecialistTable";
+import FilterForm from "../components/form/filter/FilterFormSpecialist";
+import AddSpecialistButton from "../components/form/add/AddSpecialist";
+import "./Style.css";
 
 const Specialist: React.FC = () => {
   return (
