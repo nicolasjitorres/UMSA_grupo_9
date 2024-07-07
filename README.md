@@ -193,6 +193,9 @@ Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
 
   *Tablas de datos cargada*
 
+**Filtros**
+
+Todas las tablas tienen filtros para una busqueda más efectiva de los datos
 
 
 - **Gestión de Afiliados**: Permite la visualización, creación, edición y eliminación de afiliados. En el listado de afiliados se muestra información relevante como nombre, apellido, DNI y correo electrónico.
@@ -222,15 +225,8 @@ Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
 
   ![mensaje-error](docs/alertaBorrar.png)
 
-  Todas las entidades y elementos tienen la capacidad de poderse agregar, estos tienen su debida validación.
-
-  ![agregar](docs/agregar.png)
   
-**Filtros**
 
-Todas las tablas tienen filtros para una busqueda más efectiva de los datos
-
-![filtros](docs/filtros.png)
 
 **Receta**
 
