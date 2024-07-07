@@ -7,11 +7,12 @@
 2. [Integrantes del Proyecto](#integrantes-del-proyecto)
 3. [Entidades creadas](#entidades-creadas)
 4. [Backend](#backend)
+    - [Requisitos](#requisitos)
     - [Tecnologias](#tecnologías)
     - [Dependencias utilizadas](#dependencias-utilizadas)
     - [Estructura del Proyecto](#estructura-del-proyecto)
+    - [Base de datos H2](#base-de-datos)
     - [Implementación de los servicios](#implementación-de-los-servicios)
-    - [Requisitos](#requisitos)
     - [Instrucciones para Ejecutar el Proyecto](#instrucciones-para-ejecutar-el-proyecto)
     - [Implementación del Swagger](#implementación-del-swagger)
 
@@ -46,6 +47,13 @@ Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java +
 
 # Backend
 
+## Requisitos
+
+- **Java 17 o superior**
+- **Tener Maven instalado**
+- **Terminal para correr el proyecto**
+- **Postman o navegador para probar la API**
+
 ## Tecnologías
 
 - **Java 17** como lenguaje de programación.
@@ -70,18 +78,20 @@ El proyecto sigue el patrón de diseño MVC (Modelo-Vista-Controlador) y está d
 - **model**: Modelos de datos.
 - **dto**: Objetos de Transferencia de Datos (DTOs).
 
+## Base de datos
+
+Estamos usando la base de datos H2 e importamos los datos a través de un archivo llamado *import.sql*. La elección de esta base de datos fue el hecho de poder lanzar el proyecto sin la necesidad de tener mas programas instalados.
+
+![import](docs/importSQL.png)
+
 ## Implementación de los servicios
 
 Los servicios están diseñados con interfaces e implementados para permitir una mayor flexibilidad y modularidad.
 
 ![Estructura services](docs/estructuraServices.png)
 
-## Requisitos
 
-- **Java 17 o superior**
-- **Tener Maven instalado**
-- **Terminal para correr el proyecto**
-- **Postman o navegador para probar la API**
+
 
 ## Instrucciones para Ejecutar el Proyecto
 
@@ -95,7 +105,7 @@ Los servicios están diseñados con interfaces e implementados para permitir una
     ```bash
     ./mvn compile quarkus:dev
     ```
-3. **¡Listo para probar!**
+3. **¡Listo para probar, no se necesita nada más!**
 
 - **Opción 1:**
   Abre el [archivo de la colección](https://github.com/nicolasjitorres/UMSA_grupo_9/blob/develop/BackendSofftek/obrasocial.postman_collection.json) que se encuentra subido en el repositorio para hacer las pruebas desde la herramienta POSTMAN.
