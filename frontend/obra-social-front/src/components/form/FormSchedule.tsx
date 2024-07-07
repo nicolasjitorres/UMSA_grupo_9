@@ -39,7 +39,7 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
-      return; // Evitar enviar el formulario si hay errores de validación
+      return;
     }
     if (selectedDay) {
       const scheduleDTO = {
@@ -71,7 +71,7 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
   return (
     <form onSubmit={handleSubmit}>
       <FormControl fullWidth>
-        <NativeSelect
+        <NativeSelect className="form-field"
           value={selectedDay || ""}
           onChange={handleDayChange}
           inputProps={{
@@ -87,6 +87,7 @@ const FormSchedule: React.FC<FormScheduleProp> = ({
               {day}
             </option>
           ))}
+          
         </NativeSelect>
         {errors.selectedDay && (
           <Typography variant="body2" color="error">

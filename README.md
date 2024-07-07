@@ -1,6 +1,32 @@
-# Proyecto de Obra Social - API con Java + Quarkus
+# Proyecto de Obra Social - Academia Java + React + Quarkus
 
-Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java + React 2024 de UMSA con Softtek y hemos creado este proyecto modelando una obra social. Esta obra social tiene pacientes, especialistas y turnos y recetas medicas, permitiendo que un paciente pueda sacar un turno relacionado a un especialista específico. La API está documentada utilizando Swagger y se proporciona una colección de Postman para facilitar las pruebas. Esta es la documentación correspondiente al backend; pronto incorporaremos el frontend con su apartado correspondiente.
+
+## Índice
+
+1. [Introducción](#introducción)
+2. [Integrantes del Proyecto](#integrantes-del-proyecto)
+3. [Entidades creadas](#entidades-creadas)
+4. [Backend](#backend)
+    - [Requisitos](#requisitos)
+    - [Tecnologias](#tecnologías)
+    - [Dependencias utilizadas](#dependencias-utilizadas)
+    - [Estructura del Proyecto](#estructura-del-proyecto)
+    - [Base de datos H2](#base-de-datos)
+    - [Implementación de los servicios](#implementación-de-los-servicios)
+    - [Instrucciones para Ejecutar el Proyecto](#instrucciones-para-ejecutar-el-proyecto)
+    - [Implementación del Swagger](#implementación-del-swagger)
+
+5. [Frontend](#frontend)
+    - [Tecnologías](#tecnologías-1)
+    - [Dependencias Utilizadas](#dependencias-utilizadas-1)
+    - [Estructura del Proyecto](#estructura-del-proyecto-1)
+    - [Instalación y Ejecución del Proyecto](#instalación-y-ejecución-del-proyecto)
+    - [Funcionalidades](#funcionalidades)
+6. [Terminamos](#terminamos)
+
+## Introducción
+Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java + React 2024 de UMSA con Softtek y hemos creado este proyecto modelando una obra social. Esta obra social tiene afiliados, especialistas, turnos y recetas medicas, permitiendo que un afiliado pueda sacar un turno relacionado a un especialista específico. Se ha creado una API la cual está documentada utilizando Swagger y se proporciona una colección de Postman para facilitar las pruebas. También se proporciona el correspondiente frontend para la utilización de la misma.
+
 
 ## Integrantes del Proyecto
 
@@ -8,10 +34,9 @@ Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java +
 - **Nicolas Torres**
 - **Joaquin Muñoz**
 
-
 ## Entidades creadas
 
-- **Pacientes**
+- **Afiliados**
 - **Especialistas**
 - **Turnos**
 - **Receta medica**
@@ -19,6 +44,15 @@ Somos el grupo 9 y este es el trabajo práctico integrador de la academia Java +
 - **Horarios**
 
 ![Entidades](docs/Diagrama.png)
+
+# Backend
+
+## Requisitos
+
+- **Java 17 o superior**
+- **Tener Maven instalado**
+- **Terminal para correr el proyecto**
+- **Postman o navegador para probar la API**
 
 ## Tecnologías
 
@@ -44,18 +78,20 @@ El proyecto sigue el patrón de diseño MVC (Modelo-Vista-Controlador) y está d
 - **model**: Modelos de datos.
 - **dto**: Objetos de Transferencia de Datos (DTOs).
 
+## Base de datos
+
+Estamos usando la base de datos H2 e importamos los datos a través de un archivo llamado *import.sql*. La elección de esta base de datos fue el hecho de poder lanzar el proyecto sin la necesidad de tener mas programas instalados.
+
+![import](docs/importSQL.png)
+
 ## Implementación de los servicios
 
 Los servicios están diseñados con interfaces e implementados para permitir una mayor flexibilidad y modularidad.
 
 ![Estructura services](docs/estructuraServices.png)
 
-## Requisitos
 
-- **Java 17 o superior**
-- **Tener Maven instalado**
-- **Terminal para correr el proyecto**
-- **Postman o navegador para probar la API**
+
 
 ## Instrucciones para Ejecutar el Proyecto
 
@@ -69,7 +105,7 @@ Los servicios están diseñados con interfaces e implementados para permitir una
     ```bash
     ./mvn compile quarkus:dev
     ```
-3. **¡Listo para probar!**
+3. **¡Listo para probar, no se necesita nada más!**
 
 - **Opción 1:**
   Abre el [archivo de la colección](https://github.com/nicolasjitorres/UMSA_grupo_9/blob/develop/BackendSofftek/obrasocial.postman_collection.json) que se encuentra subido en el repositorio para hacer las pruebas desde la herramienta POSTMAN.
@@ -100,7 +136,7 @@ Cada método devuelve un código de estado HTTP diferente según sea necesario. 
 - **400**: Error debido a alguna validación.
 - **404**: Se ha proporcionado una ID de alguna entidad que no existe en el sistema.
 
-## Frontend
+# Frontend
 
 El frontend de este proyecto ha sido desarrollado utilizando React y TypeScript, proporcionando una interfaz de usuario moderna y fácil de usar para interactuar con la API de la obra social.
 
@@ -159,54 +195,82 @@ Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
 
 ### Funcionalidades
 
-- **Inicio de sesión**: Permite a los usuarios autenticarse en el sistema, momentaneamente el login solo está hecho visualmente sin logica pero la idea es dejarlo preparado para incorporar usuarios y permisos (JWT de fondo).
-- **Gestión de Afiliados**: Listado, creación, edición y eliminación de afiliados.
-- **Gestión de Especialistas**: Listado, creación, edición y eliminación de especialistas.
-- **Gestión de Turnos**: Agendar, modificar y cancelar turnos.
-- **Gestión de Recetas Médicas**: Creación, modificación, eliminición y visualización de recetas médicas.
-- **Consulta de Horarios**: Visualización de los horarios disponibles para los especialistas.
+- **Gestión de Afiliados**: Permite la visualización, creación, edición y eliminación de afiliados. En el listado de afiliados se muestra información relevante como nombre, apellido, DNI y correo electrónico.
 
-### Capturas de Pantalla
-
-![Login](docs/login.png)
-*Pantalla de Inicio de Sesión*
-
-![Afiliados](docs/afiliados.png)
-*Gestión de afiliados*
+- **Gestión de Especialistas**: Permite la visualización, creación, edición y eliminación de especialistas.
 
 
-Los campos tienen las validaciones correspondientes, en este caso se muestra el caso de no poder ingresar campos vacíos.
-![Afiliados-agregar](docs/agregar-afiliado.png)
-*Agregar de afiliados*
-
-![Afiliados-Actualizar](docs/Actualizar-afiliado.png)
-*Actualizar de afiliados*
+- **Gestión de Horarios**: Cada especialista tiene un horario de atención, el cual se puede gestionar en este apartado, indicando el día y el horario de trabajo.
 
 
-![Especialistas](docs/Especialistas.png)
-*Gestión de Especialistas*
+- **Gestión de Turnos**: Permite la creación, modificación, eliminación y visualización de turnos, junto a la posibilidad de gestionar la respectiva receta del mismo. En caso de que el turno no tenga receta, se podrá agregar una nueva. Si ya tiene una receta, se puede gestionar o descargar.
 
-![turnos](docs/turnos.png)
-*Gestión de Turnos*
+  Al seleccionar el botón para editar el turno, se podrá cambiar al especialista, el dia y el horario según la disponibilidad.
 
-![turnos](docs/actualizarTurno.png)
-*Actualizar Turnos*
+
+- **Gestión de Recetas Médicas**: Permite la creación, modificación, eliminación y visualización de recetas médicas junto a su posible descarga.
+
+- **Inicio de sesión**: Permite a los usuarios autenticarse en el sistema. Momentáneamente, el login solo está hecho visualmente sin lógica, para el uso de un administrador pero la idea es dejarlo preparado para incorporar usuarios y permisos (JWT de fondo).
+
+  ![Login](docs/login.png)
+
+  *Pantalla de Inicio de Sesión*
+
+- **Pantalla principal (Home)**: Después de iniciar sesión, los usuarios son redirigidos al Home, donde se muestra información básica de la web.
+
+  ![home](docs/home.png)
+
+  *Home*
+
+- **Modales informativos**: La página principal incluye dos modales con información adicional.
+
+  ![servicios](docs/servicios.png)
+
+  *Servicios ofrecidos por la Obra Social*
+
+  ![contacto](docs/contacto.png)
+
+  *Contacto via mail de la obra social*
+
+  Si la web no tiene datos cargados se mostrará de la siguiente forma, informando que no hay datos en sistema.
+
+  ![tablas](docs/tablasVacias.png)
+
+  *Tablas de datos*
+
+  En caso de haber datos, se mostrará la web de la siguiente manera, en este caso tenemos la base de datos cargada por lo cual al iniciar el backend, se mostrará de la siguiente manera:
+
+  ![tablas](docs/tablas.png)
+
+  *Tablas de datos cargada*
+
+**Filtros**
+
+Todas las tablas tienen filtros para una busqueda más efectiva de los datos
+
+
+**Validaciones y mensajes de error**
+
+  Los campos tienen las validaciones correspondientes, y en caso de errores, como intentar ingresar campos vacíos, se muestra una notificación adecuada.
+
+  
+  ![agregar-afiliado](docs/agregar-afiliado.png)
+
+  No se podrá borrar un afiliado en caso de tener un turno asociado, para ello primero se deberá de borrar el turno.
+
+  ![mensaje-error](docs/alertaBorrar.png)
+
+**Receta**
+
+Para la receta de un turno se da la posibilidad de cambiar sus datos, borrar y descargar la misma en formato PDF.
 
 ![receta](docs/receta.png)
-*Gestión de Recetas*
-
-![home](docs/home.png)
-*Home*
-
-![servicios](docs/servicios.png)
-*Servicios ofrecidos por la Obra Social*
 
 
-![contacto](docs/contacto.png)
-*Contacto de la obra social*
 
 
-## ¡Terminamos!
+
+## Terminamos
 
 Cualquier duda o recomendación que quieran a hacer pueden hacerla y responderemos a la brevedad.
 
