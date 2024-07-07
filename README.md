@@ -162,63 +162,76 @@ Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
 - **Inicio de sesión**: Permite a los usuarios autenticarse en el sistema. Momentáneamente, el login solo está hecho visualmente sin lógica, para el uso de un administrador pero la idea es dejarlo preparado para incorporar usuarios y permisos (JWT de fondo).
 
   ![Login](docs/login.png)
+  
   *Pantalla de Inicio de Sesión*
 
 - **Pantalla principal (Home)**: Después de iniciar sesión, los usuarios son redirigidos al Home, donde se muestra información básica de la web.
 
   ![home](docs/home.png)
+
   *Home*
 
 - **Modales informativos**: La página principal incluye dos modales con información adicional.
 
   ![servicios](docs/servicios.png)
+
   *Servicios ofrecidos por la Obra Social*
 
   ![contacto](docs/contacto.png)
+
   *Contacto via mail de la obra social*
 
   Si la web no tiene datos cargados se mostrará de la siguiente forma, informando que no hay datos en sistema.
 
   ![tablas](docs/tablasVacias.png)
+
   *Tablas de datos*
 
 - **Gestión de Afiliados**: Permite la visualización, creación, edición y eliminación de afiliados. En el listado de afiliados se muestra información relevante como nombre, apellido, DNI y correo electrónico.
   ![Afiliados](docs/Afiliados.png)
+
   *Gestión de afiliados*
 
   Los campos tienen las validaciones correspondientes, y en caso de errores, como intentar ingresar campos vacíos, se muestra una notificación adecuada.
 
   
   ![agregar-afiliado](docs/agregar-afiliado.png)
+
   *Agregar de afiliados*
 
 
   ![actualizar-afiliado](docs/actualizar-afiliado.png)
+
   *Actualizar de afiliados*
 
 - **Gestión de Especialistas**: Permite la visualización, creación, edición y eliminación de especialistas.
 
   ![Especialistas](docs/Especialistas.png)
+
   *Gestión de Especialistas*
 
 - **Gestión de Horarios**: Cada especialista tiene un horario de atención, el cual se puede gestionar en este apartado, indicando el día y el horario de trabajo.
 
   ![horarios](docs/horarios.png)
+
   *Gestión de horarios de un especialista*
 
 - **Gestión de Turnos**: Permite la creación, modificación, eliminación y visualización de turnos, junto a la posibilidad de gestionar la respectiva receta del mismo. En caso de que el turno no tenga receta, se podrá agregar una nueva. Si ya tiene una receta, se puede gestionar o descargar.
 
   ![turnos](docs/turnos.png)
+
   *Gestión de Turnos*
 
   Al seleccionar el botón para editar el turno, se podrá cambiar al especialista, el dia y el horario según la disponibilidad.
 
   ![actualizar-turno](docs/actualizarTurno.png)
+
   *Actualizar Turnos*
 
 - **Gestión de Recetas Médicas**: Permite la creación, modificación, eliminación y visualización de recetas médicas junto a su posible descarga.
 
   ![receta](docs/receta.png)
+
   *Gestión de Recetas*
 
 
