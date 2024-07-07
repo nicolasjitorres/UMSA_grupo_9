@@ -162,7 +162,7 @@ Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
 - **Inicio de sesión**: Permite a los usuarios autenticarse en el sistema. Momentáneamente, el login solo está hecho visualmente sin lógica, para el uso de un administrador pero la idea es dejarlo preparado para incorporar usuarios y permisos (JWT de fondo).
 
   ![Login](docs/login.png)
-  
+
   *Pantalla de Inicio de Sesión*
 
 - **Pantalla principal (Home)**: Después de iniciar sesión, los usuarios son redirigidos al Home, donde se muestra información básica de la web.
@@ -187,56 +187,57 @@ Para instalar y ejecutar el frontend del proyecto, sigue estos pasos:
 
   *Tablas de datos*
 
-- **Gestión de Afiliados**: Permite la visualización, creación, edición y eliminación de afiliados. En el listado de afiliados se muestra información relevante como nombre, apellido, DNI y correo electrónico.
-  ![Afiliados](docs/Afiliados.png)
+  En caso de haber datos, se mostrará la web de la siguiente manera, en este caso tenemos la base de datos cargada por lo cual al iniciar el backend, se mostrará de la siguiente manera:
 
-  *Gestión de afiliados*
+  ![tablas](docs/tablas.png)
+
+  *Tablas de datos cargada*
+
+
+
+- **Gestión de Afiliados**: Permite la visualización, creación, edición y eliminación de afiliados. En el listado de afiliados se muestra información relevante como nombre, apellido, DNI y correo electrónico.
+
+- **Gestión de Especialistas**: Permite la visualización, creación, edición y eliminación de especialistas.
+
+
+- **Gestión de Horarios**: Cada especialista tiene un horario de atención, el cual se puede gestionar en este apartado, indicando el día y el horario de trabajo.
+
+
+- **Gestión de Turnos**: Permite la creación, modificación, eliminación y visualización de turnos, junto a la posibilidad de gestionar la respectiva receta del mismo. En caso de que el turno no tenga receta, se podrá agregar una nueva. Si ya tiene una receta, se puede gestionar o descargar.
+
+  Al seleccionar el botón para editar el turno, se podrá cambiar al especialista, el dia y el horario según la disponibilidad.
+
+
+- **Gestión de Recetas Médicas**: Permite la creación, modificación, eliminación y visualización de recetas médicas junto a su posible descarga.
+
+
+**Validaciones y mensajes de error**
 
   Los campos tienen las validaciones correspondientes, y en caso de errores, como intentar ingresar campos vacíos, se muestra una notificación adecuada.
 
   
   ![agregar-afiliado](docs/agregar-afiliado.png)
 
-  *Agregar de afiliados*
+  No se podrá borrar un afiliado en caso de tener un turno asociado, para ello primero se deberá de borrar el turno.
 
+  ![mensaje-error](docs/alertaBorrar.png)
 
-  ![actualizar-afiliado](docs/actualizar-afiliado.png)
+  Todas las entidades y elementos tienen la capacidad de poderse agregar, estos tienen su debida validación.
 
-  *Actualizar de afiliados*
+  ![agregar](docs/agregar.png)
+  
+**Filtros**
 
-- **Gestión de Especialistas**: Permite la visualización, creación, edición y eliminación de especialistas.
+Todas las tablas tienen filtros para una busqueda más efectiva de los datos
 
-  ![Especialistas](docs/Especialistas.png)
+![filtros](docs/filtros.png)
 
-  *Gestión de Especialistas*
+**Receta**
 
-- **Gestión de Horarios**: Cada especialista tiene un horario de atención, el cual se puede gestionar en este apartado, indicando el día y el horario de trabajo.
+Para la receta de un turno se da la posibilidad de cambiar sus datos, borrar y descargar la misma en formato PDF.
 
-  ![horarios](docs/horarios.png)
-
-  *Gestión de horarios de un especialista*
-
-- **Gestión de Turnos**: Permite la creación, modificación, eliminación y visualización de turnos, junto a la posibilidad de gestionar la respectiva receta del mismo. En caso de que el turno no tenga receta, se podrá agregar una nueva. Si ya tiene una receta, se puede gestionar o descargar.
-
-  ![turnos](docs/turnos.png)
-
-  *Gestión de Turnos*
-
-  Al seleccionar el botón para editar el turno, se podrá cambiar al especialista, el dia y el horario según la disponibilidad.
-
-  ![actualizar-turno](docs/actualizarTurno.png)
-
-  *Actualizar Turnos*
-
-- **Gestión de Recetas Médicas**: Permite la creación, modificación, eliminación y visualización de recetas médicas junto a su posible descarga.
 
   ![receta](docs/receta.png)
-
-  *Gestión de Recetas*
-
-
-
-
 
 
 
