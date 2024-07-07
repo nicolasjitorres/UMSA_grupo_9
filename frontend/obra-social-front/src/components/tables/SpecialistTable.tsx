@@ -30,7 +30,7 @@ const SpecialistList: React.FC = () => {
   ) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
+  };  
 
   const dataToShow =
     filteredSpecialists.length > 0 ? filteredSpecialists : specialists;
@@ -65,7 +65,7 @@ const SpecialistList: React.FC = () => {
                     key={specialist.id}
                     specialist={specialist}
                   />
-                ))
+                ))   
             ) : (
               <TableRow>
                 <TableCell colSpan={4} align="center">

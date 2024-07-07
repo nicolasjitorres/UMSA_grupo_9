@@ -5,6 +5,8 @@ import shiftReduce from "../slices/ShiftSlice";
 import prescriptionReducer from "../slices/PrescriptionSlice";
 import schedulesReducer from "../slices/SchedulesSlice";
 import specialityReducer from "../slices/SpecialitySlice";
+import locationReducer from "../slices/locationSlice";
+
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +15,8 @@ export const store = configureStore({
     shift: shiftReduce,
     prescription: prescriptionReducer,
     schedules: schedulesReducer,
-    specialities: specialityReducer
+    specialities: specialityReducer,
+    locations: locationReducer
   },
 });
 

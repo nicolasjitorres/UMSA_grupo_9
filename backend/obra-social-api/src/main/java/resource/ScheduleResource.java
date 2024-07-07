@@ -81,7 +81,7 @@ public class ScheduleResource {
 			@APIResponse(responseCode = "404", description = "Horario no encontrado") })
 	public Response deleteScheduleById(@PathParam("id") Long id) {
 		try {
-			Schedule deletedSchedule = scheduleService.deleteSchedule(id);
+			scheduleService.deleteSchedule(id);
 			return Response.status(204).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();

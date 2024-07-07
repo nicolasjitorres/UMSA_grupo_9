@@ -26,15 +26,16 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({
 }) => {
   const { delete_Specialist } = useAppContext();
   const [formData, setFormData] = useState({
-    firstName: specialist?.firstName || "",
-    lastName: specialist?.lastName || "",
-    dni: specialist?.dni || "",
-    email: specialist?.email || "",
-    speciality: specialist?.speciality || "",
-    street: specialist?.location?.street || "",
-    locality: specialist?.location?.locality || "",
-    province: specialist?.location?.province || "",
-    country: specialist?.location?.country || "",
+    firstName: specialist?.firstName || '',
+    lastName: specialist?.lastName || '',
+    dni: specialist?.dni || '',
+    email: specialist?.email || '',
+    speciality: specialist?.speciality || '',
+    street: specialist?.location?.street || '',
+    locality: specialist?.location?.locality || '',
+    province: specialist?.location?.province || '',
+    country: specialist?.location?.country || '',
+    password: '',
   });
 
   const [errors, setErrors] = useState<ValidationErrors>({});
@@ -104,6 +105,7 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({
         locality: "",
         province: "",
         country: "",
+        password: "",
       });
 
       handleClose();
@@ -116,6 +118,10 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({
       handleClose();
     }
   };
+
+  React.useEffect(() => {
+    dispatch(fetchLocations());
+  }, [dispatch]);
 
   return (
     <form onSubmit={handleSubmit} className="form-container">
@@ -161,6 +167,16 @@ const FormSpecialist: React.FC<FormSpecialistProps> = ({
         margin="normal"
         error={!!errors.email}
         helperText={errors.email}
+        className="form-field"
+      />
+      <TextField
+        fullWidth
+        label="Contraseña"
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleInputChange}
+        margin="normal"
         className="form-field"
       />
       <FormControl fullWidth margin="normal" className="form-field">

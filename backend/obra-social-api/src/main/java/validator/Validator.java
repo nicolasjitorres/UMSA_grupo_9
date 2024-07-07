@@ -2,6 +2,7 @@ package validator;
 
 import java.util.List;
 
+import dto.SpecialistDTO;
 import model.Affiliate;
 import jakarta.enterprise.context.ApplicationScoped;
 import model.Location;
@@ -35,6 +36,15 @@ public class Validator {
 			return errors.stream().map(violation ->violation.getPropertyPath() + violation.getMessage()).toList();
 		}
 	}
+	public List<String> validateSpecialistDto(SpecialistDTO specialistDto) {
+		var errors = validator.validate(specialistDto);
+		if (errors.isEmpty()) {
+			return null;
+		} else {
+			return errors.stream().map(violation ->violation.getPropertyPath() + violation.getMessage()).toList();
+		}
+	}
+
 	public List<String> validateSchedule(Schedule schedule) {
 		var errors = validator.validate(schedule);
 		if (errors.isEmpty()) {

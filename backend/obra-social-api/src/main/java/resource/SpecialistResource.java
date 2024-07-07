@@ -13,6 +13,8 @@ import model.Specialist;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+
+import dto.SpecialistDTO;
 import service.interfaces.ISpecialistService;
 
 @Path("/especialistas")
@@ -22,6 +24,9 @@ public class SpecialistResource {
 
 	@Inject
 	private ISpecialistService specialistService;
+
+	@Inject 
+	private Mapper mapper;
 
 
 	@GET
@@ -33,7 +38,7 @@ public class SpecialistResource {
 	public Response getAllSpecialists() {
 		List<Specialist> specialists = specialistService.getAllSpecialists();
 		if(!specialists.isEmpty()) {
-				return Response.ok(Mapper.toSpecialistDTOList(specialists)).build();
+				return Response.ok(mapper.toSpecialistDTOList(specialists)).build();
 		} else {
 			return Response.status(204).build();
 		}
@@ -51,7 +56,7 @@ public class SpecialistResource {
 		if (existSpecialist == null) {
 			return Response.status(Response.Status.NOT_FOUND).entity("No existe el usuario con el id " + id + ".").build();
 		} else {
-			return Response.ok(Mapper.toSpecialistDTO(existSpecialist)).build();
+			return Response.ok(mapper.toSpecialistDTO(existSpecialist)).build();
 		}
 	}
 
@@ -59,10 +64,10 @@ public class SpecialistResource {
 	@Operation(summary = "Crear un especialista", description = "Crea un nuevo especialista.")
 	@APIResponse(responseCode = "200", description = "Especialista creado con éxito")
 	@APIResponse(responseCode = "400", description = "Solicitud incorrecta, hay datos invalidos")
-	public Response createSpecialist(Specialist newSpecialist) {
+	public Response createSpecialist(SpecialistDTO newSpecialistDto) {
 		try {
-			Specialist specialist = specialistService.addSpecialist(newSpecialist);
-			return Response.ok(Mapper.toSpecialistDTO(specialist)).build();
+			Specialist specialist = specialistService.addSpecialist(newSpecialistDto);
+			return Response.ok(mapper.toSpecialistDTO(specialist)).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
@@ -79,7 +84,7 @@ public class SpecialistResource {
 	public Response updateSpecialist(@PathParam("id") Long id, Specialist editSpecialist) {
 		try {
 			Specialist editedSpecialist = specialistService.editSpecialist(id, editSpecialist);
-			return Response.ok(Mapper.toSpecialistDTO(editedSpecialist)).build();
+			return Response.ok(mapper.toSpecialistDTO(editedSpecialist)).build();
 		} catch (IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		} catch (Exception e) {
@@ -96,7 +101,7 @@ public class SpecialistResource {
 	})
 	public Response deleteSpecialist(@PathParam("id") Long id) {
 		try{
-			Specialist deletedSpecialist = specialistService.deleteSpecialist(id);
+			specialistService.deleteSpecialist(id);
 			return Response.status(204).build();
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity((e.getMessage())).build();

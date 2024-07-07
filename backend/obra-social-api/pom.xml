@@ -30,23 +30,27 @@
   </dependencyManagement>
 
   <dependencies>
-	<dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-jwt</artifactId>
+    </dependency>
+	  <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-openapi</artifactId>
     </dependency>
     <dependency>
     	<groupId>io.quarkus</groupId>
     	<artifactId>quarkus-hibernate-validator</artifactId>
-	</dependency>
+	  </dependency>
     <dependency>
-    	<groupId>org.springframework.security</groupId>
-    	<artifactId>spring-security-core</artifactId>
-    	<version>5.8.0</version>
-	</dependency>
+      <groupId>org.mindrot</groupId>
+      <artifactId>jbcrypt</artifactId>
+      <version>0.4</version>
+    </dependency>
     <dependency>
     	<groupId>io.quarkus</groupId>
     	<artifactId>quarkus-swagger-ui</artifactId>
-	</dependency>
+	  </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-orm-rest-data-panache</artifactId>

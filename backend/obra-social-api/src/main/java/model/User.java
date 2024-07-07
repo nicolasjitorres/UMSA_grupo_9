@@ -15,7 +15,7 @@ import model.enums.Role;
 
 @MappedSuperclass
 @Data
-public abstract class User{
+public abstract class User {
 	@NotBlank(message = ": El campo 'nombre' no debe estar vacío.")
 	@Size(min = 2, message = ": El campo 'nombre' debe tener al menos 2 caracteres.")
 	@Column(name="first_name")
@@ -40,12 +40,8 @@ public abstract class User{
 	@Email(message = ": El campo 'email' debe contener un email válido.")
 	@Column(name="email")
 	private String email;
-/*
-@NotBlank(message = ": El campo 'contraseña' no debe estar vacío.")
-    @Size(min = 8, message = ": El campo 'contraseña' debe tener al menos 8 caracteres.")
-    //@Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = ": El campo 'contraseña' debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.")
-	@JsonIgnore
+
+	@NotBlank(message = ": El campo 'contraseña' no debe estar vacío.")
 	private String password;
 
-	*/
 }

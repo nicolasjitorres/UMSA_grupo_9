@@ -8,9 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.enums.Day;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 @Data
 @AllArgsConstructor
