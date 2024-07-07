@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Location } from "../type";
-import { handleAxiosError } from "./AxiosErrorHandler";
+import { handleAxiosError } from "../../components/Errors/AxiosErrorHandler";
 
 interface LocationsState {
   locations: Location[];
