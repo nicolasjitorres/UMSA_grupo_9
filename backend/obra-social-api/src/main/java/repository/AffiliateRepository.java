@@ -12,5 +12,4 @@ public class AffiliateRepository implements PanacheRepository<Affiliate> {
     public Affiliate findByHealthInsuranceCode(String healthInsuranceCode) {
         return find("healthInsuranceCode", healthInsuranceCode).firstResult();
     }
-
 }
